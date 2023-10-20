@@ -3,12 +3,12 @@ from accounts.models import User
 # Create your models here.
 
 def generate_pk():
-    number = (Task.objects.all().count())+ 1
+    number = (TASK.objects.all().count())+ 1
     return f'TSK-{number}'
 
 
-class Task (models.Model):
-    task= models.CharField(default=generate_pk, primary_key=True, max_length=255, unique= True, editable=False)
+class TaskModel (models.Model):
+    task= models.CharField(default=generate_pk,max_length=255, unique= True, editable=False)
     title = models.CharField(max_length=255)
     description = models.TextField()
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reaporter')

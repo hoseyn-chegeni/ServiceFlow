@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Task',
             fields=[
-                ('task', models.CharField(default=task.models.generate_pk, editable=False, max_length=255, primary_key=True, serialize=False, unique=True)),
+                ('task', models.CharField(default=task.models.generate_pk, editable=False, max_length=255,serialize=False, unique=True)),
                 ('title', models.CharField(max_length=255)),
                 ('description', models.TextField()),
                 ('created_date', models.DateTimeField(auto_now_add=True)),
