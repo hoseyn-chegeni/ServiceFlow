@@ -22,3 +22,12 @@ class MyTaskView(ListView):
     def get_queryset(self, **kwargs):
        qs = super().get_queryset(**kwargs)
        return qs.filter(assign_to_id=self.request.user.id)
+
+
+class MyCreatedTaskView(ListView):
+    template_name = 'tasks/myTask.html'
+    model = Task
+    context_object_name = 'tasks'
+    def get_queryset(self, **kwargs):
+       qs = super().get_queryset(**kwargs)
+       return qs.filter(creator_id=self.request.user.id)
