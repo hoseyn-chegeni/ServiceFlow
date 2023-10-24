@@ -18,4 +18,12 @@ class MyNotesView(ListView):
     context_object_name = 'notes'
     def get_queryset(self, **kwargs):
        qs = super().get_queryset(**kwargs)
-       return qs.filter(author_id=self.request.user.id)
+       return qs.filter(author_id=self.request.user.id, is_archive = False)
+
+class MyArchiveNotesView(ListView):
+    template_name = 'notes/my_archive_notes.html'
+    model = Note
+    context_object_name = 'notes'
+    def get_queryset(self, **kwargs):
+       qs = super().get_queryset(**kwargs)
+       return qs.filter(author_id=self.request.user.id, is_archive = True)
