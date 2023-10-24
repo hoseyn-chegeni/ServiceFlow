@@ -4,6 +4,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic import ListView
 from accounts.models import User
 from tasks.models import Task
+from notes.models import Note
 
 # Create your views here.
 class IndexView(TemplateView):
@@ -12,6 +13,7 @@ class IndexView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['users'] = User.objects.all().count()
         context['tasks'] = Task.objects.all().count()
+        context['notes'] = Note.objects.filter(is_public = True).count()
         return context
     
 class UserView(ListView):

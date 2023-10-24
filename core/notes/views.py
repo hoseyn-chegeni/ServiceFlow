@@ -1,3 +1,4 @@
+from typing import Any
 from django.shortcuts import render
 from django.views.generic import ListView
 from .models import Note
@@ -10,6 +11,7 @@ class PublicNoteView(ListView):
     def get_queryset(self, **kwargs):
        qs = super().get_queryset(**kwargs)
        return qs.filter(is_public=True)
+
     
 
 class MyNotesView(ListView):
@@ -19,6 +21,7 @@ class MyNotesView(ListView):
     def get_queryset(self, **kwargs):
        qs = super().get_queryset(**kwargs)
        return qs.filter(author_id=self.request.user.id, is_archive = False)
+
 
 class MyArchiveNotesView(ListView):
     template_name = 'notes/my_archive_notes.html'
