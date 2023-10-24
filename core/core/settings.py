@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'accounts',
     'index',
     'tasks',
-    'meetings'
+    'meetings',
+    'notes',
 ]
 
 MIDDLEWARE = [
