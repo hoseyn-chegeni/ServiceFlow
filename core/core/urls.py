@@ -24,4 +24,5 @@ urlpatterns = [
     path('index/', include('index.urls')),
     path('tasks/',include('tasks.urls')),
     path('accounts/',include('accounts.urls')),
+    path('notes/',include('notes.urls'))
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

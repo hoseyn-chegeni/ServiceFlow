@@ -1,5 +1,7 @@
 from django.db import models
 from accounts.models import User
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 # Create your models here.
 def generate_pk():
     number = (Note.objects.all().count())+1
@@ -17,12 +19,13 @@ class Note(models.Model):
     tags = models.ManyToManyField('NoteTag')
 
     def __str__(self):
-        return self.title
-    
+        return self.note
+
 class NoteTag(models.Model):
     name = models.CharField(max_length=255)
     desc = models.TextField(blank= True, null= True)
 
+
+
     def __str__(self):
         return self.name
-    
