@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'meetings',
     'notes',
     'reminders',
+    'team',
 ]
 
 MIDDLEWARE = [
