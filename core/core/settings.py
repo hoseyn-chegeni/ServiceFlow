@@ -85,9 +85,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'itest',
-        'HOST':'127.0.0.1',
+        'HOST':'db',
         'USER':'root',
-        'PASSWORD':'h@seyn4651'
+        'PASSWORD':'h@seyn4651',
+        'PORT':'3306'
     }
 }
 
