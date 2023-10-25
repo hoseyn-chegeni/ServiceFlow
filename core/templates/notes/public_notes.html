@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
+<body>   
+     <form action="" method="get">
+    {{filter.form.as_p}}
+    <input type="submit">
+</form>
     {%for i in notes%}
     {{i.notes}},,{{i.title}},{{i.author}} <br>
     {%endfor%}

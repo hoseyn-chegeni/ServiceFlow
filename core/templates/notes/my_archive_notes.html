@@ -6,6 +6,11 @@
     <title>Document</title>
 </head>
 <body>
+    <form action="" method="get">
+        {%csrf_token%}
+        {{filter.form.as_p}}
+        <input type="submit">
+    </form>
     {%for i in notes%}
     {{i.notes}},,{{i.title}},{{i.author}} <br>
     {%endfor%}
