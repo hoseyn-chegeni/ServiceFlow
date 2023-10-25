@@ -1,3 +1,12 @@
 from django.shortcuts import render
-
+from django.views.generic import ListView
+from .models import Reminder
 # Create your views here.
+
+class MyCreatedReminder(ListView):
+    template_name = 'reminder/my_created_reminder.html'
+    model = Reminder
+    context_object_name = 'reminder'
+    def get_queryset(self, **kwargs):
+       qs = super().get_queryset(**kwargs)
+       return qs.filter(created_by_id=self.request.user.id)
