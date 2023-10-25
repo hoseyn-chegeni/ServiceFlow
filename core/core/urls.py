@@ -26,4 +26,5 @@ urlpatterns = [
     path('accounts/',include('accounts.urls')),
     path('notes/',include('notes.urls')),
     path('reminders/',include('reminders.urls')),
+    path('team/',include('team.urls')),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

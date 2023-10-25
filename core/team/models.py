@@ -21,4 +21,4 @@ class Team (models.Model):
     budget  = models.IntegerField()
 
     def __str__(self):
-        return self.team
+        return f'{self.team}/ {self.name}'
