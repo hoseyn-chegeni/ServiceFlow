@@ -1,10 +1,14 @@
 from django.urls import reverse
 from django.contrib.auth.views import LoginView, LogoutView
+from django.views.generic import ListView
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from .models import User
 from .forms import UserCreationForm
 # Create your views here.
+
+class UserView(ListView):
+    model = User
 
 
 class UserLogin(LoginView):

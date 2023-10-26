@@ -16,5 +16,3 @@ class IndexView(TemplateView):
         context['notes'] = Note.objects.filter(is_public = True).count()
         return context
     
-class UserView(ListView):
-    model = User
