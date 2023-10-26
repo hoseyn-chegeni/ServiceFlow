@@ -3,7 +3,7 @@ from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render
 from django_filters.views import FilterView
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, DetailView
 from .filters import TaskFilter
 from .models import Task
 from  .forms import CreateTaskForm
@@ -45,3 +45,7 @@ class CreateTaskView(CreateView):
     def form_valid(self, form):
         form.instance.creator = self.request.user
         return super().form_valid(form)
+    
+class TaskDetailView(DetailView):
+    model = Task
+    template_name = 'tasks/detail.html'
