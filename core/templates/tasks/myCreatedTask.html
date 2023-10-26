@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>My Created Task</title>
 </head>
 <body>
     {%for i in tasks%}
-    {{i.title}},,{{i.assign_to}}, <br>
+    <a href="{%url 'tasks:detail' i.id %}">{{i.task}}</a> {{i.title}}{{i.assign_to}}, <br>
     {%endfor%}
 </body>
 </html>

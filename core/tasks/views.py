@@ -20,7 +20,7 @@ class TaskView(FilterView):
 
 
 class MyTaskView(ListView):
-    template_name = 'tasks/myTask.html'
+    template_name = 'tasks/myCreatedTask.html'
     model = Task
     context_object_name = 'tasks'
     def get_queryset(self, **kwargs):
