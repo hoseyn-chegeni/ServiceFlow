@@ -9,6 +9,7 @@ from .forms import UserCreationForm
 
 class UserView(ListView):
     model = User
+    template_name = 'registration/user_list.html'
 
 
 class UserLogin(LoginView):

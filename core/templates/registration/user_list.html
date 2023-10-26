@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <button><a href="{%url 'accounts:create_user'%}"> Create New task</a></button><br>
+    <button><a href="{%url 'accounts:create_user'%}"> Create New User</a></button><br>
     {%for i in object_list%}
     {{i.id}}. {{i.first_name}} {{i.last_name}}//// {{i.email}}<br>
     {%endfor%} 
