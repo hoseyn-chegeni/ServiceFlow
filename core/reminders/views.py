@@ -8,7 +8,7 @@ from .models import Reminder
 class MyCreatedReminder(ListView):
     template_name = 'reminder/my_created_reminder.html'
     model = Reminder
-    context_object_name = 'reminder'
+    context_object_name = 'reminders'
     def get_queryset(self, **kwargs):
        qs = super().get_queryset(**kwargs)
        return qs.filter(created_by_id=self.request.user.id)

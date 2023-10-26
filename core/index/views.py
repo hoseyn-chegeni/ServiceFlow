@@ -18,4 +18,3 @@ class IndexView(TemplateView):
     
 class UserView(ListView):
     model = User
-    paginate_by = 2
