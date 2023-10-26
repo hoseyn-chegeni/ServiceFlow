@@ -1,9 +1,13 @@
 from django.db.models.query import QuerySet
+from django.forms.models import BaseModelForm
+from django.http import HttpResponse
 from django.shortcuts import render
 from django_filters.views import FilterView
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
 from .filters import TaskFilter
 from .models import Task
+from  .forms import CreateTaskForm
+from django.urls import reverse_lazy
 
 # Create your views here.
 
@@ -31,3 +35,13 @@ class MyCreatedTaskView(ListView):
     def get_queryset(self, **kwargs):
        qs = super().get_queryset(**kwargs)
        return qs.filter(creator_id=self.request.user.id)
+    
+
+class CreateTaskView(CreateView):
+    template_name = 'tasks/create_task.html'
+    form_class = CreateTaskForm
+    template_name = 'registration/signup.html'
+    success_url = reverse_lazy('index:home')
+    def form_valid(self, form):
+        form.instance.creator = self.request.user
+        return super().form_valid(form)
