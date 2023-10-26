@@ -5,7 +5,7 @@ from django.views.generic import  CreateView
 from .models import Note
 from django_filters.views import FilterView
 from .filters import NoteFilter, PublicNoteFilter
-from .forms import CreatePublicNoteForm
+from .forms import CreatePublicNoteForm,CreateNoteForm
 
 # Create your views here.
 
@@ -39,6 +39,14 @@ class MyArchiveNotesView(FilterView):
        qs = super().get_queryset(**kwargs)
        return qs.filter(author_id=self.request.user.id, is_archive = True)
     
+class CreateNote(CreateView):
+    template_name = 'notes/create_note.html'
+    form_class = CreateNoteForm
+    success_url = reverse_lazy('notes:my_notes')
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
 
 class CreatePublicNote(CreateView):
     template_name = 'notes/create_public_note.html'
