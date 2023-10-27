@@ -40,7 +40,6 @@ class MyCreatedTaskView(ListView):
 class CreateTaskView(CreateView):
     template_name = 'tasks/create_task.html'
     form_class = CreateTaskForm
-    template_name = 'registration/signup.html'
     success_url = reverse_lazy('index:home')
     def form_valid(self, form):
         form.instance.creator = self.request.user
