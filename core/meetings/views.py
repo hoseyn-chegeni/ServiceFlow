@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django_filters.views import FilterView
+from django.views.generic import DetailView
 from .filters import MyCreatedMeetingsFilter, InvitedMeetingsFilter
 from .models import Meetings
 # Create your views here.
@@ -18,3 +19,8 @@ class MyCreatedMeetings(FilterView):
     def get_queryset(self, **kwargs):
        qs = super().get_queryset(**kwargs)
        return qs.filter(organizer_id=self.request.user.id)
+    
+
+class MeetingDetailView(DetailView):
+    model = Meetings
+    template_name = 'meetings/detail.html'
