@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django_filters.views import FilterView
-from django.views.generic import DetailView, CreateView
+from django.views.generic import DetailView, CreateView, DeleteView
 from .filters import MyCreatedMeetingsFilter, InvitedMeetingsFilter
 from .models import Meetings
 from .forms import CreateMeetingsForm
@@ -34,3 +34,7 @@ class CreateMeetingsView(CreateView):
     def form_valid(self, form):
         form.instance.organizer = self.request.user
         return super().form_valid(form)
+    
+class DeleteMeetings(DeleteView):
+    model = Meetings
+    success_url = reverse_lazy('index:home')

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import MyCreatedMeetings, InvitedMeetings,MeetingDetailView,CreateMeetingsView
+from .views import MyCreatedMeetings, InvitedMeetings,MeetingDetailView,CreateMeetingsView,DeleteMeetings
 
 app_name = 'meetings'
 
@@ -8,4 +8,5 @@ urlpatterns = [
     path('my_created_meetings/', MyCreatedMeetings.as_view(),name='my_created_meetings'),
     path('detail/<int:pk>', MeetingDetailView.as_view(),name='detail'),
     path('create/', CreateMeetingsView.as_view(),name='create'),
+    path('delete/<int:pk>', DeleteMeetings.as_view(),name='delete'),
 ]
