@@ -1,7 +1,10 @@
+from typing import Any
+from django.db import models
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django_filters.views import FilterView
 from django.views.generic import DetailView, CreateView, DeleteView
+from django.views.generic.edit import UpdateView
 from .filters import MyCreatedMeetingsFilter, InvitedMeetingsFilter
 from .models import Meetings
 from .forms import CreateMeetingsForm
@@ -38,3 +41,9 @@ class CreateMeetingsView(CreateView):
 class DeleteMeetings(DeleteView):
     model = Meetings
     success_url = reverse_lazy('index:home')
+
+class UpdatedMeetings(UpdateView):
+    model = Meetings
+    fields = ("title","description", "date_time","duration","location", "attendees","action")
+    success_url = reverse_lazy('index:home')
+    template_name = 'meetings/update.html'
