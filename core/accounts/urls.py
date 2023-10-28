@@ -7,6 +7,7 @@ from .views import (
     UserUpdate,
     UserDetail,
     UserDelete,
+    UserPasswordChangeView
 )
 
 app_name = "accounts"
@@ -19,4 +20,5 @@ urlpatterns = [
     path("update/<int:pk>/", UserUpdate.as_view(), name="update"),
     path("detail/<int:pk>/", UserDetail.as_view(), name="detail"),
     path("delete/<int:pk>/", UserDelete.as_view(), name="delete"),
+    path("change_password/", UserPasswordChangeView.as_view(), name="change_password"),
 ]

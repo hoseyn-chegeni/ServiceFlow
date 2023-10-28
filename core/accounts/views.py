@@ -1,5 +1,5 @@
 from django.urls import reverse, reverse_lazy
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.views.generic import ListView, UpdateView, DetailView, DeleteView
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
@@ -49,3 +49,8 @@ class UserDelete(DeleteView):
     model = User
     template_name = "registration/delete.html"
     success_url = reverse_lazy("accounts:users")
+
+
+class UserPasswordChangeView(PasswordChangeView):
+    template_name = 'registration/change_password.html'
+    success_url = reverse_lazy('index:home')
