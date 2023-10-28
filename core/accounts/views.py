@@ -1,6 +1,6 @@
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
-from django.views.generic import ListView
+from django.views.generic import ListView, UpdateView, DetailView
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from .models import User
@@ -31,3 +31,14 @@ class CreateUser(CreateView):
     form_class = UserCreationForm
     template_name = 'registration/signup.html'
     success_url = reverse_lazy('index:home')
+
+
+class UserUpdate(UpdateView):
+    model = User
+    fields = ('first_name','last_name','image')
+    template_name = 'registration/update.html'
+    success_url = reverse_lazy('accounts:users')
+
+class UserDatail(DetailView):
+    model = User
+    template_name = 'registration/detail.html'
