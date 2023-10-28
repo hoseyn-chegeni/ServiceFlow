@@ -6,13 +6,14 @@
     <title>Document</title>
 </head>
 <body>
+    <button><a href="{%url 'team:create'%}"> Create New Team</a></button>
     <form action="" method="get">
         {%csrf_token%}
         {{filter.form.as_p}}
         <input type="submit">
     </form>
     {%for i in team%}
-    {{i.name}},,{{i.leader}},<br>
+    {{i.name}},,{{i.leader}},<a href="{%url 'team:detail' i.id%}"> Detail</a>,<a href="{%url 'team:update' i.id %}">Update</a>,<a href="{%url 'team:delete' i.id %}">Delete</a><br>
     {%endfor%}
 </body>
 </html>

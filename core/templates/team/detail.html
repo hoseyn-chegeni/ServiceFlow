@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {{object.team}}<br>
+    {{object.name}}<br>
+    {{object.description}}<br>
+    Members: <br/>{% for user in object.members.all %}{{ user }},{% endfor %}
+    {{object.leader}}<br>
+    {{object.responsibilities}}<br>
+    is_active: {{object.is_active}}<br>
+    {{object.budget}}<br>
+    {{object.created_by}}<br>
+</body>
+</html>
