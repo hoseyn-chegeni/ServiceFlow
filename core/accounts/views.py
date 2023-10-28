@@ -1,6 +1,6 @@
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
-from django.views.generic import ListView, UpdateView, DetailView
+from django.views.generic import ListView, UpdateView, DetailView, DeleteView
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from .models import User
@@ -39,6 +39,11 @@ class UserUpdate(UpdateView):
     template_name = 'registration/update.html'
     success_url = reverse_lazy('accounts:users')
 
-class UserDatail(DetailView):
+class UserDetail(DetailView):
     model = User
     template_name = 'registration/detail.html'
+
+class UserDelete(DeleteView):
+    model = User
+    template_name = 'registration/delete.html'
+    success_url = reverse_lazy('accounts:users')
