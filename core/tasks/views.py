@@ -3,7 +3,7 @@ from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render
 from django_filters.views import FilterView
-from django.views.generic import ListView, CreateView, DetailView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from .filters import TaskFilter
 from .models import Task
 from  .forms import CreateTaskForm
@@ -48,3 +48,15 @@ class CreateTaskView(CreateView):
 class TaskDetailView(DetailView):
     model = Task
     template_name = 'tasks/detail.html'
+
+
+class TaskUpdate(UpdateView):
+    model = Task
+    fields = ('title', 'description', 'type','status','assign_to')
+    template_name = 'tasks/update.html'
+    success_url = reverse_lazy('tasks:task_list')
+
+class TaskDelete(DeleteView):
+    model = Task
+    template_name = 'tasks/delete.html'
+    success_url = reverse_lazy('tasks:task_list')

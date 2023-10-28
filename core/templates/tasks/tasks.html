@@ -13,6 +13,6 @@
     </form>
 
     {% for obj in filter.qs %}
-   <a href="{%url 'tasks:detail' obj.id %}">{{ obj.task }}</a>:       {{ obj.title }} <br/>
+        {{ obj.task }}:{{ obj.title }}    <a href="{%url 'tasks:detail' obj.id %}">Detail</a> <a href="{%url 'tasks:update' obj.id %}">Update</a> <a href="{%url 'tasks:delete' obj.id %}">Delete</a>,<br/>
     {% endfor %}
 </body>
