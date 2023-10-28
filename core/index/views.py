@@ -7,14 +7,17 @@ from tasks.models import Task
 from notes.models import Note
 from meetings.models import Meetings
 
+
 # Create your views here.
 class IndexView(TemplateView):
-    template_name = 'index.html'
+    template_name = "index.html"
+
     def get_context_data(self, **kwargs: Any):
         context = super().get_context_data(**kwargs)
-        context['users'] = User.objects.all().count()
-        context['tasks'] = Task.objects.all().count()
-        context['notes'] = Note.objects.filter(is_public = True).count()
-        context['meetings'] = Meetings.objects.filter(attendees = self.request.user).count()
+        context["users"] = User.objects.all().count()
+        context["tasks"] = Task.objects.all().count()
+        context["notes"] = Note.objects.filter(is_public=True).count()
+        context["meetings"] = Meetings.objects.filter(
+            attendees=self.request.user
+        ).count()
         return context
-    

@@ -7,7 +7,6 @@ import team.models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -16,19 +15,49 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Team',
+            name="Team",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('team', models.CharField(default=team.models.generate_pk, editable=False, max_length=255, unique=True)),
-                ('name', models.CharField(max_length=255)),
-                ('description', models.TextField()),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('responsibilities', models.TextField(blank=True, null=True)),
-                ('is_active', models.BooleanField(default=True)),
-                ('budget', models.IntegerField()),
-                ('leader', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='leader', to=settings.AUTH_USER_MODEL)),
-                ('members', models.ManyToManyField(related_name='members', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "team",
+                    models.CharField(
+                        default=team.models.generate_pk,
+                        editable=False,
+                        max_length=255,
+                        unique=True,
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
+                ("description", models.TextField()),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("responsibilities", models.TextField(blank=True, null=True)),
+                ("is_active", models.BooleanField(default=True)),
+                ("budget", models.IntegerField()),
+                (
+                    "leader",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="leader",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "members",
+                    models.ManyToManyField(
+                        related_name="members", to=settings.AUTH_USER_MODEL
+                    ),
+                ),
             ],
         ),
     ]

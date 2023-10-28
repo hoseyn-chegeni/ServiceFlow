@@ -7,7 +7,6 @@ import reminders.models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -16,20 +15,51 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Reminder',
+            name="Reminder",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('reminder', models.CharField(default=reminders.models.generate_pk, editable=False, max_length=255, unique=True, verbose_name='Reminder ID')),
-                ('title', models.CharField(max_length=255)),
-                ('description', models.TextField()),
-                ('date', models.DateField()),
-                ('time', models.TimeField()),
-                ('assign_to_me', models.BooleanField(default=False)),
-                ('is_completed', models.BooleanField(default=False)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('assign_to', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='Assign_to', to=settings.AUTH_USER_MODEL)),
-                ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='created_by', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "reminder",
+                    models.CharField(
+                        default=reminders.models.generate_pk,
+                        editable=False,
+                        max_length=255,
+                        unique=True,
+                        verbose_name="Reminder ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=255)),
+                ("description", models.TextField()),
+                ("date", models.DateField()),
+                ("time", models.TimeField()),
+                ("assign_to_me", models.BooleanField(default=False)),
+                ("is_completed", models.BooleanField(default=False)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "assign_to",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="Assign_to",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "created_by",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="created_by",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

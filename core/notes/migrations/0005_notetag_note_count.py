@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('notes', '0004_remove_notetag_note_count'),
+        ("notes", "0004_remove_notetag_note_count"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='notetag',
-            name='note_count',
+            model_name="notetag",
+            name="note_count",
             field=models.PositiveIntegerField(default=0),
         ),
     ]

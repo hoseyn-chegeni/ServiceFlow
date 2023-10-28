@@ -2,3 +2,4 @@ django
 django-filter
 mysqlclient
 Pillow
+black

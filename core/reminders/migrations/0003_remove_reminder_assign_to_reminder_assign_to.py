@@ -5,20 +5,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('reminders', '0002_remove_reminder_assign_to_me'),
+        ("reminders", "0002_remove_reminder_assign_to_me"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='reminder',
-            name='assign_to',
+            model_name="reminder",
+            name="assign_to",
         ),
         migrations.AddField(
-            model_name='reminder',
-            name='assign_to',
+            model_name="reminder",
+            name="assign_to",
             field=models.ManyToManyField(to=settings.AUTH_USER_MODEL),
         ),
     ]
