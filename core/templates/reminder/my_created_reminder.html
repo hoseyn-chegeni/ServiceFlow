@@ -6,8 +6,9 @@
     <title>My Created Reminders</title>
 </head>
 <body>
+    <button><a href="{%url 'reminders:create'%}"> Create New reminder</a></button><br>
     {%for i in reminders%}
-    {{i.title}},{{i.reminder}} <br>
+    {{i.title}},{{i.reminder}},<a href="{%url 'reminders:detail' i.id %}"> Detail</a>,<a href="{%url 'reminders:update' i.id %}">Update</a>,<a href="{%url 'reminders:delete' i.id %}">Delete</a> <br>
     {%endfor%}
 </body>
 </html>

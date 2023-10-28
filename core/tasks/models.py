@@ -5,8 +5,11 @@ from accounts.models import User
 
 
 def generate_pk():
-    number = (Task.objects.all().count()) + 1
-    return f"TSK-{number}"
+    if Task.objects.last() is not None:
+        number = (Task.objects.last().id) + 1
+        return f"TASK-{number}"
+    else:
+        return f"TASK-1"
 
 
 class Task(models.Model):

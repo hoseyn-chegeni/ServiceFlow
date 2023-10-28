@@ -4,8 +4,11 @@ from accounts.models import User
 
 # Create your models here.
 def generate_pk():
-    number = (Reminder.objects.all().count()) + 1
-    return f"REMINDER-{number}"
+    if Reminder.objects.last() is not None:
+        number = (Reminder.objects.last().id) + 1
+        return f"REMINDER-{number}"
+    else:
+        return f"REMINDER-1"
 
 
 class Reminder(models.Model):

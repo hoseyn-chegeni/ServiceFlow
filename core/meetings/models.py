@@ -4,8 +4,11 @@ from accounts.models import User
 
 # Create your models here.
 def generate_pk():
-    number = (Meetings.objects.all().count()) + 1
-    return f"MEET-{number}"
+    if Meetings.objects.last() is not None:
+        number = (Meetings.objects.last().id) + 1
+        return f"MEETING-{number}"
+    else:
+        return f"MEETING-1"
 
 
 class Meetings(models.Model):

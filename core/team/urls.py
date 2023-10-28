@@ -1,5 +1,11 @@
 from django.urls import path
-from .views import TeamView,TeamCreateView,TeamDeleteView,TeamUpdateView,TeamDetailView
+from .views import (
+    TeamView,
+    TeamCreateView,
+    TeamDeleteView,
+    TeamUpdateView,
+    TeamDetailView,
+)
 
 app_name = "team"
 

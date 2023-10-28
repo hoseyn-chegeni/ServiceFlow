@@ -4,8 +4,11 @@ from accounts.models import User
 
 # Create your models here.
 def generate_pk():
-    number = (Team.objects.all().count()) + 1
-    return f"TEAM-{number}"
+    if Team.objects.last() is not None:
+        number = (Team.objects.last().id) + 1
+        return f"TEAM-{number}"
+    else:
+        return f"TEAM-1"
 
 
 class Team(models.Model):
@@ -26,7 +29,9 @@ class Team(models.Model):
     # permissions
     # projects
     budget = models.IntegerField()
-    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
+    created_by = models.ForeignKey(
+        User, on_delete=models.SET_NULL, blank=True, null=True
+    )
 
     def __str__(self):
         return f"{self.team}/ {self.name}"

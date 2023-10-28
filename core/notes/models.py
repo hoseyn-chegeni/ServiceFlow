@@ -6,8 +6,11 @@ from django.dispatch import receiver
 
 # Create your models here.
 def generate_pk():
-    number = (Note.objects.all().count()) + 1
-    return f"NOTE-{number}"
+    if Note.objects.last() is not None:
+        number = (Note.objects.last().id) + 1
+        return f"NOTE-{number}"
+    else:
+        return f"NOTE-1"
 
 
 class Note(models.Model):

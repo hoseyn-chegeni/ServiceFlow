@@ -62,18 +62,21 @@ class CreatePublicNote(CreateView):
         form.instance.author = self.request.user
         form.instance.is_public = True
         return super().form_valid(form)
-    
+
 
 class NoteDetailView(DetailView):
     model = Note
-    template_name =  "notes/detail.html"
+    template_name = "notes/detail.html"
+
+
 class NoteUpdateView(UpdateView):
     model = Note
-    template_name =  "notes/update.html"
-    success_url = reverse_lazy('notes:my_notes')
-    fields = ('title','content','is_archive','is_public','tags')
+    template_name = "notes/update.html"
+    success_url = reverse_lazy("notes:my_notes")
+    fields = ("title", "content", "is_archive", "is_public", "tags")
+
 
 class NoteDeleteView(DeleteView):
     model = Note
-    template_name =  "notes/update.html"
-    success_url = reverse_lazy('notes:my_notes')
+    template_name = "notes/update.html"
+    success_url = reverse_lazy("notes:my_notes")

@@ -1,8 +1,16 @@
 from typing import Any
 from django.db.models.query import QuerySet
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.urls import reverse_lazy
+from django.views.generic import (
+    ListView,
+    DeleteView,
+    DetailView,
+    CreateView,
+    UpdateView,
+)
 from .models import Reminder
+from .forms import ReminderCreateForm
 
 # Create your views here.
 
@@ -25,3 +33,32 @@ class AssignedReminder(ListView):
     def get_queryset(self):
         user = self.request.user
         return Reminder.objects.filter(assign_to=user)
+
+
+class ReminderDetailView(DetailView):
+    model = Reminder
+    template_name = "reminder/detail.html"
+
+
+class ReminderUpdateView(UpdateView):
+    model = Reminder
+    template_name = "reminder/update.html"
+    fields = ("title", "description", "date", "time", "assign_to", "is_completed")
+    success_url = reverse_lazy("reminders:my_created_reminders")
+
+
+class ReminderCreateView(CreateView):
+    model = Reminder
+    template_name = "reminder/create.html"
+    form_class = ReminderCreateForm
+    success_url = reverse_lazy("reminders:my_created_reminders")
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
+
+class ReminderDeleteView(DeleteView):
+    model = Reminder
+    template_name = "reminder/delete.html"
+    success_url = reverse_lazy("reminders:my_created_reminders")

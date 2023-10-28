@@ -7,7 +7,7 @@ from .views import (
     CreateNote,
     NoteUpdateView,
     NoteDetailView,
-    NoteDeleteView
+    NoteDeleteView,
 )
 
 app_name = "notes"
