@@ -12,7 +12,7 @@
     <input type="submit">
 </form>
     {%for i in notes%}
-    {{i.notes}},,{{i.title}},{{i.author}} <br>
+    {{i.notes}},,{{i.title}},{{i.author}}   <a href="{%url 'notes:detail' i.id %}">Detail</a>,<br>
     {%endfor%}
 </body>
 </html>

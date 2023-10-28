@@ -1,7 +1,7 @@
 from typing import Any
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 from .models import Note
 from django_filters.views import FilterView
 from .filters import NoteFilter, PublicNoteFilter
@@ -62,3 +62,18 @@ class CreatePublicNote(CreateView):
         form.instance.author = self.request.user
         form.instance.is_public = True
         return super().form_valid(form)
+    
+
+class NoteDetailView(DetailView):
+    model = Note
+    template_name =  "notes/detail.html"
+class NoteUpdateView(UpdateView):
+    model = Note
+    template_name =  "notes/update.html"
+    success_url = reverse_lazy('notes:my_notes')
+    fields = ('title','content','is_archive','is_public','tags')
+
+class NoteDeleteView(DeleteView):
+    model = Note
+    template_name =  "notes/update.html"
+    success_url = reverse_lazy('notes:my_notes')

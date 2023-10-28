@@ -49,6 +49,7 @@ class CreateMeetingsView(CreateView):
 class DeleteMeetings(DeleteView):
     model = Meetings
     success_url = reverse_lazy("index:home")
+    template_name = "meetings/delete.html"
 
 
 class UpdatedMeetings(UpdateView):
