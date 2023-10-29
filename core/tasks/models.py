@@ -39,6 +39,7 @@ class Task(models.Model):
 
 class TaskType(models.Model):
     name = models.CharField(max_length=255)
+    assigned_to = models.ForeignKey('team.Team', on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
         return self.name

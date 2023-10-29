@@ -47,7 +47,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     <a href="{%url 'reminders:assigned_reminder'%}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-diamond fa-fw"></i>  Assigned Reminder</a>
     <a href="{%url 'team:team_list'%}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bell fa-fw"></i>  Teams</a>
     <a href="{%url 'meetings:my_created_meetings'%}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>  My Created Meetings</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i>  History</a>
+    <a href="{%url 'tasks:my_team'%}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i>  Tasks assigned to my team</a>
     <a href="{%url 'accounts:logout'%}"  class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Logout</a><br><br>
   </div>
 </nav>

@@ -1,3 +1,4 @@
+from typing import Any
 from django.db.models.query import QuerySet
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
@@ -72,3 +73,13 @@ class TaskDelete(DeleteView):
     model = Task
     template_name = "tasks/delete.html"
     success_url = reverse_lazy("tasks:task_list")
+
+
+class MyTeamTasks(ListView):
+    model = Task
+    template_name = 'tasks/my_team_tasks.html'
+    context_object_name = 'tasks'
+
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        return qs.filter(type__assigned_to=self.request.user.member_of)
