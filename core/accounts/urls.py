@@ -7,7 +7,7 @@ from .views import (
     UserUpdate,
     UserDetail,
     UserDelete,
-    UserPasswordChangeView
+    UserPasswordChangeView,
 )
 
 app_name = "accounts"

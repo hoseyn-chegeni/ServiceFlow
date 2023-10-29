@@ -52,5 +52,5 @@ class UserDelete(DeleteView):
 
 
 class UserPasswordChangeView(PasswordChangeView):
-    template_name = 'registration/change_password.html'
-    success_url = reverse_lazy('index:home')
+    template_name = "registration/change_password.html"
+    success_url = reverse_lazy("index:home")

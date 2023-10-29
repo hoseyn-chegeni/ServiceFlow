@@ -17,7 +17,6 @@ class Team(models.Model):
     )
     name = models.CharField(max_length=255)
     description = models.TextField()
-    members = models.ManyToManyField(User, related_name="members")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     leader = models.ForeignKey(

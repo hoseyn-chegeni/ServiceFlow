@@ -8,7 +8,6 @@ class TeamCreteForm(forms.ModelForm):
         fields = (
             "name",
             "description",
-            "members",
             "leader",
             "responsibilities",
             "is_active",

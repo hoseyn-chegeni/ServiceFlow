@@ -31,7 +31,6 @@ class TeamUpdateView(UpdateView):
     fields = (
         "name",
         "description",
-        "members",
         "leader",
         "responsibilities",
         "is_active",
