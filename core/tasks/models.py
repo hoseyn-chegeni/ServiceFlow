@@ -30,7 +30,7 @@ class Task(models.Model):
         "TaskStatus", on_delete=models.SET_NULL, blank=True, null=True
     )
     assign_to = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="Assigner"
+        User, on_delete=models.SET_NULL,blank=True, null=True ,related_name="Assigner"
     )
 
     def __str__(self):

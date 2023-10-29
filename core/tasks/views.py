@@ -64,7 +64,7 @@ class TaskDetailView(DetailView):
 
 class TaskUpdate(UpdateView):
     model = Task
-    fields = ("title", "description", "type", "status", "assign_to")
+    fields = ("title", "description", "type", "status")
     template_name = "tasks/update.html"
     success_url = reverse_lazy("tasks:task_list")
 
@@ -83,3 +83,14 @@ class MyTeamTasks(ListView):
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(type__assigned_to=self.request.user.member_of)
+    
+class TaskAssignToMe(UpdateView):
+    template_name = 'tasks/assign_to_me.html'
+    success_url = reverse_lazy("tasks:my_team")
+    model = Task
+    fields = ("assign_to",)
+    def form_valid(self, form):
+        form.instance.assign_to = self.request.user
+        return super().form_valid(form)
+
+

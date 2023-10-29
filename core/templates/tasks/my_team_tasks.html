@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>{{user.member_of}}</title>
 </head>
 <body>
-    {%for i in tasks%}
-            {{i.task}}/////{{i.creator}}////{{i.title}} <br>
+    {%for obj in tasks%}
+    {{ obj.task }}:{{ obj.title }}    <a href="{%url 'tasks:detail' obj.id %}">Detail</a> <a href="{%url 'tasks:update' obj.id %}">Update</a> <a href="{%url 'tasks:delete' obj.id %}">Delete</a>, <a href="{%url 'tasks:assign_to_me' obj.id%}">Assign to me</a><br/>
     {%endfor%}
 </body>
 </html>

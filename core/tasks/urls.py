@@ -7,7 +7,8 @@ from .views import (
     TaskDetailView,
     TaskDelete,
     TaskUpdate,
-    MyTeamTasks
+    MyTeamTasks,
+    TaskAssignToMe
 )
 
 app_name = "tasks"
@@ -21,4 +22,5 @@ urlpatterns = [
     path("delete/<int:pk>", TaskDelete.as_view(), name="delete"),
     path("update/<int:pk>", TaskUpdate.as_view(), name="update"),
     path("tasks_assigned_to_my_team/", MyTeamTasks.as_view(), name="my_team"),
+    path("assign_to_me/<int:pk>/", TaskAssignToMe.as_view(), name="assign_to_me"),
 ]
