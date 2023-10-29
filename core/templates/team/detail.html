@@ -9,7 +9,7 @@
     {{object.team}}<br>
     {{object.name}}<br>
     {{object.description}}<br>
-    Members: <br/>{% for user in object.members.all %}{{ user }},{% endfor %}
+    Members: <br/>{% for user in users %}{{ user }},{% endfor %}<br>
     {{object.leader}}<br>
     {{object.responsibilities}}<br>
     is_active: {{object.is_active}}<br>

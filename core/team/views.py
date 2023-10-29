@@ -1,3 +1,5 @@
+from typing import Any
+from django.db import models
 from django.shortcuts import render
 from .filters import TeamFilter
 from django_filters.views import FilterView
@@ -5,6 +7,7 @@ from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
 from .models import Team
 from .forms import TeamCreteForm
 from django.urls import reverse_lazy
+from accounts.models import User
 
 # Create your views here.
 
@@ -15,14 +18,17 @@ class TeamView(FilterView):
     context_object_name = "team"
     template_name = "team/team.html"
 
-    def get_queryset(self, **kwargs):
-        qs = super().get_queryset(**kwargs)
-        return qs.filter(is_active=True)
 
 
 class TeamDetailView(DetailView):
     model = Team
     template_name = "team/detail.html"
+    context_object_name = 'team'
+    def get_context_data(self, **kwargs: Any):
+        context = super().get_context_data(**kwargs)
+        context['users'] = self.object.member.all()
+        return context
+
 
 
 class TeamUpdateView(UpdateView):
