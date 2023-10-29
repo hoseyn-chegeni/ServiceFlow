@@ -1,8 +1,3 @@
-from typing import Any
-from django.db.models.query import QuerySet
-from django.forms.models import BaseModelForm
-from django.http import HttpResponse
-from django.shortcuts import render
 from django_filters.views import FilterView
 from django.views.generic import (
     ListView,
@@ -77,20 +72,20 @@ class TaskDelete(DeleteView):
 
 class MyTeamTasks(ListView):
     model = Task
-    template_name = 'tasks/my_team_tasks.html'
-    context_object_name = 'tasks'
+    template_name = "tasks/my_team_tasks.html"
+    context_object_name = "tasks"
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(type__assigned_to=self.request.user.member_of)
-    
+
+
 class TaskAssignToMe(UpdateView):
-    template_name = 'tasks/assign_to_me.html'
+    template_name = "tasks/assign_to_me.html"
     success_url = reverse_lazy("tasks:my_team")
     model = Task
     fields = ("assign_to",)
+
     def form_valid(self, form):
         form.instance.assign_to = self.request.user
         return super().form_valid(form)
-
-

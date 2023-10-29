@@ -30,7 +30,7 @@ class Task(models.Model):
         "TaskStatus", on_delete=models.SET_NULL, blank=True, null=True
     )
     assign_to = models.ForeignKey(
-        User, on_delete=models.SET_NULL,blank=True, null=True ,related_name="Assigner"
+        User, on_delete=models.SET_NULL, blank=True, null=True, related_name="Assigner"
     )
 
     def __str__(self):
@@ -39,7 +39,9 @@ class Task(models.Model):
 
 class TaskType(models.Model):
     name = models.CharField(max_length=255)
-    assigned_to = models.ForeignKey('team.Team', on_delete=models.SET_NULL, blank=True, null=True)
+    assigned_to = models.ForeignKey(
+        "team.Team", on_delete=models.SET_NULL, blank=True, null=True
+    )
 
     def __str__(self):
         return self.name

@@ -8,7 +8,7 @@ from .views import (
     TaskDelete,
     TaskUpdate,
     MyTeamTasks,
-    TaskAssignToMe
+    TaskAssignToMe,
 )
 
 app_name = "tasks"

@@ -19,16 +19,15 @@ class TeamView(FilterView):
     template_name = "team/team.html"
 
 
-
 class TeamDetailView(DetailView):
     model = Team
     template_name = "team/detail.html"
-    context_object_name = 'team'
+    context_object_name = "team"
+
     def get_context_data(self, **kwargs: Any):
         context = super().get_context_data(**kwargs)
-        context['users'] = self.object.member.all()
+        context["users"] = self.object.member.all()
         return context
-
 
 
 class TeamUpdateView(UpdateView):
