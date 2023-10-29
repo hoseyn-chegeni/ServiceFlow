@@ -8,6 +8,7 @@ from .models import Team
 from .forms import TeamCreteForm
 from django.urls import reverse_lazy
 from accounts.models import User
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 # Create your views here.
 
@@ -19,10 +20,11 @@ class TeamView(FilterView):
     template_name = "team/team.html"
 
 
-class TeamDetailView(DetailView):
+class TeamDetailView(PermissionRequiredMixin,DetailView):
     model = Team
     template_name = "team/detail.html"
     context_object_name = "team"
+    permission_required = 'team.Can_view_team'
 
     def get_context_data(self, **kwargs: Any):
         context = super().get_context_data(**kwargs)
