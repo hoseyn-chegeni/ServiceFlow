@@ -4,7 +4,7 @@ from django.views.generic import ListView, UpdateView, DetailView, DeleteView
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from .models import User
-from .forms import UserCreationForm
+from .forms import CustomUserCreationForm
 
 # Create your views here.
 
@@ -28,7 +28,7 @@ class UserLogout(LogoutView):
 
 class CreateUser(CreateView):
     model = User
-    form_class = UserCreationForm
+    form_class = CustomUserCreationForm
     template_name = "registration/signup.html"
     success_url = reverse_lazy("index:home")
 
