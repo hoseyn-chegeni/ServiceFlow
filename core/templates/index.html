@@ -9,9 +9,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif};
-a [href="{%url 'team:team_list'%}"] {
+  [href="{%url 'team:team_list'%}"] {
   display: none;
-}
+  }
 </style>
 </head>
 <body class="w3-light-grey">
@@ -45,10 +45,12 @@ a [href="{%url 'team:team_list'%}"] {
     <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
     <a href="{%url 'tasks:myTask_list'%}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  My Tasks</a>
     <a href="{%url 'tasks:myCreatedTask_list' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  My Created Task</a>
+    {%if has_notes_permission %}
     <a href="{%url 'notes:my_notes' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  My Notes</a>
+    {%endif%}
     <a href="{%url 'reminders:my_created_reminders'%}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bullseye fa-fw"></i>  My Created Reminders</a>
     <a href="{%url 'reminders:assigned_reminder'%}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-diamond fa-fw"></i>  Assigned Reminder</a>
-    {%if has_permission %}
+    {%if has_team_permission %}
     <a href="{%url 'team:team_list'%}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bell fa-fw"></i>  Teams</a>
     {%endif%}
     <a href="{%url 'meetings:my_created_meetings'%}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>  My Created Meetings</a>
