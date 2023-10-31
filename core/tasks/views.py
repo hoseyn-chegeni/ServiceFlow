@@ -1,3 +1,4 @@
+from typing import Any
 from django_filters.views import FilterView
 from django.views.generic import (
     ListView,
@@ -22,18 +23,21 @@ class TaskView(FilterView):
     template_name = "tasks/tasks.html"
 
 
+
 class MyTaskView(ListView):
-    template_name = "tasks/myCreatedTask.html"
+
     model = Task
     context_object_name = "tasks"
-
+    template_name = "tasks/myTask.html"
+    
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(assign_to_id=self.request.user.id)
+    
 
 
 class MyCreatedTaskView(ListView):
-    template_name = "tasks/myTask.html"
+    template_name = "tasks/myCreatedTask.html"
     model = Task
     context_object_name = "tasks"
 
