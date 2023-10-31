@@ -11,6 +11,7 @@ from .filters import TaskFilter
 from .models import Task
 from .forms import CreateTaskForm
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 # Create your views here.
 
@@ -46,32 +47,35 @@ class MyCreatedTaskView(ListView):
         return qs.filter(creator_id=self.request.user.id)
 
 
-class CreateTaskView(CreateView):
+class CreateTaskView(PermissionRequiredMixin,CreateView):
     template_name = "tasks/create_task.html"
     form_class = CreateTaskForm
     success_url = reverse_lazy("index:home")
+    permission_required = 'tasks.add_task'
 
     def form_valid(self, form):
         form.instance.creator = self.request.user
         return super().form_valid(form)
 
 
-class TaskDetailView(DetailView):
+class TaskDetailView(PermissionRequiredMixin,DetailView):
     model = Task
     template_name = "tasks/detail.html"
+    permission_required = 'tasks.view_task'
 
 
-class TaskUpdate(UpdateView):
+class TaskUpdate(PermissionRequiredMixin,UpdateView):
     model = Task
     fields = ("title", "description", "type", "status")
     template_name = "tasks/update.html"
     success_url = reverse_lazy("tasks:task_list")
+    permission_required = 'tasks.change_task'
 
-
-class TaskDelete(DeleteView):
+class TaskDelete(PermissionRequiredMixin,DeleteView):
     model = Task
     template_name = "tasks/delete.html"
     success_url = reverse_lazy("tasks:task_list")
+    permission_required = 'tasks.delete_task'
 
 
 class MyTeamTasks(ListView):
