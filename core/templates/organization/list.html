@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button><a href="{%url 'organization:create'%}"> Create New Organization</a></button>
+    <form action="" method="get">
+        {%csrf_token%}
+        {{filter.form.as_p}}
+        <input type="submit">
+    </form>
+    {%for i in orgs%}
+    {{i.id}}:{{i.org}},,{{i.name}},<a href="{%url 'organization:detail' i.id%}"> Detail</a>,<a href="{%url 'organization:update' i.id %}">Update</a>,<a href="{%url 'organization:delete' i.id %}">Delete</a><br>
+    {%endfor%}
+</body>
+</html>

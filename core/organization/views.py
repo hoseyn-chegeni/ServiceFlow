@@ -14,7 +14,7 @@ from .forms import OrganizationCreateForm
 class OrganizationListView(PermissionRequiredMixin, FilterView):
     model = Organization
     filterset_class = OrganizationFilters
-    context_object_name = "org"
+    context_object_name = "orgs"
     template_name = "organization/list.html"
     permission_required = "organization.view_organization"
 
@@ -22,7 +22,6 @@ class OrganizationListView(PermissionRequiredMixin, FilterView):
 class OrganizationDetailView(PermissionRequiredMixin, DetailView):
     model = Organization
     template_name = "organization/detail.html"
-    context_object_name = "org"
     permission_required = "organization.view_organization"
 
 
@@ -31,13 +30,14 @@ class OrganizationCreateView(PermissionRequiredMixin, CreateView):
     template_name = "organization/create.html"
     form_class = OrganizationCreateForm
     success_url = reverse_lazy("organization:list")
+    permission_required = "organization.add_organization"
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         return super().form_valid(form)
 
 
-class OrganizationUpdateView:
+class OrganizationUpdateView(PermissionRequiredMixin, UpdateView):
     model = Organization
     template_name = "organization/update.html"
     fields = (
@@ -58,9 +58,11 @@ class OrganizationUpdateView:
         "logo",
     )
     success_url = reverse_lazy("organization:list")
+    permission_required = "organization.change_organization"
 
 
-class OrganizationDeleteView:
+class OrganizationDeleteView(PermissionRequiredMixin, DeleteView):
     model = Organization
     template_name = "organization/delete.html"
     success_url = reverse_lazy("organization:list")
+    permission_required = "organization.delete_organization"
