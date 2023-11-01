@@ -17,7 +17,9 @@ class Team(models.Model):
         default=generate_pk, max_length=255, unique=True, editable=False
     )
     name = models.CharField(max_length=255)
-    access_group = models.OneToOneField(Group, on_delete=models.SET_NULL, blank=True,null=True)
+    access_group = models.OneToOneField(
+        Group, on_delete=models.SET_NULL, blank=True, null=True
+    )
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

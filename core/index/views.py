@@ -17,8 +17,8 @@ class IndexView(TemplateView):
         context["users"] = User.objects.all().count()
         context["tasks"] = Task.objects.all().count()
         context["notes"] = Note.objects.filter(is_public=True).count()
-        context["has_team_permission"] = self.request.user.has_perm('team.view_team')
-        context["has_notes_permission"] = self.request.user.has_perm('notes.view_note')
+        context["has_team_permission"] = self.request.user.has_perm("team.view_team")
+        context["has_notes_permission"] = self.request.user.has_perm("notes.view_note")
         context["meetings"] = Meetings.objects.filter(
             attendees=self.request.user
         ).count()

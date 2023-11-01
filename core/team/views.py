@@ -20,11 +20,11 @@ class TeamView(FilterView):
     template_name = "team/team.html"
 
 
-class TeamDetailView(PermissionRequiredMixin,DetailView):
+class TeamDetailView(PermissionRequiredMixin, DetailView):
     model = Team
     template_name = "team/detail.html"
     context_object_name = "team"
-    permission_required = 'team.Can_view_team'
+    permission_required = "team.Can_view_team"
 
     def get_context_data(self, **kwargs: Any):
         context = super().get_context_data(**kwargs)

@@ -29,6 +29,7 @@ urlpatterns = (
         path("reminders/", include("reminders.urls")),
         path("team/", include("team.urls")),
         path("meetings/", include("meetings.urls")),
+        path("organization/", include("organization.urls")),
     ]
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -24,17 +24,14 @@ class TaskView(FilterView):
     template_name = "tasks/tasks.html"
 
 
-
 class MyTaskView(ListView):
-
     model = Task
     context_object_name = "tasks"
     template_name = "tasks/myTask.html"
-    
+
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(assign_to_id=self.request.user.id)
-    
 
 
 class MyCreatedTaskView(ListView):
@@ -47,35 +44,36 @@ class MyCreatedTaskView(ListView):
         return qs.filter(creator_id=self.request.user.id)
 
 
-class CreateTaskView(PermissionRequiredMixin,CreateView):
+class CreateTaskView(PermissionRequiredMixin, CreateView):
     template_name = "tasks/create_task.html"
     form_class = CreateTaskForm
     success_url = reverse_lazy("index:home")
-    permission_required = 'tasks.add_task'
+    permission_required = "tasks.add_task"
 
     def form_valid(self, form):
         form.instance.creator = self.request.user
         return super().form_valid(form)
 
 
-class TaskDetailView(PermissionRequiredMixin,DetailView):
+class TaskDetailView(PermissionRequiredMixin, DetailView):
     model = Task
     template_name = "tasks/detail.html"
-    permission_required = 'tasks.view_task'
+    permission_required = "tasks.view_task"
 
 
-class TaskUpdate(PermissionRequiredMixin,UpdateView):
+class TaskUpdate(PermissionRequiredMixin, UpdateView):
     model = Task
     fields = ("title", "description", "type", "status")
     template_name = "tasks/update.html"
     success_url = reverse_lazy("tasks:task_list")
-    permission_required = 'tasks.change_task'
+    permission_required = "tasks.change_task"
 
-class TaskDelete(PermissionRequiredMixin,DeleteView):
+
+class TaskDelete(PermissionRequiredMixin, DeleteView):
     model = Task
     template_name = "tasks/delete.html"
     success_url = reverse_lazy("tasks:task_list")
-    permission_required = 'tasks.delete_task'
+    permission_required = "tasks.delete_task"
 
 
 class MyTeamTasks(ListView):

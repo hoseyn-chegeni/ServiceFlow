@@ -18,7 +18,7 @@ class User(AbstractUser):
         related_name="member",
     )
     image = models.ImageField(
-        upload_to="profile_image", default="profile_image/default.jpeg"
+        upload_to="images", default="profile_image/default.jpeg"
     )
 
     USERNAME_FIELD = "email"
