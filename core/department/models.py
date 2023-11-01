@@ -21,7 +21,7 @@ class Department(models.Model):
     )
     active_status = models.BooleanField(default=True)
     organization = models.ForeignKey(
-        "organization.Organization", on_delete=models.SET_NULL, blank=True, null=True
+        "organization.Organization", on_delete=models.SET_NULL, blank=True, null=True,related_name='department'
     )
 
     def __str__(self):
