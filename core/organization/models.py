@@ -47,7 +47,7 @@ class Organization(models.Model):
     )
     registration_number = models.CharField(max_length=50)
     registration_date = models.DateField()
-    logo = models.ImageField(upload_to="image", blank=True, null=True)
+    logo = models.ImageField(upload_to="images", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(

@@ -1,11 +1,11 @@
 from typing import Any
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
-from django.views.generic import ListView
 from accounts.models import User
 from tasks.models import Task
 from notes.models import Note
 from meetings.models import Meetings
+from organization.models import Organization
 
 
 # Create your views here.
@@ -22,4 +22,8 @@ class IndexView(TemplateView):
         context["meetings"] = Meetings.objects.filter(
             attendees=self.request.user
         ).count()
+        context["organization"] = Organization.objects.all()[:5]
+        context["recent_users"] = User.objects.order_by("-date_joined")[:5]
+        context["recent_tasks"] = Task.objects.order_by("-created_date")[:3]
+
         return context

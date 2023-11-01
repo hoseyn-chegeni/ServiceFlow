@@ -196,78 +196,56 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif};
   </div>
   <hr>
 
+
   <div class="w3-container">
-    <h5>Countries</h5>
-    <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
-      <tr>
-        <td>United States</td>
-        <td>65%</td>
-      </tr>
-      <tr>
-        <td>UK</td>
-        <td>15.7%</td>
-      </tr>
-      <tr>
-        <td>Russia</td>
-        <td>5.6%</td>
-      </tr>
-      <tr>
-        <td>Spain</td>
-        <td>2.1%</td>
-      </tr>
-      <tr>
-        <td>India</td>
-        <td>1.9%</td>
-      </tr>
-      <tr>
-        <td>France</td>
-        <td>1.5%</td>
-      </tr>
-    </table><br>
-    <button class="w3-button w3-dark-grey">More Countries  <i class="fa fa-arrow-right"></i></button>
-  </div>
+    <h5>Top Organization</h5>
+    <div class="w3-row">
+      {%for i in organization%}
+      <div class="w3-col m2 text-center">
+        <img class="w3-circle" src="{{i.logo.url}}" style="width:96px;height:96px">
+      </div>
+      <div class="w3-col m10 w3-container">
+        <h4>{{i.name}} <span class="w3-opacity w3-medium">{{i.registration_date}}</span></h4>
+        <p>{{i.address}}</p><br>
+      </div>
+      {%endfor%}
+    </div>
   <hr>
   <div class="w3-container">
     <h5>Recent Users</h5>
     <ul class="w3-ul w3-card-4 w3-white">
+      {%for i in recent_users%}
       <li class="w3-padding-16">
-        <img src="/w3images/avatar2.png" class="w3-left w3-circle w3-margin-right" style="width:35px">
-        <span class="w3-xlarge">Mike</span><br>
+        <img src="{{i.image.url}}" class="w3-left w3-circle w3-margin-right" style="width:35px">
+        <span class="w3-xlarge">{{i.email}}</span><br>
       </li>
-      <li class="w3-padding-16">
-        <img src="/w3images/avatar5.png" class="w3-left w3-circle w3-margin-right" style="width:35px">
-        <span class="w3-xlarge">Jill</span><br>
-      </li>
-      <li class="w3-padding-16">
-        <img src="" class="w3-left w3-circle w3-margin-right" style="width:35px">
-        <span class="w3-xlarge">Jane</span><br>
-      </li>
-    </ul>
+      {%endfor%}
+     </ul>
+  </div>
+  <hr>
+  <div class="w3-container">
+    <h5>Recent Tasks</h5>
+    <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
+      <tr>
+        <th>Title</th>
+        <th>Creator</th>
+        <th>Assigned to</th>
+        <th>Type</th>
+      </tr>
+      {%for i in recent_tasks%}
+      <tr>
+        <td>{{i.title}}</td>
+        <td>{{i.creator}}</td>
+        <td>{{i.assign_to}}</td>
+        <td>{{i.type}}</td>
+      </tr>
+      {%endfor%}
+    </table><br>
+    <button class="w3-button w3-dark-grey"><a href="{%url 'tasks:task_list' %}">Explore All Tasks  <i class="fa fa-arrow-right"></i></a></button>
   </div>
   <hr>
 
-  <div class="w3-container">
-    <h5>Recent Comments</h5>
-    <div class="w3-row">
-      <div class="w3-col m2 text-center">
-        <img class="w3-circle" src="/w3images/avatar3.png" style="width:96px;height:96px">
-      </div>
-      <div class="w3-col m10 w3-container">
-        <h4>John <span class="w3-opacity w3-medium">Sep 29, 2014, 9:12 PM</span></h4>
-        <p>Keep up the GREAT work! I am cheering for you!! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><br>
-      </div>
-    </div>
 
-    <div class="w3-row">
-      <div class="w3-col m2 text-center">
-        <img class="w3-circle" src="/w3images/avatar1.png" style="width:96px;height:96px">
-      </div>
-      <div class="w3-col m10 w3-container">
-        <h4>Bo <span class="w3-opacity w3-medium">Sep 28, 2014, 10:15 PM</span></h4>
-        <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><br>
-      </div>
-    </div>
-  </div>
   <br>
   <div class="w3-container w3-dark-grey w3-padding-32">
     <div class="w3-row">
