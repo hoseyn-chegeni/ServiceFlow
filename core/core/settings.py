@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "reminders",
     "team",
     "organization",
+    "department"
 ]
 
 MIDDLEWARE = [

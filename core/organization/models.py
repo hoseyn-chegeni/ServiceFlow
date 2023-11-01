@@ -58,22 +58,5 @@ class Organization(models.Model):
         return self.name
     
 
-
-
-
 def generate_dept_pk():
-    if Department.objects.last() is not None:
-        number = (Department.objects.last().id) + 1
-        return f"DEPT-{number}"
-    else:
-        return f"DEPT-1"
-    
-class Department(models.Model):
-    name = models.CharField(max_length=255)
-    description = models.TextField(blank= True, null=True)
-    manager = models.ForeignKey('accounts.User', on_delete=models.SET_NULL, blank=True, null=True)
-    active_status = models.BooleanField(default=True)
-    organization = models.ForeignKey('organization.Organization', on_delete=models.SET_NULL, blank=True,null=True)
-
-    def __str__(self):
-        return self.name
+    pass

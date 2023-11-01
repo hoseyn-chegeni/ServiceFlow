@@ -4,4 +4,3 @@ from .models import Organization
 # Register your models here.
 
 admin.site.register(Organization)
-# admin.site.register(Department)
