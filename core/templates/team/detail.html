@@ -9,11 +9,12 @@
     {{object.team}}<br>
     {{object.name}}<br>
     {{object.description}}<br>
-    Members: <br/>{% for user in users %}{{ user }},{% endfor %}<br>
     {{object.leader}}<br>
     {{object.responsibilities}}<br>
     is_active: {{object.is_active}}<br>
     {{object.budget}}<br>
     {{object.created_by}}<br>
+
+    Members: <br/>{% for user in users %}<a href="{% url 'accounts:detail' user.id %}">{{ user }}</a>,{% endfor %}<br>
 </body>
 </html>

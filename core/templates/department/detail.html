@@ -12,5 +12,6 @@
     {{object.manager}}<br>
     {{object.active_status}}<br>
     {{object.organization}}<br>
+    Team: {% for t in team %}<a href="{%url 'team:detail' t.id%}">{{t}}</a>,{% endfor %}<br>
 </body>
 </html>

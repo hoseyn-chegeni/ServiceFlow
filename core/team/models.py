@@ -41,7 +41,7 @@ class Team(models.Model):
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
-        related_name="department",
+        related_name="team",
     )
 
     def __str__(self):

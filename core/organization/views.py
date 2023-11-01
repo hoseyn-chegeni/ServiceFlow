@@ -26,7 +26,7 @@ class OrganizationDetailView(PermissionRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs: Any):
         context = super().get_context_data(**kwargs)
-        
+
         context["department"] = self.object.department.all()
         return context
 

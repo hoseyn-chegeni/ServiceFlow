@@ -24,6 +24,6 @@
     {{object.registration_date}}<br>
     {{object.logo}}<br>
     {{object.created_by}}<br>
-    Departments: {% for d in department %}{{ d }},{% endfor %}<br>
+    Departments: {% for d in department %}<a href="{%url 'department:detail' d.id%}">{{ d }}</a>,{% endfor %}<br>
 </body>
 </html>

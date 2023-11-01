@@ -21,11 +21,21 @@ class Department(models.Model):
     )
     active_status = models.BooleanField(default=True)
     organization = models.ForeignKey(
-        "organization.Organization", on_delete=models.SET_NULL, blank=True, null=True,related_name='department'
+        "organization.Organization",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="department",
     )
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
-    created_by = models.ForeignKey("accounts.User", on_delete=models.SET_NULL, blank=True, null=True, related_name='creator')
+    created_by = models.ForeignKey(
+        "accounts.User",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="creator",
+    )
 
     def __str__(self):
         return self.name
