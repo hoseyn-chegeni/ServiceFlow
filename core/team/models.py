@@ -36,7 +36,6 @@ class Team(models.Model):
         User, on_delete=models.SET_NULL, blank=True, null=True
     )
 
-    parent_team = models.ForeignKey('self', on_delete=models.SET_NULL,null=True, blank=True, related_name='parent')
-    organization = models.ForeignKey('organization.Organization', on_delete=models.SET_NULL, blank= True, null=True)
+    department = models.ForeignKey('organization.Department', on_delete=models.SET_NULL, blank= True, null=True)
     def __str__(self):
         return self.name
