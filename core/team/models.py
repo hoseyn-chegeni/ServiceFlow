@@ -36,6 +36,13 @@ class Team(models.Model):
         User, on_delete=models.SET_NULL, blank=True, null=True
     )
 
-    department = models.ForeignKey('department.Department', on_delete=models.SET_NULL, blank= True, null=True, related_name='department')
+    department = models.ForeignKey(
+        "department.Department",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="department",
+    )
+
     def __str__(self):
         return self.name

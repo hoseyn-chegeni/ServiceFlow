@@ -56,7 +56,7 @@ class Organization(models.Model):
 
     def __str__(self):
         return self.name
-    
+
 
 def generate_dept_pk():
     pass
