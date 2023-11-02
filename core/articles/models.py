@@ -13,11 +13,11 @@ class Article(models.Model):
     art = models.CharField(default=generate_pk, max_length=255, unique=True, editable=False)
     title = models.CharField(max_length=255)
     content = models.TextField()
-    tags = models.ManyToManyField('ArticleTags')
+    tags = models.ManyToManyField('ArticleTags', blank= True)
     author = models.ForeignKey('accounts.User', on_delete=models.CASCADE)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
-    related_articles = models.ManyToManyField('self')
+    related_articles = models.ManyToManyField('self', blank= True)
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
