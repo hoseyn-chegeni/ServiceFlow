@@ -57,8 +57,6 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif};
     <a href="{%url 'tasks:my_team'%}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i>  Tasks assigned to my team</a>
     <a href="{%url 'organization:list'%}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>  Organization</a>
     <a href="{%url 'department:list'%}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>  Department</a>
-    <a href="{%url 'article:list'%}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>  Articles</a>
-    <a href="{%url 'article:my_list'%}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>  My Articles</a>
     <a href="{%url 'accounts:logout'%}"  class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Logout</a><br><br>
   </div>
 </nav>
@@ -268,6 +266,15 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif};
         <p>Countries</p>
         <p>States</p>
         <p>Cites</p>
+      </div><br>
+
+      <br><div class="w3-container w3-third">
+        <h5 class="w3-bottombar w3-border-white">Articles</h5>
+          <a href="{%url 'article:list' %}"> <p>All Articles</p></a>
+          <a href="{%url 'article:my_list' %}"> <p>My Articles</p>
+          <a href="{%url 'article:archive' %}"> <p>My Archive Articles</p>
+          <a href="{%url 'article:create' %}"> <p>Create New Article</p>
+          <a href="{%url 'article:list' %}"> <p>Manage Tags</p>
       </div>
     </div>
   </div>

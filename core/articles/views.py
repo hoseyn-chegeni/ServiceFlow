@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView , CreateView, DeleteView, DetailView
 from django_filters.views import FilterView
-from .models import Article
+from .models import Article, ArticleTags
 from .forms import CreateArticleForms
 from .filters import ArticleFilter
 # Create your views here.
@@ -57,4 +57,22 @@ class DeleteArticleView(DeleteView):
     model = Article
     template_name = 'article/delete.html'
     success_url = reverse_lazy('article:list')
+
+
+
+
+class ListArticleTag(FilterView):
+    model = ArticleTags
+    template_name = 'article/tags/list.html'
+
+    
+class CreateArticleTag(CreateView):
+    model = ArticleTags
+    template_name = 'article/tags/create.html'
+class UpdateArticleTag(UpdateView):
+    model = ArticleTags
+    template_name = 'article/tags/update.html'
+class DeleteArticleTag(DeleteView):
+    model = ArticleTags
+    template_name = 'article/tags/delete.html'
 
