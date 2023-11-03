@@ -1,6 +1,6 @@
 import django_filters
 from django_filters import FilterSet
-from .models import Article
+from .models import Article, ArticleTags
 
 
 class ArticleFilter(FilterSet):
@@ -14,4 +14,15 @@ class ArticleFilter(FilterSet):
             "tags",
             "author",
             "related_articles",
+        ]
+
+
+class ArticleTagFilter(FilterSet):
+    name = django_filters.CharFilter(lookup_expr="icontains")
+
+    class Meta:
+        model = ArticleTags
+        fields = [
+            "id",
+            "name",
         ]

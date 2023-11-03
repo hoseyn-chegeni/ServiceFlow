@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARTICLES</title>
+</head>
+<body>
+    <button><a href="{%url 'article:tag_create'%}"> Create New Tag</a></button>
+    <form action="" method="get">
+        {{filter.form.as_p}}
+        <input type="submit">
+    </form>
+    {%for i in tags%}
+    {{i.id}}:{{i.name}} <a href="{%url 'article:tag_update' i.id %}">Update</a>,<a href="{%url 'article:tag_delete' i.id %}">Delete</a>
+    {%endfor%}
+</body>
+</html>
