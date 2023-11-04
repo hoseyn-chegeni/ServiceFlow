@@ -1,9 +1,8 @@
 from django.urls import path
-from .models import Mail
-from .views import InboxView
+from .views import MailBoxView
 app_name = 'mail'
 
 urlpatterns = [
-    path('inbox/',InboxView.as_view(), name='inbox')
-    
+    path('inbox/',MailBoxView.as_view(), name='inbox'),
+
 ]

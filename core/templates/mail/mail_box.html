@@ -44,17 +44,11 @@ html,body,h1,h2,h3,h4,h5 {font-family: "RobotoDraft", "Roboto", sans-serif}
        class="w3-button w3-red w3-right w3-xxlarge"><i class="fa fa-remove"></i></span>
       <h2>Send Mail</h2>
     </div>
-    <div class="w3-panel">
-      <label>To</label>
-      <input class="w3-input w3-border w3-margin-bottom" type="text">
-      <label>From</label>
-      <input class="w3-input w3-border w3-margin-bottom" type="text">
-      <label>Subject</label>
-      <input class="w3-input w3-border w3-margin-bottom" type="text">
-      <input class="w3-input w3-border w3-margin-bottom" style="height:150px" placeholder="What's on your mind?">
-      <div class="w3-section">
-        <a class="w3-button w3-red" onclick="document.getElementById('id01').style.display='none'">Cancel  <i class="fa fa-remove"></i></a>
-        <a class="w3-button w3-light-grey w3-right" onclick="document.getElementById('id01').style.display='none'">Send  <i class="fa fa-paper-plane"></i></a> 
+    <form method="post" action="">
+        {%csrf_token%}
+        {{form.as_p}}
+        <button type="submit">Send</button>
+    </form>
       </div>    
     </div>
   </div>
