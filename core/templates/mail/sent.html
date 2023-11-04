@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sent</title>
+</head>
+<body>
+    {%for i in sent%}
+    {{i.id}}<br>
+    sender:{{i.sender}} <br>
+    subject: {{i.subject}}<br>
+    -------------------<br>
+    {%endfor%}
+</body>
+</html>

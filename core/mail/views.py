@@ -1,3 +1,4 @@
+from typing import Any
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
@@ -30,5 +31,11 @@ class MailBoxView(CreateView):
         return super().form_valid(form)
 
 
-class SentItemView:
-    pass
+class SentItemView(ListView):
+    model = Mail
+    template_name = 'mail/sent.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['sent'] = Mail.objects.filter(sender = self.request.user)
+        return context
