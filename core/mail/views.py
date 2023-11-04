@@ -8,5 +8,6 @@ class InboxView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
+        context['inbox_counter'] =  Mail.objects.filter(recipient = self.request.user).count()
         context['inbox'] = Mail.objects.filter(recipient = self.request.user)
         return context

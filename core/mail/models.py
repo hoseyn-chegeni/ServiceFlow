@@ -3,8 +3,8 @@ from django.db import models
 
 # Create your models here.
 class Mail(models.Model):
-    sender = models.EmailField()
-    recipient = models.EmailField()
+    sender = models.ForeignKey('accounts.User', on_delete=models.CASCADE,related_name='user_sender')
+    recipient = models.ForeignKey('accounts.User', on_delete=models.CASCADE,related_name='user_recipient')
     subject = models.CharField(
         max_length=255,
     )
