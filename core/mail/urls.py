@@ -1,8 +1,8 @@
 from django.urls import path
 from .views import MailBoxView
-app_name = 'mail'
+
+app_name = "mail"
 
 urlpatterns = [
-    path('inbox/',MailBoxView.as_view(), name='inbox'),
-
+    path("inbox/", MailBoxView.as_view(), name="inbox"),
 ]

@@ -1,26 +1,34 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
-from django.views.generic.edit import CreateView
+from django.views.generic import CreateView, ListView
 from .models import Mail
 
 
 # Create your views here.
-class MailBoxView(CreateView ):
-    template_name = 'mail/mail_box.html'
+class MailBoxView(CreateView):
+    template_name = "mail/mail_box.html"
     model = Mail
-    fields = ['recipient','subject','body',]
-    success_url = reverse_lazy('mail:inbox')
+    fields = [
+        "recipient",
+        "subject",
+        "body",
+    ]
+    success_url = reverse_lazy("mail:inbox")
 
     def get_context_data(self, **kwargs):
-        context =  super().get_context_data(**kwargs)
-        context['inbox_counter'] =  Mail.objects.filter(recipient = self.request.user).count()
-        context['inbox'] = Mail.objects.filter(recipient = self.request.user)
-        context['sent_counter'] =  Mail.objects.filter(sender = self.request.user).count()
-        context['sent'] = Mail.objects.filter(sender = self.request.user)
+        context = super().get_context_data(**kwargs)
+        context["inbox_counter"] = Mail.objects.filter(
+            recipient=self.request.user
+        ).count()
+        context["inbox"] = Mail.objects.filter(recipient=self.request.user)
         return context
-    
+
     def form_valid(self, form):
         form.instance.sender = self.request.user
-        form.instance.folder = 'INBOX'
+        form.instance.folder = "INBOX"
         return super().form_valid(form)
+
+
+class SentItemView:
+    pass
