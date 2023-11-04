@@ -28,8 +28,11 @@ class Mail(models.Model):
     reply_to = models.EmailField(blank=True, null=True)
     thread_it = models.CharField(max_length=255, blank=True, null=True)
     is_replied = models.BooleanField(default=False)
-    tags = models.ManyToManyField("Tag")
+    tags = models.ManyToManyField("Tag", blank=True)
     is_forwarded = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.subject
 
 
 class Tag(models.Model):
