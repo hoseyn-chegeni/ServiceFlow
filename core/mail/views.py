@@ -16,6 +16,8 @@ class MailBoxView(CreateView ):
         context =  super().get_context_data(**kwargs)
         context['inbox_counter'] =  Mail.objects.filter(recipient = self.request.user).count()
         context['inbox'] = Mail.objects.filter(recipient = self.request.user)
+        context['sent_counter'] =  Mail.objects.filter(sender = self.request.user).count()
+        context['sent'] = Mail.objects.filter(sender = self.request.user)
         return context
     
     def form_valid(self, form):
