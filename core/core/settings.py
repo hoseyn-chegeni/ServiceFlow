@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "organization",
     "department",
     "articles",
+    "mail",
 ]
 
 MIDDLEWARE = [
