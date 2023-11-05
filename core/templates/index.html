@@ -279,10 +279,17 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif};
         <h5 class="w3-bottombar w3-border-blue">Task</h5>
         <a href="{%url 'tasks:task_list'%}" > <p>All Tasks</p></a>
         <a href="{%url 'tasks:myTask_list'%}" ><p>My Tasks</p>
-            <a href="{%url 'tasks:my_team' %}"> <p>Tasks assigned to my team</p>
-          <a href="{%url 'tasks:myCreatedTask_list' %}"> <p>My Created task</p>
-          <a href="{%url 'tasks:create_task' %}"> <p>Create Task</p>
+            <a href="{%url 'tasks:my_team' %}"> <p>Tasks assigned to my team</p></a>
+          <a href="{%url 'tasks:myCreatedTask_list' %}"> <p>My Created task</p><a>
+          <a href="{%url 'tasks:create_task' %}"> <p>Create Task</p></a>
       </div>
+      <div class="w3-container w3-third">
+        <h5 class="w3-bottombar w3-border-pink">Note</h5>
+        <a href="{%url 'notes:public_notes'%}" > <p>Public Notes</p></a>
+        <a href="{%url 'notes:my_notes'%}" ><p>My Nots</p>
+        <a href="{%url 'notes:my_archive_notes' %}"> <p>Archive Notes</p>
+        <a href="{%url 'notes:create_note' %}"> <p>Create Notes</p>
+        </div>
     </div>
   </div>
 
