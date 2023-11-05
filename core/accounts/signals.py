@@ -15,11 +15,11 @@ def send_mail_create_user(sender, instance, created, **kwargs):
         send_mail(subject, message, from_email, recipient_list)
 
 
-@receiver(post_save, sender=User)
-def set_user_group(sender, instance, created, **kwargs):
-    if created:
-        user = User.objects.get(id=instance.id)
-        user.groups.add(
-            user.member_of.access_group,
-        )
-        user.save()
+# @receiver(post_save, sender=User)
+# def set_user_group(sender, instance, created, **kwargs):
+#     if created:
+#         user = User.objects.get(id=instance.id)
+#         user.groups.add(
+#             user.member_of.access_group,
+#         )
+#         user.save()
