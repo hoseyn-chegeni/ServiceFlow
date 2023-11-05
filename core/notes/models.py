@@ -37,6 +37,7 @@ class Note(models.Model):
 class NoteTag(models.Model):
     name = models.CharField(max_length=255)
     desc = models.TextField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
