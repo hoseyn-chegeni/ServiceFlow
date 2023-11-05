@@ -1,11 +1,12 @@
 from typing import Any
+from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
-from .models import Note
+from .models import Note, NoteTag
 from django_filters.views import FilterView
-from .filters import NoteFilter, PublicNoteFilter
-from .forms import CreatePublicNoteForm, CreateNoteForm
+from .filters import NoteFilter, PublicNoteFilter, TagFilter
+from .forms import CreatePublicNoteForm, CreateNoteForm, CreateTagForm
 
 # Create your views here.
 
@@ -80,3 +81,58 @@ class NoteDeleteView(DeleteView):
     model = Note
     template_name = "notes/update.html"
     success_url = reverse_lazy("notes:my_notes")
+
+
+class ListTagView(FilterView):
+    model = NoteTag
+    template_name = "notes/tags/list.html"
+    filterset_class = TagFilter
+    context_object_name = 'tags'
+
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        return qs.filter(is_active=True)
+
+
+class DisableTagView(FilterView):
+    model = NoteTag
+    template_name = "notes/tags/disable.html"
+    filterset_class = TagFilter
+    context_object_name = 'tags'
+
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        return qs.filter(is_active=False)
+
+
+class DetailTagView(DetailView):
+    model = NoteTag
+    template_name = "notes/tags/detail.html"
+
+
+class CreateTagView(CreateView):
+    model = NoteTag
+    template_name = "notes/tags/create.html"
+    form_class = CreateTagForm
+    success_url = reverse_lazy("notes:list_tag")
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
+
+class UpdateTagView(UpdateView):
+    model = NoteTag
+    template_name = "notes/tags/update.html"
+    fields = [
+        "name",
+        "desc",
+        "is_active",
+    ]
+    success_url = reverse_lazy("notes:list_tag")
+
+
+class DeleteTagView(DeleteView):
+    model = NoteTag
+    template_name = "notes/tags/delete.html"
+    success_url = reverse_lazy("notes:list_tag")

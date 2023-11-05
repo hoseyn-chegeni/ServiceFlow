@@ -33,9 +33,9 @@ class MailBoxView(CreateView):
 
 class SentItemView(ListView):
     model = Mail
-    template_name = 'mail/sent.html'
-    
+    template_name = "mail/sent.html"
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['sent'] = Mail.objects.filter(sender = self.request.user)
+        context["sent"] = Mail.objects.filter(sender=self.request.user)
         return context

@@ -30,3 +30,14 @@ class PublicNoteFilter(FilterSet):
             "author",
             "tags",
         ]
+
+
+class TagFilter(FilterSet):
+    name = django_filters.CharFilter(lookup_expr="icontains")
+
+    class Meta:
+        model = Note
+        fields = [
+            "id",
+            "name",
+        ]

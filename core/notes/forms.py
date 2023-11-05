@@ -1,5 +1,5 @@
 from django import forms
-from .models import Note
+from .models import Note, NoteTag
 
 
 class CreateNoteForm(forms.ModelForm):
@@ -15,4 +15,13 @@ class CreatePublicNoteForm(forms.ModelForm):
             "title",
             "content",
             "tags",
+        )
+
+
+class CreateTagForm(forms.ModelForm):
+    class Meta:
+        model = NoteTag
+        fields = (
+            "name",
+            "desc",
         )

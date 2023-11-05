@@ -8,6 +8,12 @@ from .views import (
     NoteUpdateView,
     NoteDetailView,
     NoteDeleteView,
+    ListTagView,
+    DisableTagView,
+    CreateTagView,
+    UpdateTagView,
+    DeleteTagView,
+    DetailTagView,
 )
 
 app_name = "notes"
@@ -21,4 +27,10 @@ urlpatterns = [
     path("detail/<int:pk>/", NoteDetailView.as_view(), name="detail"),
     path("delete/<int:pk>/", NoteDeleteView.as_view(), name="delete"),
     path("update/<int:pk>/", NoteUpdateView.as_view(), name="update"),
+    path("tag_list/", ListTagView.as_view(), name="list_tag"),
+    path("disable_tag/", DisableTagView.as_view(), name="disable_tag"),
+    path("create/", CreateTagView.as_view(), name="create_tag"),
+    path("update_tag/<int:pk>/", UpdateTagView.as_view(), name="update_tag"),
+    path("detail_tag/<int:pk>/", DetailTagView.as_view(), name="detail_tag"),
+    path("delete_tag/<int:pk>/", DeleteTagView.as_view(), name="delete_tag"),
 ]

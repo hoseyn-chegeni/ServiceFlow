@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button><a href="{%url 'notes:create_tag'%}"> Create New Tag</a></button>
+    <form action="" method="get">
+        {{filter.form.as_p}}
+        <input type="submit">
+    </form>
+    {%for i in tags%}
+    {{i.id}},,{{i.name}}, <a href="{%url 'notes:detail_tag' i.id %}">Detail</a>,<a href="{%url 'notes:update_tag' i.id %}">Update</a>,<a href="{%url 'notes:delete_tag' i.id %}">Delete</a>,<br>
+    {%endfor%}
+
+    <a href="{%url 'notes:disable_tag' %}">Disable Tags</a>
+</body>
+</html>
