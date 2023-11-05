@@ -11,7 +11,7 @@
     {{object.date}}<br>
    {{object.time}}<br>
     {{object.created_by}}<br>
-    {{object.assign_to}}<br>
+    {%for i in object.assign_to.all%} {{i}}, {%endfor%}<br>
     {{object.is_completed}}<br>
 </body>
 </html>
