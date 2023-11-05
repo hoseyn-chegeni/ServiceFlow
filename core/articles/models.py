@@ -22,6 +22,11 @@ class Article(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
     related_articles = models.ManyToManyField("self", blank=True)
     is_active = models.BooleanField(default=True)
+    approval_status = models.ForeignKey('ArticleApprovalStatus', on_delete=models.SET_NULL, blank=True, null=True)
+    importance = models.CharField(max_length=20, choices=[("HIGH", "HIGH"), ("MEDIUM", "MEDIUM"), ("LOW", "LOW")], default="MEDIUM")
+    attachments = models.FileField(upload_to="attachments",blank=True, null=True)
+
+
 
     def __str__(self):
         return self.title
@@ -29,6 +34,18 @@ class Article(models.Model):
 
 class ArticleTags(models.Model):
     name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null= True)
+    created_by = models.ForeignKey("accounts.User", on_delete=models.SET_NULL, blank=True, null= True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
+
+
+class ArticleApprovalStatus(models.Model):
+    name = models.CharField(max_length=255,)
+    description = models.TextField(blank=True, null= True)
+    created_by = models.ForeignKey("accounts.User", on_delete=models.SET_NULL, blank=True, null= True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

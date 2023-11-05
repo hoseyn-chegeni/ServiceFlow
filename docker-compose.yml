@@ -12,19 +12,19 @@ services:
       - "8000:8000"
     # environment:
     #   - name=value
-    depends_on:
-      - db
-  db:
-    image: mysql:latest
-    command: mysqld --default-authentication-plugin=mysql_native_password
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=h@seyn4651
-      - MYSQL_DATABASE=itest
-      - MYSQL_USER=hoseyn
-      - MYSQL_PASSWORD=h@seyn4651
-    volumes:
-      - ./mysql-data:/var/lib/mysql
+  #   depends_on:
+  #     - db
+  # db:
+  #   image: mysql:latest
+  #   command: mysqld --default-authentication-plugin=mysql_native_password
+  #   restart: always
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=h@seyn4651
+  #     - MYSQL_DATABASE=itest
+  #     - MYSQL_USER=hoseyn
+  #     - MYSQL_PASSWORD=h@seyn4651
+  #   volumes:
+  #     - ./mysql-data:/var/lib/mysql
 
   smtp4dev:
       image: rnwood/smtp4dev:v3
