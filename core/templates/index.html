@@ -242,9 +242,10 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif};
     <div class="w3-row">
       <div class="w3-container w3-third">
         <h5 class="w3-bottombar w3-border-green">Organization</h5>
-        <p>Organization</p>
-        <p>Departments</p>
-        <p>Teams</p>
+        <a href="{%url 'organization:list'%}"><p>Organization</p></a>
+        <a href="{%url 'department:list'%}"><p>Departments</p></a>
+        <a href="{%url 'team:team_list'%}"><p>Teams</p></a>
+
       </div>
       <div class="w3-container w3-third">
         <h5 class="w3-bottombar w3-border-red">Tools</h5>
