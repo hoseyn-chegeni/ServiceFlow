@@ -79,6 +79,11 @@ class DeleteArticleView(DeleteView):
     success_url = reverse_lazy("article:list")
 
 
+class ShareArticleView(DetailView):
+    pass
+
+
+
 # TAGS
 class ListArticleTag(FilterView):
     model = ArticleTags

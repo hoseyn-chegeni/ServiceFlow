@@ -6,6 +6,7 @@ from tasks.models import Task
 from notes.models import Note
 from meetings.models import Meetings
 from organization.models import Organization
+from articles.models import ShareArticle
 
 
 # Create your views here.
@@ -25,5 +26,5 @@ class IndexView(TemplateView):
         context["organization"] = Organization.objects.all()[:5]
         context["recent_users"] = User.objects.order_by("-date_joined")[:5]
         context["recent_tasks"] = Task.objects.order_by("-created_date")[:3]
-
+        context['shared_article'] = ShareArticle.objects.filter(recipient_id = self.request.user.id)
         return context
