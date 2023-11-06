@@ -26,3 +26,4 @@ class ArticleTagFilter(FilterSet):
             "id",
             "name",
         ]
+

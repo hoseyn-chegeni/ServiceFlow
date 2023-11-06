@@ -122,6 +122,16 @@ class ShareArticleView(DetailView):
         return context
     
 
+class SentArticleView(ListView):
+    model = ShareArticle
+    context_object_name = "article"
+    template_name = "article/shared/sent.html"
+
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        return qs.filter(sender_id=self.request.user.id)
+
+
 class AddCommentView(CreateView):
     model = CommentShareArticle
     fields = ('content',)

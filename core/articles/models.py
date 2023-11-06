@@ -60,6 +60,7 @@ class ArticleApprovalStatus(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+#SHARED
 
 class ShareArticle(models.Model):
     article = models.ForeignKey("Article", on_delete=models.CASCADE)
