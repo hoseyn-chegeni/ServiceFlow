@@ -26,5 +26,7 @@ class IndexView(TemplateView):
         context["organization"] = Organization.objects.all()[:5]
         context["recent_users"] = User.objects.order_by("-date_joined")[:5]
         context["recent_tasks"] = Task.objects.order_by("-created_date")[:3]
-        context['shared_article'] = ShareArticle.objects.filter(recipient_id = self.request.user.id)
+        context["shared_article"] = ShareArticle.objects.filter(
+            recipient_id=self.request.user.id
+        )
         return context

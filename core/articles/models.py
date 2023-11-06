@@ -62,22 +62,28 @@ class ArticleApprovalStatus(models.Model):
 
 
 class ShareArticle(models.Model):
-    article = models.ForeignKey('Article', on_delete=models.CASCADE)
-    sender = models.ForeignKey('accounts.User', on_delete=models.CASCADE, related_name= 'sender')
-    recipient = models.ForeignKey('accounts.User', on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add= True)
-    updated_at = models.DateTimeField(auto_now= True)
+    article = models.ForeignKey("Article", on_delete=models.CASCADE)
+    sender = models.ForeignKey(
+        "accounts.User", on_delete=models.CASCADE, related_name="sender"
+    )
+    recipient = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.article}'
+        return f"{self.article}"
 
 
 class CommentShareArticle(models.Model):
-    share_article = models.ForeignKey(ShareArticle, on_delete=models.CASCADE)
+    share_article = models.ForeignKey(
+        ShareArticle, on_delete=models.CASCADE, related_name="comment"
+    )
     content = models.TextField()
-    sender = models.ForeignKey('accounts.User', on_delete=models.CASCADE,)
-    created_at = models.DateTimeField(auto_now_add= True)
-
+    sender = models.ForeignKey(
+        "accounts.User",
+        on_delete=models.CASCADE,
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.id}:{self.share_article} '
+        return f"{self.id}:{self.share_article} "

@@ -8,6 +8,7 @@ from .views import (
     UpdateArticleView,
     DeleteArticleView,
     DetailArticleView,
+    ShareArticleView,
     # TAGS
     ListArticleTag,
     CreateArticleTag,
@@ -26,6 +27,8 @@ urlpatterns = [
     path("update/<int:pk>/", UpdateArticleView.as_view(), name="update"),
     path("detail/<int:pk>/", DetailArticleView.as_view(), name="detail"),
     path("delete/<int:pk>/", DeleteArticleView.as_view(), name="delete"),
+    # SHARED
+    path("share_detail/<int:pk>/", ShareArticleView.as_view(), name="share_detail"),
     # TAGS
     path("tag_list/", ListArticleTag.as_view(), name="tag_list"),
     path("tag_create/", CreateArticleTag.as_view(), name="tag_create"),

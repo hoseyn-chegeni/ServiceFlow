@@ -126,13 +126,13 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif};
         <img src="{% static 'index/region.jpeg' %}" style="width:100%" alt="Google Regional Map">
       </div>
       <div class="w3-twothird">
-        <h5>Feeds</h5>
+        <h5>Shared</h5>
         <table class="w3-table w3-striped w3-white">
           {%for i in shared_article%}
-          <tr>
-            <td><i class="fa fa-user w3-text-blue w3-large"></i></td>
-            <td> {{i.sender}} share a Document with you.</td>
-            <td><i>{{i.created_at}}</i></td>
+           <tr>
+              <td><i class="fa fa-user w3-text-blue w3-large"></i></td>
+                <td><a href="{%url 'article:share_detail' i.id%}">{{i.sender}} share a Document with you.</a></td>
+              <td><i>{{i.created_at}}</i></td>
           </tr>
           {%endfor%}
         </table>

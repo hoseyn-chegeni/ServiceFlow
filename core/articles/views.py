@@ -1,3 +1,5 @@
+from typing import Any
+from django.db import models
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -8,7 +10,7 @@ from django.views.generic import (
     DetailView,
 )
 from django_filters.views import FilterView
-from .models import Article, ArticleTags
+from .models import Article, ArticleTags, ShareArticle, CommentShareArticle
 from .forms import CreateArticleForms, CreateArticleTags
 from .filters import ArticleFilter, ArticleTagFilter
 
@@ -80,8 +82,13 @@ class DeleteArticleView(DeleteView):
 
 
 class ShareArticleView(DetailView):
-    pass
+    template_name = "article/shared/detail.html"
+    model = ShareArticle
 
+    def get_context_data(self, **kwargs: Any):
+        context = super().get_context_data(**kwargs)
+        context["comment"] = self.object.comment.all()
+        return context
 
 
 # TAGS
