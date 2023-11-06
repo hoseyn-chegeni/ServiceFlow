@@ -14,5 +14,6 @@
     {{object.is_archive}}<br>
    <a href="{{object.attachments.url}}">{{object.title}} </a> <br>
    tags:{{object.tags.name}}<br>
+   <button> <a href="{%url 'article:post' object.id%}">Share this article</a></button>
 </body>
 </html>

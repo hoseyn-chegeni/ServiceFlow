@@ -68,6 +68,7 @@ class ShareArticle(models.Model):
         "accounts.User", on_delete=models.CASCADE, related_name="sender"
     )
     recipient = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
+    content = models.CharField(max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

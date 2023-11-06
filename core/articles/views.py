@@ -112,7 +112,7 @@ class DeleteArticleTag(DeleteView):
 
 # SHARED
 
-class ShareArticleView(DetailView):
+class ShareArticleDetailView(DetailView):
     template_name = "article/shared/detail.html"
     model = ShareArticle
 
@@ -122,7 +122,7 @@ class ShareArticleView(DetailView):
         return context
     
 
-class SentArticleView(ListView):
+class SentArticleListView(ListView):
     model = ShareArticle
     context_object_name = "article"
     template_name = "article/shared/sent.html"
@@ -130,6 +130,18 @@ class SentArticleView(ListView):
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(sender_id=self.request.user.id)
+
+
+class SentArticleView(CreateView):
+    model = ShareArticle
+    fields = ('recipient','content',)
+    success_url = reverse_lazy('article:list')
+    template_name = "article/shared/post.html"
+    def form_valid(self, form):
+        article = get_object_or_404(Article, id=self.kwargs['article_id'])
+        form.instance.article = article
+        form.instance.sender = self.request.user
+        return super().form_valid(form)
 
 
 class AddCommentView(CreateView):
