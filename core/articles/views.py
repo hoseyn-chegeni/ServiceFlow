@@ -1,6 +1,6 @@
 from typing import Any
 from django.db import models
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import (
     ListView,
@@ -81,15 +81,6 @@ class DeleteArticleView(DeleteView):
     success_url = reverse_lazy("article:list")
 
 
-class ShareArticleView(DetailView):
-    template_name = "article/shared/detail.html"
-    model = ShareArticle
-
-    def get_context_data(self, **kwargs: Any):
-        context = super().get_context_data(**kwargs)
-        context["comment"] = self.object.comment.all()
-        return context
-
 
 # TAGS
 class ListArticleTag(FilterView):
@@ -116,3 +107,33 @@ class DeleteArticleTag(DeleteView):
     model = ArticleTags
     template_name = "article/tags/delete.html"
     success_url = reverse_lazy("article:tag_list")
+
+
+
+# SHARED
+
+class ShareArticleView(DetailView):
+    template_name = "article/shared/detail.html"
+    model = ShareArticle
+
+    def get_context_data(self, **kwargs: Any):
+        context = super().get_context_data(**kwargs)
+        context["comment"] = self.object.comment.all()
+        return context
+    
+
+class AddCommentView(CreateView):
+    model = CommentShareArticle
+    fields = ('content',)
+    template_name = 'article/shared/comment.html'
+
+    def get_success_url(self) -> str:
+        return reverse_lazy("article:share_detail", kwargs={'pk': self.kwargs['article_id']})
+    
+    def form_valid(self, form):
+        article = get_object_or_404(ShareArticle, id=self.kwargs['article_id'])
+        form.instance.share_article = article
+        form.instance.sender = self.request.user
+        return super().form_valid(form)
+    
+
