@@ -56,7 +56,14 @@ class CreateArticleView(CreateView):
 
 class UpdateArticleView(UpdateView):
     model = Article
-    fields = ("title", "content", "tags", "related_articles", "is_active","attachments")
+    fields = (
+        "title",
+        "content",
+        "tags",
+        "related_articles",
+        "is_active",
+        "attachments",
+    )
     template_name = "article/update.html"
     success_url = reverse_lazy("article:my_list")
 

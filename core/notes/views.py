@@ -87,7 +87,7 @@ class ListTagView(FilterView):
     model = NoteTag
     template_name = "notes/tags/list.html"
     filterset_class = TagFilter
-    context_object_name = 'tags'
+    context_object_name = "tags"
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
@@ -98,7 +98,7 @@ class DisableTagView(FilterView):
     model = NoteTag
     template_name = "notes/tags/disable.html"
     filterset_class = TagFilter
-    context_object_name = 'tags'
+    context_object_name = "tags"
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)

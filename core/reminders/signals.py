@@ -8,11 +8,10 @@ from mail.models import Mail
 
 @receiver(post_save, sender=Reminder)
 def send_mail_assigned_reminder(sender, instance, created, **kwargs):
-        for i in instance.assign_to.all():
-            Mail.objects.create(
-                sender = instance.created_by,
-                recipient = instance.created_by,
-                body = instance.title,
-                subject = instance.title,
-            )
-
+    for i in instance.assign_to.all():
+        Mail.objects.create(
+            sender=instance.created_by,
+            recipient=instance.created_by,
+            body=instance.title,
+            subject=instance.title,
+        )

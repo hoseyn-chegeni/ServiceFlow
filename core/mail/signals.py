@@ -11,6 +11,8 @@ def send_to_smtp(sender, instance, created, **kwargs):
         subject = instance.subject
         message = instance.body
         from_email = instance.sender
-        recipient_list = [instance.recipient,]
+        recipient_list = [
+            instance.recipient,
+        ]
 
         send_mail(subject, message, from_email, recipient_list)
