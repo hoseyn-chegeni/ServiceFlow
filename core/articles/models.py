@@ -31,7 +31,7 @@ class Article(models.Model):
         default="MEDIUM",
     )
     attachments = models.FileField(upload_to="attachments", blank=True, null=True)
-
+    is_approved = models.BooleanField(default=False)
     def __str__(self):
         return self.title
 

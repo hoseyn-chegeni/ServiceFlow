@@ -158,4 +158,7 @@ class AddCommentView(CreateView):
         form.instance.sender = self.request.user
         return super().form_valid(form)
     
+#APPROVAL WORK FLOW
 
+class ApproveArticleView():
+    pass
