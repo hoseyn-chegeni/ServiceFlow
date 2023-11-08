@@ -18,6 +18,11 @@ from .views import (
     CreateArticleTag,
     UpdateArticleTag,
     DeleteArticleTag,
+    # APPROVE
+    PendingArticleList,
+    ApproveArticleView,
+    RejectArticleView,
+    RejectArticleList
 )
 
 app_name = "article"
@@ -43,4 +48,9 @@ urlpatterns = [
     path("tag_create/", CreateArticleTag.as_view(), name="tag_create"),
     path("tag_update/<int:pk>/", UpdateArticleTag.as_view(), name="tag_update"),
     path("tag_delete/<int:pk>/", DeleteArticleTag.as_view(), name="tag_delete"),
+    # APPROVE
+    path("pending_list/", PendingArticleList.as_view(), name="pending_list"),
+    path("reject_list/", RejectArticleList.as_view(), name="reject_list"),
+    path("approve/<int:pk>/", ApproveArticleView.as_view(), name="approve"),
+    path("reject/<int:pk>/", RejectArticleView.as_view(), name="reject"),
 ]

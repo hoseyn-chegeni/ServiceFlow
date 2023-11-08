@@ -1,5 +1,6 @@
 from typing import Any
 from django.db import models
+from django.db.models.query import QuerySet
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -10,7 +11,13 @@ from django.views.generic import (
     DetailView,
 )
 from django_filters.views import FilterView
-from .models import Article, ArticleTags, ShareArticle, CommentShareArticle
+from .models import (
+    Article,
+    ArticleTags,
+    ShareArticle,
+    CommentShareArticle,
+    ArticleApprovalStatus,
+)
 from .forms import CreateArticleForms, CreateArticleTags
 from .filters import ArticleFilter, ArticleTagFilter
 
@@ -23,6 +30,12 @@ class ListArticleView(FilterView):
     template_name = "article/list.html"
     filterset_class = ArticleFilter
 
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        return qs.filter(
+            approval_status=ArticleApprovalStatus.objects.get(name="Approved")
+        )
+
 
 class MyArticleView(FilterView):
     model = Article
@@ -32,7 +45,10 @@ class MyArticleView(FilterView):
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
-        return qs.filter(is_active=True, author_id=self.request.user.id)
+        return qs.filter(
+            approval_status=ArticleApprovalStatus.objects.get(name="Approved"),
+            author_id=self.request.user.id,
+        )
 
 
 class ArchiveArticleView(FilterView):
@@ -167,5 +183,53 @@ class AddCommentView(CreateView):
 # APPROVAL WORK FLOW
 
 
-class ApproveArticleView:
-    pass
+class PendingArticleList(FilterView):
+    model = Article
+    template_name = "article/pending_list.html"
+    context_object_name = "tags"
+    filterset_class = ArticleFilter
+
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        return qs.filter(
+            approval_status=ArticleApprovalStatus.objects.get(name="Pending")
+        )
+    
+class RejectArticleList(FilterView):
+    model = Article
+    template_name = "article/reject_list.html"
+    context_object_name = "tags"
+    filterset_class = ArticleFilter
+
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        return qs.filter(
+            approval_status=ArticleApprovalStatus.objects.get(name="Rejected")
+        )
+
+
+
+class ApproveArticleView(UpdateView):
+    model = Article
+    template_name = "article/approve.html"
+    fields = ("approve_comment",)
+    success_url = reverse_lazy("article:pending_list")
+
+    def form_valid(self, form):
+        form.instance.approval_status = ArticleApprovalStatus.objects.get(
+            name="Approved"
+        )
+        return super().form_valid(form)
+
+
+class RejectArticleView(UpdateView):
+    model = Article
+    template_name = "article/reject.html"
+    fields = ("approve_comment",)
+    success_url = reverse_lazy("article:pending_list")
+
+    def form_valid(self, form):
+        form.instance.approval_status = ArticleApprovalStatus.objects.get(
+            name="Rejected"
+        )
+        return super().form_valid(form)

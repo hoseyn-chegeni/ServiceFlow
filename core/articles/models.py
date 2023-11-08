@@ -2,6 +2,21 @@ from django.db import models
 
 
 # Create your models here.
+class ArticleApprovalStatus(models.Model):
+    name = models.CharField(
+        max_length=255,
+    )
+    description = models.TextField(blank=True, null=True)
+    created_by = models.ForeignKey(
+        "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+
 def generate_pk():
     if Article.objects.last() is not None:
         number = (Article.objects.last().id) + 1
@@ -21,17 +36,20 @@ class Article(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
     related_articles = models.ManyToManyField("self", blank=True)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
     approval_status = models.ForeignKey(
-        "ArticleApprovalStatus", on_delete=models.SET_NULL, blank=True, null=True
+        "ArticleApprovalStatus",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
     )
+    approve_comment = models.TextField(blank=True, null=True)
     importance = models.CharField(
         max_length=20,
         choices=[("HIGH", "HIGH"), ("MEDIUM", "MEDIUM"), ("LOW", "LOW")],
         default="MEDIUM",
     )
     attachments = models.FileField(upload_to="attachments", blank=True, null=True)
-    is_approved = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
@@ -48,18 +66,6 @@ class ArticleTags(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class ArticleApprovalStatus(models.Model):
-    name = models.CharField(
-        max_length=255,
-    )
-    description = models.TextField(blank=True, null=True)
-    created_by = models.ForeignKey(
-        "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
-    )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
 
 # SHARED
