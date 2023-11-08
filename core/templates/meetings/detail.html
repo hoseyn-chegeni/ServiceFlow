@@ -13,5 +13,8 @@
     {{object.date_time}}<br>
     {{object.location}}<br>
    organizer: {{object.organizer}}<br>
+   <button><a href="{% url 'meetings:detail_excel_report' object.id %}">Download Excel Report</a></button>
+   <button><a href="{% url 'meetings:detail_csv_report' object.id %}">Download CSV Report</a></button>
+
 </body>
 </html>

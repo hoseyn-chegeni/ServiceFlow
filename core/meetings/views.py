@@ -82,6 +82,7 @@ class MeetingsExcelReportView(View):
         for meet in meetings:
             ws.append(
                 [
+                    meet.meeting,
                     meet.title,
                     meet.description,
                     meet.organizer.email,
@@ -110,6 +111,7 @@ class MeetingsCSVReportView(View):
         for meet in meeting:
             writer.writerow(
                 [
+                    meet.meeting,
                     meet.title,
                     meet.description,
                     meet.organizer.email,
@@ -118,3 +120,52 @@ class MeetingsCSVReportView(View):
             )
 
         return response
+    
+
+
+class MeetingDetailExcelReportView(View):
+    def get(self, request, user_id, *args, **kwargs):
+        # Create a new Excel workbook
+        wb = Workbook()
+        ws = wb.active
+
+        # Add headers to the Excel file
+        ws.append(["title", "description", "organizer", "action"])
+
+        # Query the User model for the specific user and add data to the Excel file
+        meet = Meetings.objects.get(pk=user_id)
+        ws.append([
+            meet.meeting,
+            meet.title,
+            meet.description,
+            meet.organizer.email,
+            meet.action,
+            ])
+
+        # Save the workbook to a response object
+        response = HttpResponse(content_type='application/ms-excel')
+        response['Content-Disposition'] = f'attachment; filename="{meet.meeting}_report.xlsx"'
+        wb.save(response)
+
+        return response
+
+class MeetingDetailCSVReportView(View):
+    def get(self, request, user_id, *args, **kwargs):
+        # Create a CSV response object
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = f'attachment; filename="meetings_report.csv"'
+
+        # Write CSV data to the response object
+        writer = csv.writer(response)
+        writer.writerow(["title", "description", "organizer", "action"])
+        meet = Meetings.objects.get(pk=user_id)
+        writer.writerow([
+            meet.meeting,
+            meet.title,
+            meet.description,
+            meet.organizer.email,
+            meet.action,
+            ])
+
+        return response
+
