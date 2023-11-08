@@ -11,6 +11,7 @@ from .views import (
     MeetingDetailCSVReportView,
     MeetingDetailExcelReportView,
     CloseMetingView,
+    CancelMetingView,
 )
 
 app_name = "meetings"
@@ -25,6 +26,7 @@ urlpatterns = [
     path("delete/<int:pk>/", DeleteMeetings.as_view(), name="delete"),
     path("update/<int:pk>/", UpdatedMeetings.as_view(), name="update"),
     path("close/<int:pk>/", CloseMetingView.as_view(), name="close"),
+    path("cancel/<int:pk>/", CancelMetingView.as_view(), name="cancel"),
     # REPORT
     path("excel-report/", MeetingsExcelReportView.as_view(), name="excel_report"),
     path("csv-report/", MeetingsCSVReportView.as_view(), name="csv_report"),

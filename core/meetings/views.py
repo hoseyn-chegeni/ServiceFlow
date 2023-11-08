@@ -47,7 +47,7 @@ class MeetingDetailView(DetailView):
 class CloseMetingView(LoginRequiredMixin, UpdateView):
     template_name = "meetings/close.html"
     model = Meetings
-    fields = ("action", "report")
+    fields = ("report"),
 
     def get_success_url(self):
         return reverse_lazy("meetings:detail", kwargs={"pk": self.object.pk})
@@ -55,6 +55,28 @@ class CloseMetingView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         form.instance.status = MeetingStatus.objects.get(name="Done")
         return super().form_valid(form)
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        return query.filter(organizer=self.request.user)
+    
+
+class CancelMetingView(LoginRequiredMixin, UpdateView):
+    template_name = "meetings/cancel.html"
+    model = Meetings
+    fields = ("report",)
+    def form_valid(self, form):
+        form.instance.status = MeetingStatus.objects.get(name="Cenceled")
+        return super().form_valid(form)
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        return query.filter(organizer=self.request.user)
+
+    def get_success_url(self):
+        return reverse_lazy("meetings:detail", kwargs={"pk": self.object.pk})
+
+
 
     def get_queryset(self):
         query = super().get_queryset()
