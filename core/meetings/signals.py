@@ -16,7 +16,6 @@ def send_mail_for_attendees(sender, instance, created, **kwargs):
 
 
 @receiver(post_save, sender=Meetings)
-
 def send_mail_for_organizer(sender, instance, created, **kwargs):
     if created:
         subject = f"Dear {instance.organizer} yout {instance.title} meeting has set for {instance.date_time}"

@@ -32,6 +32,7 @@ class Article(models.Model):
     )
     attachments = models.FileField(upload_to="attachments", blank=True, null=True)
     is_approved = models.BooleanField(default=False)
+
     def __str__(self):
         return self.title
 
@@ -60,7 +61,9 @@ class ArticleApprovalStatus(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-#SHARED
+
+# SHARED
+
 
 class ShareArticle(models.Model):
     article = models.ForeignKey("Article", on_delete=models.CASCADE)

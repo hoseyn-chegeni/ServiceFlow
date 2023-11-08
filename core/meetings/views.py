@@ -1,7 +1,8 @@
-from typing import Any
-from django.db import models
-from django.shortcuts import render
+import csv
+from django.http import HttpResponse
+from openpyxl import Workbook
 from django.urls import reverse_lazy
+from django.views import View
 from django_filters.views import FilterView
 from django.views.generic import DetailView, CreateView, DeleteView
 from django.views.generic.edit import UpdateView
@@ -65,3 +66,55 @@ class UpdatedMeetings(UpdateView):
     )
     success_url = reverse_lazy("index:home")
     template_name = "meetings/update.html"
+
+
+class MeetingsExcelReportView(View):
+    def get(self, request, *args, **kwargs):
+        # Create a new Excel workbook
+        wb = Workbook()
+        ws = wb.active
+
+        # Add headers to the Excel file
+        ws.append(["title", "description", "organizer", "action"])
+
+        # Query the User model and add data to the Excel file
+        meetings = Meetings.objects.all()
+        for meet in meetings:
+            ws.append(
+                [
+                    meet.title,
+                    meet.description,
+                    meet.organizer.email,
+                    meet.action,
+                ]
+            )
+
+        # Save the workbook to a response object
+        response = HttpResponse(content_type="application/ms-excel")
+        response["Content-Disposition"] = 'attachment; filename="Meeting_report.xlsx"'
+        wb.save(response)
+
+        return response
+
+
+class MeetingsCSVReportView(View):
+    def get(self, request, *args, **kwargs):
+        # Create a CSV response object
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = 'attachment; filename="meetings_report.csv"'
+
+        # Write CSV data to the response object
+        writer = csv.writer(response)
+        writer.writerow(["title", "description", "organizer", "action"])
+        meeting = Meetings.objects.all()
+        for meet in meeting:
+            writer.writerow(
+                [
+                    meet.title,
+                    meet.description,
+                    meet.organizer.email,
+                    meet.action,
+                ]
+            )
+
+        return response

@@ -6,6 +6,8 @@ from .views import (
     CreateMeetingsView,
     DeleteMeetings,
     UpdatedMeetings,
+    MeetingsExcelReportView,
+    MeetingsCSVReportView,
 )
 
 app_name = "meetings"
@@ -19,4 +21,7 @@ urlpatterns = [
     path("create/", CreateMeetingsView.as_view(), name="create"),
     path("delete/<int:pk>/", DeleteMeetings.as_view(), name="delete"),
     path("update/<int:pk>/", UpdatedMeetings.as_view(), name="update"),
+    # REPORT
+    path("excel-report/", MeetingsExcelReportView.as_view(), name="excel_report"),
+    path("csv-report/", MeetingsCSVReportView.as_view(), name="csv_report"),
 ]

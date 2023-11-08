@@ -81,7 +81,6 @@ class DeleteArticleView(DeleteView):
     success_url = reverse_lazy("article:list")
 
 
-
 # TAGS
 class ListArticleTag(FilterView):
     model = ArticleTags
@@ -109,8 +108,8 @@ class DeleteArticleTag(DeleteView):
     success_url = reverse_lazy("article:tag_list")
 
 
-
 # SHARED
+
 
 class ShareArticleDetailView(DetailView):
     template_name = "article/shared/detail.html"
@@ -120,7 +119,7 @@ class ShareArticleDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["comment"] = self.object.comment.all()
         return context
-    
+
 
 class SentArticleListView(ListView):
     model = ShareArticle
@@ -134,11 +133,15 @@ class SentArticleListView(ListView):
 
 class SentArticleView(CreateView):
     model = ShareArticle
-    fields = ('recipient','content',)
-    success_url = reverse_lazy('article:list')
+    fields = (
+        "recipient",
+        "content",
+    )
+    success_url = reverse_lazy("article:list")
     template_name = "article/shared/post.html"
+
     def form_valid(self, form):
-        article = get_object_or_404(Article, id=self.kwargs['article_id'])
+        article = get_object_or_404(Article, id=self.kwargs["article_id"])
         form.instance.article = article
         form.instance.sender = self.request.user
         return super().form_valid(form)
@@ -146,19 +149,23 @@ class SentArticleView(CreateView):
 
 class AddCommentView(CreateView):
     model = CommentShareArticle
-    fields = ('content',)
-    template_name = 'article/shared/comment.html'
+    fields = ("content",)
+    template_name = "article/shared/comment.html"
 
     def get_success_url(self) -> str:
-        return reverse_lazy("article:share_detail", kwargs={'pk': self.kwargs['article_id']})
-    
+        return reverse_lazy(
+            "article:share_detail", kwargs={"pk": self.kwargs["article_id"]}
+        )
+
     def form_valid(self, form):
-        article = get_object_or_404(ShareArticle, id=self.kwargs['article_id'])
+        article = get_object_or_404(ShareArticle, id=self.kwargs["article_id"])
         form.instance.share_article = article
         form.instance.sender = self.request.user
         return super().form_valid(form)
-    
-#APPROVAL WORK FLOW
 
-class ApproveArticleView():
+
+# APPROVAL WORK FLOW
+
+
+class ApproveArticleView:
     pass

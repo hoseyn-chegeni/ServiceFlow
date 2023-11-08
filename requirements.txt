@@ -4,3 +4,4 @@ mysqlclient
 Pillow
 black
 python-dotenv
+openpyxl
