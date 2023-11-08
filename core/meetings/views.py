@@ -1,17 +1,21 @@
 import csv
+from typing import Any
+from django.db import models
 from django.http import HttpResponse
 from openpyxl import Workbook
 from django.urls import reverse_lazy
 from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django_filters.views import FilterView
 from django.views.generic import DetailView, CreateView, DeleteView
 from django.views.generic.edit import UpdateView
 from .filters import MyCreatedMeetingsFilter, InvitedMeetingsFilter
-from .models import Meetings
+from .models import Meetings, MeetingStatus
 from .forms import CreateMeetingsForm
 
 
 # Create your views here.
+# ----------SELECT----------
 class InvitedMeetings(FilterView):
     model = Meetings
     filterset_class = InvitedMeetingsFilter
@@ -35,6 +39,26 @@ class MyCreatedMeetings(FilterView):
 class MeetingDetailView(DetailView):
     model = Meetings
     template_name = "meetings/detail.html"
+
+
+# ----------FUNCTIONS----------
+
+
+class CloseMetingView(LoginRequiredMixin, UpdateView):
+    template_name = "meetings/close.html"
+    model = Meetings
+    fields = ("action", "report")
+
+    def get_success_url(self):
+        return reverse_lazy("meetings:detail", kwargs={"pk": self.object.pk})
+
+    def form_valid(self, form):
+        form.instance.status = MeetingStatus.objects.get(name="Done")
+        return super().form_valid(form)
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        return query.filter(organizer=self.request.user)
 
 
 class CreateMeetingsView(CreateView):
@@ -66,6 +90,9 @@ class UpdatedMeetings(UpdateView):
     )
     success_url = reverse_lazy("index:home")
     template_name = "meetings/update.html"
+
+
+# ----------REPORT----------
 
 
 class MeetingsExcelReportView(View):
@@ -120,7 +147,6 @@ class MeetingsCSVReportView(View):
             )
 
         return response
-    
 
 
 class MeetingDetailExcelReportView(View):
@@ -134,38 +160,44 @@ class MeetingDetailExcelReportView(View):
 
         # Query the User model for the specific user and add data to the Excel file
         meet = Meetings.objects.get(pk=user_id)
-        ws.append([
-            meet.meeting,
-            meet.title,
-            meet.description,
-            meet.organizer.email,
-            meet.action,
-            ])
+        ws.append(
+            [
+                meet.meeting,
+                meet.title,
+                meet.description,
+                meet.organizer.email,
+                meet.action,
+            ]
+        )
 
         # Save the workbook to a response object
-        response = HttpResponse(content_type='application/ms-excel')
-        response['Content-Disposition'] = f'attachment; filename="{meet.meeting}_report.xlsx"'
+        response = HttpResponse(content_type="application/ms-excel")
+        response[
+            "Content-Disposition"
+        ] = f'attachment; filename="{meet.meeting}_report.xlsx"'
         wb.save(response)
 
         return response
 
+
 class MeetingDetailCSVReportView(View):
     def get(self, request, user_id, *args, **kwargs):
         # Create a CSV response object
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = f'attachment; filename="meetings_report.csv"'
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = f'attachment; filename="meetings_report.csv"'
 
         # Write CSV data to the response object
         writer = csv.writer(response)
         writer.writerow(["title", "description", "organizer", "action"])
         meet = Meetings.objects.get(pk=user_id)
-        writer.writerow([
-            meet.meeting,
-            meet.title,
-            meet.description,
-            meet.organizer.email,
-            meet.action,
-            ])
+        writer.writerow(
+            [
+                meet.meeting,
+                meet.title,
+                meet.description,
+                meet.organizer.email,
+                meet.action,
+            ]
+        )
 
         return response
-

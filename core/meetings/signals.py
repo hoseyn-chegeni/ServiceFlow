@@ -21,5 +21,7 @@ def send_mail_for_organizer(sender, instance, created, **kwargs):
         subject = f"Dear {instance.organizer} you {instance.title} meeting has set for {instance.date_time}"
         message = f"{instance.title}, {instance.description}"
         from_email = settings.EMAIL_HOST_USER
-        recipient_list = [instance.organizer,]
+        recipient_list = [
+            instance.organizer,
+        ]
         send_mail(subject, message, from_email, recipient_list)

@@ -31,6 +31,7 @@ class Meetings(models.Model):
         "MeetingStatus", on_delete=models.SET_NULL, blank=True, null=True
     )
     action = models.TextField()
+    report = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.meeting}{self.title}"
