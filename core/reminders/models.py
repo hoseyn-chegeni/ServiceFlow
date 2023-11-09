@@ -1,6 +1,6 @@
 from django.db import models
 from accounts.models import User
-
+from datetime import datetime, timedelta
 
 # Create your models here.
 def generate_pk():
@@ -33,3 +33,12 @@ class Reminder(models.Model):
 
     def __str__(self):
         return self.reminder
+
+
+    def delete_old_reminders():
+        # Get current date and time
+        now = datetime.now()
+        # Calculate date and time 30 days ago
+        a_days_ago = now - timedelta(days=1)
+        # Delete reminders older than 30 days
+        Reminder.objects.filter(created_at__lt=a_days_ago).delete()
