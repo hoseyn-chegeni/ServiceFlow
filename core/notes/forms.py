@@ -5,17 +5,13 @@ from .models import Note, NoteTag
 class CreateNoteForm(forms.ModelForm):
     class Meta:
         model = Note
-        fields = ("title", "content", "tags", "is_public")
+        fields = ("title", "content", "tags", "is_public", "attachment")
 
 
 class CreatePublicNoteForm(forms.ModelForm):
     class Meta:
         model = Note
-        fields = (
-            "title",
-            "content",
-            "tags",
-        )
+        fields = ("title", "content", "tags", "attachment")
 
 
 class CreateTagForm(forms.ModelForm):

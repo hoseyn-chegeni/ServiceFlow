@@ -194,7 +194,8 @@ class PendingArticleList(FilterView):
         return qs.filter(
             approval_status=ArticleApprovalStatus.objects.get(name="Pending")
         )
-    
+
+
 class RejectArticleList(FilterView):
     model = Article
     template_name = "article/reject_list.html"
@@ -206,7 +207,6 @@ class RejectArticleList(FilterView):
         return qs.filter(
             approval_status=ArticleApprovalStatus.objects.get(name="Rejected")
         )
-
 
 
 class ApproveArticleView(UpdateView):

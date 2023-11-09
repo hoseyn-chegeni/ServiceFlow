@@ -22,7 +22,7 @@ from .views import (
     PendingArticleList,
     ApproveArticleView,
     RejectArticleView,
-    RejectArticleList
+    RejectArticleList,
 )
 
 app_name = "article"

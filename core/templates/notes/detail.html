@@ -13,5 +13,8 @@
     {{object.is_public}}<br>
     {{object.is_archive}}<br>
    tags:{{object.tags.name}}<br>
+   {% if object.attachment%}
+   <a href="{{object.attachment.url}}">{{object.title}} </a> <br>
+   {% endif %}
 </body>
 </html>

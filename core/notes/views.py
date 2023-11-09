@@ -74,7 +74,7 @@ class NoteUpdateView(UpdateView):
     model = Note
     template_name = "notes/update.html"
     success_url = reverse_lazy("notes:my_notes")
-    fields = ("title", "content", "is_archive", "is_public", "tags")
+    fields = ("title", "content", "is_archive", "is_public", "tags", "attachment")
 
 
 class NoteDeleteView(DeleteView):

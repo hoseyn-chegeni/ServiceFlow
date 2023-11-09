@@ -12,7 +12,9 @@
     author: {{object.author}}<br>
     {{object.is_public}}<br>
     {{object.is_archive}}<br>
+    {%if object.attachments%}
    <a href="{{object.attachments.url}}">{{object.title}} </a> <br>
+   {%endif%}
    tags:{{object.tags.name}}<br>
    <button> <a href="{%url 'article:post' object.id%}">Share this article</a></button>
 </body>
