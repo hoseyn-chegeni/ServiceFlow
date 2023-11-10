@@ -1,4 +1,6 @@
 from typing import Any
+from django.shortcuts import get_object_or_404
+from django.db.models.query import QuerySet
 from django_filters.views import FilterView
 from django.views.generic import (
     ListView,
@@ -123,3 +125,19 @@ class TaskAssignTo(UpdateView):
             
         )
         return super().form_valid(form)
+
+
+class TaskAssignmentLogsView(ListView):
+    model = TaskAssignmentHistory
+    template_name = 'tasks/assign_log.html'
+    context_object_name = 'log'
+
+
+    def get_queryset(self):
+        task = get_object_or_404(Task, pk=self.kwargs['pk'])
+        return task.assignment_history.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['task'] = get_object_or_404(Task, pk=self.kwargs['pk'])
+        return context

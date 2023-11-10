@@ -13,6 +13,6 @@
     {{object.status}}<br>
    Team: {{object.type.assigned_to.name}} <br>
     assignee {{object.assign_to}}<br>
-
+<a href="{% url 'tasks:assign_log' object.id%}">Task Assignment log</a>
 </body>
 </html>
