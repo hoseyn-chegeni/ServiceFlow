@@ -9,7 +9,7 @@ from .views import (
     TaskUpdate,
     MyTeamTasks,
     TaskAssignToMe,
-    TaskAssignToMe_v2,
+    TaskAssignTo,
 )
 
 app_name = "tasks"
@@ -24,6 +24,5 @@ urlpatterns = [
     path("update/<int:pk>", TaskUpdate.as_view(), name="update"),
     path("tasks_assigned_to_my_team/", MyTeamTasks.as_view(), name="my_team"),
     path("assign_to_me/<int:pk>/", TaskAssignToMe.as_view(), name="assign_to_me"),
-    path("assign_to_me_2/<int:pk>/", TaskAssignToMe_v2.as_view(), name="assign_to_me_2"),
-
+    path("assign_to/<int:pk>/", TaskAssignTo.as_view(), name="assign_to"),
 ]

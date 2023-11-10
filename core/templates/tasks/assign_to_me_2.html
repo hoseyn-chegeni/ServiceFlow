@@ -8,7 +8,7 @@
 <body>
     <form action="" method="post">
         {%csrf_token%}
-        <p>Are you sure you want to assign this task</p>
+        {{form.as_p}}
         <input type="submit" value="Yes">
     </form>
 </body>

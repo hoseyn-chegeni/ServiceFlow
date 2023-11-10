@@ -56,4 +56,6 @@ class TaskStatus(models.Model):
 class TaskAssignmentHistory(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='assignment_history')
     assigned_to = models.ForeignKey(User, on_delete=models.CASCADE)
+    assigned_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='assigned_tasks_history', blank = True, null = True)
     assigned_at = models.DateTimeField(auto_now_add=True)
+    comment = models.TextField(null = True, blank = True)

@@ -93,21 +93,33 @@ class TaskAssignToMe(UpdateView):
     fields = ("assign_to",)
 
     def form_valid(self, form):
+        task = form.save(commit=False)
+        task.save()
         form.instance.assign_to = self.request.user
+        TaskAssignmentHistory.objects.create(
+            task=task,
+            assigned_by = self.request.user,
+            assigned_to =self.request.user
+            
+        )
         return super().form_valid(form)
 
-class TaskAssignToMe_v2(UpdateView):
+
+class TaskAssignTo(UpdateView):
     template_name = "tasks/assign_to_me_2.html"
     success_url = reverse_lazy("tasks:my_team")
     model = Task
     fields = ("assign_to",) 
 
     def form_valid(self, form):
+        
         task = form.save(commit=False)
         task.save()
 
         TaskAssignmentHistory.objects.create(
             task=task,
-            assigned_to=self.request.user,
+            assigned_by = self.request.user,
+            assigned_to =task.assign_to
+            
         )
         return super().form_valid(form)
