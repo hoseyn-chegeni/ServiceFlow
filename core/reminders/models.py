@@ -2,6 +2,7 @@ from django.db import models
 from accounts.models import User
 from datetime import datetime, timedelta
 
+
 # Create your models here.
 def generate_pk():
     if Reminder.objects.last() is not None:
@@ -33,7 +34,6 @@ class Reminder(models.Model):
 
     def __str__(self):
         return self.reminder
-
 
     def delete_old_reminders():
         # Get current date and time
