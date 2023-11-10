@@ -8,7 +8,7 @@ from django.views.generic import (
     DeleteView,
 )
 from .filters import TaskFilter
-from .models import Task
+from .models import Task, TaskAssignmentHistory
 from .forms import CreateTaskForm
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -94,4 +94,20 @@ class TaskAssignToMe(UpdateView):
 
     def form_valid(self, form):
         form.instance.assign_to = self.request.user
+        return super().form_valid(form)
+
+class TaskAssignToMe_v2(UpdateView):
+    template_name = "tasks/assign_to_me_2.html"
+    success_url = reverse_lazy("tasks:my_team")
+    model = Task
+    fields = ("assign_to",) 
+
+    def form_valid(self, form):
+        task = form.save(commit=False)
+        task.save()
+
+        TaskAssignmentHistory.objects.create(
+            task=task,
+            assigned_to=self.request.user,
+        )
         return super().form_valid(form)
