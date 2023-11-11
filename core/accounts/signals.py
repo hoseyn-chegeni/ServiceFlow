@@ -31,7 +31,7 @@ def send_mail_create_user(sender, instance, created, **kwargs):
 def log_user_creation(sender, instance, created, **kwargs):
     if created:
         DatabaseLog.objects.create(
-            user=User.objects.get(id = kwargs.get('user').id),
+            user=instance,
             event_type='create',
             table_name='auth_user',
             record_id=instance.id,
@@ -44,7 +44,7 @@ def log_user_creation(sender, instance, created, **kwargs):
 def log_user_update(sender, instance, created, **kwargs):
     if not created:
         DatabaseLog.objects.create(
-            user=User.objects.get(),
+            user=instance,
             event_type='update',
             table_name='auth_user',
             record_id=instance.id,
@@ -56,7 +56,7 @@ def log_user_update(sender, instance, created, **kwargs):
 @receiver(pre_delete, sender=User)
 def log_user_deletion(sender, instance, **kwargs):
     DatabaseLog.objects.create(
-        user=User.objects.get(id = kwargs.get('request.user').id),
+        user=instance,
         event_type='delete',
         table_name='auth_user',
         record_id=instance.id,
