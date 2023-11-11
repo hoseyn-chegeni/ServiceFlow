@@ -8,7 +8,7 @@ from accounts.models import User
 
 @receiver(m2m_changed, sender=Meetings.attendees.through)
 def send_mail_for_attendees(sender, instance, action, model, pk_set, **kwargs):
-    if action == 'post_add':
+    if action == "post_add":
         subject = f"{instance.organizer} has book a new meeting at {instance.date_time} for you"
         message = f"{instance.title}, {instance.description}"
         from_email = settings.EMAIL_HOST_USER
