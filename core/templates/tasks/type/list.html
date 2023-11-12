@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button><a href="{%url 'tasks:create_type'%}"> Create New Task type</a></button><br>
+
+
+    {% for i in type %}
+        {{ i.name }}/ <a href="{%url 'tasks:detail_type' i.id%}">Detail</a>/
+                      <a href="{%url 'tasks:update_type' i.id%}">Update</a>/
+                      <a href="{%url 'tasks:delete_type' i.id%}">Delete</a>/<br>
+    {% endfor %}
+</body>

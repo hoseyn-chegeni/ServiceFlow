@@ -1,5 +1,5 @@
 from django import forms
-from .models import Task, TaskStatus
+from .models import Task, TaskStatus, TaskType
 
 
 class CreateTaskForm(forms.ModelForm):
@@ -11,3 +11,9 @@ class CreateTaskStatusForm(forms.ModelForm):
     class Meta:
         model = TaskStatus
         fields = ("name", "description",)
+
+class CreateTaskTypeForm(forms.ModelForm):
+    class Meta:
+        model = TaskType
+        fields = ("name", "description",)
+
