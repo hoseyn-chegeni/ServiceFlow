@@ -21,82 +21,118 @@ class TaskAdmin(admin.ModelAdmin):
         "assign_to",
         "priority",
     )
-    list_filter = ('type', 'status', 'priority','assign_to', 'created_date', 'last_change')
+    list_filter = (
+        "type",
+        "status",
+        "priority",
+        "assign_to",
+        "created_date",
+        "last_change",
+    )
 
-    search_fields = ('title','creator__email', 'assign_to__email')
-    readonly_fields = ('created_date', 'last_change')
+    search_fields = ("title", "creator__email", "assign_to__email")
+    readonly_fields = ("created_date", "last_change")
 
     fieldsets = (
-        ('Task Information', {
-            'fields': ('title', 'description', 'creator', 'created_date', 'last_change')
-        }),
-        ('Status', {
-            'fields': ('type', 'status', 'priority')
-        }),
-        ('Assign', {
-            'fields': ('assign_to',)
-        }),
+        (
+            "Task Information",
+            {
+                "fields": (
+                    "title",
+                    "description",
+                    "creator",
+                    "created_date",
+                    "last_change",
+                )
+            },
+        ),
+        ("Status", {"fields": ("type", "status", "priority")}),
+        ("Assign", {"fields": ("assign_to",)}),
     )
-    actions = ['mark_as_done']
+    actions = ["mark_as_done"]
 
     def mark_as_done(self, request, queryset):
-        queryset.update(status=TaskStatus.objects.get(name='Closed'))
-        self.message_user(request, f'Selected tasks marked as Done.')
+        queryset.update(status=TaskStatus.objects.get(name="Closed"))
+        self.message_user(request, f"Selected tasks marked as Done.")
 
-    mark_as_done.short_description = 'Mark selected tasks as Done'
-
+    mark_as_done.short_description = "Mark selected tasks as Done"
 
 
 class TaskStatusAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description', 'created_by', 'created_at', 'updated_at', 'is_active')
-    search_fields = ('name', 'description', 'created_by__email')
-    list_filter = ('is_active', 'created_at', 'updated_at')
-    readonly_fields = ('created_at', 'updated_at')
+    list_display = (
+        "name",
+        "description",
+        "created_by",
+        "created_at",
+        "updated_at",
+        "is_active",
+    )
+    search_fields = ("name", "description", "created_by__email")
+    list_filter = ("is_active", "created_at", "updated_at")
+    readonly_fields = ("created_at", "updated_at")
 
     fieldsets = (
-        ('Task Type Information', {
-            'fields': ('name', 'description', 'created_by', 'created_at', 'updated_at', 'is_active')
-        }),
+        (
+            "Task Type Information",
+            {
+                "fields": (
+                    "name",
+                    "description",
+                    "created_by",
+                    "created_at",
+                    "updated_at",
+                    "is_active",
+                )
+            },
+        ),
     )
 
-    actions = ['toggle_is_active']
+    actions = ["toggle_is_active"]
 
     def toggle_is_active(self, request, queryset):
         for task_type in queryset:
             task_type.is_active = not task_type.is_active
             task_type.save()
 
-        self.message_user(request, f'Selected task types toggled for is_active status.')
+        self.message_user(request, f"Selected task types toggled for is_active status.")
 
-    toggle_is_active.short_description = 'Toggle is_active status'
-
-
+    toggle_is_active.short_description = "Toggle is_active status"
 
 
 class TaskAssignmentHistoryAdmin(admin.ModelAdmin):
-    list_display = ('task', 'assigned_to', 'assigned_by', 'assigned_at', 'comment')
-    list_filter = ('assigned_to', 'assigned_by', 'assigned_at')
-    search_fields = ('task__title', 'assigned_to__email', 'assigned_by__email')
-    readonly_fields = ('assigned_at',)
+    list_display = ("task", "assigned_to", "assigned_by", "assigned_at", "comment")
+    list_filter = ("assigned_to", "assigned_by", "assigned_at")
+    search_fields = ("task__title", "assigned_to__email", "assigned_by__email")
+    readonly_fields = ("assigned_at",)
 
     fieldsets = (
-        ('Assignment Information', {
-            'fields': ('task', 'assigned_to', 'assigned_by', 'assigned_at', 'comment')
-        }),
+        (
+            "Assignment Information",
+            {
+                "fields": (
+                    "task",
+                    "assigned_to",
+                    "assigned_by",
+                    "assigned_at",
+                    "comment",
+                )
+            },
+        ),
     )
+
 
 class TaskCommentAdmin(admin.ModelAdmin):
-    list_display = ('task', 'user', 'commented_at')
-    list_filter = ('task', 'user', 'commented_at')
-    search_fields = ('task__title', 'user__email', 'comment')
-    readonly_fields = ('commented_at',)
+    list_display = ("task", "user", "commented_at")
+    list_filter = ("task", "user", "commented_at")
+    search_fields = ("task__title", "user__email", "comment")
+    readonly_fields = ("commented_at",)
 
     fieldsets = (
-        ('Comment Information', {
-            'fields': ('task', 'user', 'comment', 'commented_at')
-        }),
+        (
+            "Comment Information",
+            {"fields": ("task", "user", "comment", "commented_at")},
+        ),
     )
-
 
 
 admin.site.register(Task, TaskAdmin)

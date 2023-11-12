@@ -52,10 +52,9 @@ class TaskType(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
+
     def __str__(self):
         return self.name
-
-
 
 
 class TaskStatus(models.Model):
@@ -70,7 +69,6 @@ class TaskStatus(models.Model):
 
     def __str__(self):
         return self.name
-
 
 
 class TaskPriority(models.Model):

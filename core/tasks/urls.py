@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import (
+from .views.task import (
     TaskView,
     MyTaskView,
     MyCreatedTaskView,
@@ -8,11 +8,14 @@ from .views import (
     TaskDelete,
     TaskUpdate,
     MyTeamTasks,
-    TaskAssignToMe,
-    TaskAssignTo,
-    TaskAssignmentLogsView,
-    TaskCommentView,
 )
+from .views.assignee import (
+    TaskAssignmentHistory,
+    TaskAssignmentLogsView,
+    TaskAssignTo,
+    TaskAssignToMe,
+)
+from .views.comment import TaskCommentView
 
 app_name = "tasks"
 
