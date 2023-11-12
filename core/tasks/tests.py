@@ -99,3 +99,43 @@ class TaskStatusURLTest(TestCase):
 
 
 
+#------ADMIN PANEL-----
+class TaskStatusAdminTest(TestCase):
+    def setUp(self):
+        self.admin_user = User.objects.create_user(email='admin@admin.com', password='adminpassword', is_staff=True, is_superuser = True)
+        self.client.force_login(self.admin_user)
+        self.status = TaskStatus.objects.create(
+            name='Test Status',
+            created_by=self.admin_user,
+            description='Test Description'
+        )
+
+    def test_task_status_admin_list_view(self):
+        url = reverse('admin:tasks_taskstatus_changelist')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Test Status')
+
+    def test_task_status_admin_detail_view(self):
+        url = reverse('admin:tasks_taskstatus_change', args=[self.status.pk])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Test Status')
+
+    def test_task_status_admin_add_view(self):
+        url = reverse('admin:tasks_taskstatus_add')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_task_status_admin_update_view(self):
+        url = reverse('admin:tasks_taskstatus_change', args=[self.status.pk])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_task_status_admin_delete_view(self):
+        url = reverse('admin:tasks_taskstatus_delete', args=[self.status.pk])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+
+
