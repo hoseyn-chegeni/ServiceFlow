@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from django.views.generic import (
     ListView,
     CreateView,
@@ -5,7 +6,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from ..models import TaskPriority
+from ..models import TaskPriority, Task, TaskPriorityChange
 from django.urls import reverse_lazy
 from ..forms import CreateTaskPriorityForm
 
@@ -47,3 +48,36 @@ class PriorityDeleteView(DeleteView):
     model = TaskPriority
     template_name = "tasks/priority/delete.html"
     success_url = reverse_lazy("tasks:list_priority")
+
+
+class ChangePriorityView(UpdateView):
+    template_name = "tasks/priority/change.html"
+    model = Task
+    fields = ("priority",)
+
+    def form_valid(self, form):
+        task = form.save(commit=False)
+        task.save()
+
+        TaskPriorityChange.objects.create(
+            task=task, priority=task.priority, changed_by=self.request.user
+        )
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy("tasks:detail", kwargs={"pk": self.object.pk})
+
+
+class ChangePriorityLogView(ListView):
+    model = TaskPriorityChange
+    template_name = "tasks/priority/log.html"
+    context_object_name = "log"
+
+    def get_queryset(self):
+        task = get_object_or_404(Task, pk=self.kwargs["pk"])
+        return task.priority_log.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["task"] = get_object_or_404(Task, pk=self.kwargs["pk"])
+        return context

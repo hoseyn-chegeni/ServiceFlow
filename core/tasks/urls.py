@@ -37,6 +37,8 @@ from .views.priority import (
     PriorityDetailView,
     PriorityListView,
     PriorityUpdateView,
+    ChangePriorityLogView,
+    ChangePriorityView,
 )
 
 app_name = "tasks"
@@ -90,5 +92,15 @@ urlpatterns = [
         "update_priority/<int:pk>/",
         PriorityUpdateView.as_view(),
         name="update_priority",
+    ),
+    path(
+        "change-priority/<int:pk>/",
+        ChangePriorityView.as_view(),
+        name="change_priority",
+    ),
+    path(
+        "change_priority_log/<int:pk>/",
+        ChangePriorityLogView.as_view(),
+        name="change_priority_log",
     ),
 ]
