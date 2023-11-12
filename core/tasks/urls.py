@@ -10,7 +10,6 @@ from .views.task import (
     MyTeamTasks,
 )
 from .views.assignee import (
-    TaskAssignmentHistory,
     TaskAssignmentLogsView,
     TaskAssignTo,
     TaskAssignToMe,
