@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button><a href="{%url 'tasks:create_priority'%}"> Create New Task Priority</a></button><br>
+
+
+    {% for i in priority %}
+        {{ i.name }}/ <a href="{%url 'tasks:detail_priority' i.id%}">Detail</a>/
+                      <a href="{%url 'tasks:update_priority' i.id%}">Update</a>/
+                      <a href="{%url 'tasks:delete_priority' i.id%}">Delete</a>/<br>
+    {% endfor %}
+</body>
