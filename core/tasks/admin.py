@@ -6,6 +6,7 @@ from .models import (
     TaskAssignmentHistory,
     TaskComment,
     TaskPriority,
+    TaskStatusChange,
 )
 
 
@@ -141,3 +142,4 @@ admin.site.register(TaskStatus, TaskStatusAdmin)
 admin.site.register(TaskAssignmentHistory, TaskAssignmentHistoryAdmin)
 admin.site.register(TaskComment, TaskCommentAdmin)
 admin.site.register(TaskPriority, TaskStatusAdmin)
+admin.site.register(TaskStatusChange)

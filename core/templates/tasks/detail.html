@@ -14,8 +14,9 @@
    Team: {{object.type.assigned_to.name}} <br>
     assignee {{object.assign_to}}<br>
     Priority: {{object.priority}}<br>
-<a href="{% url 'tasks:assign_log' object.id%}">Task Assignment log</a>
-
+<a href="{% url 'tasks:assign_log' object.id%}">Task Assignment log</a> <br>
+<a href="{% url 'tasks:change_status' object.id%}">Task Change Status</a> <br>
+<a href="{% url 'tasks:change_log' object.id%}">Task Change Status Log</a>
 
 <h3>Comments</h3>
 <ul>
