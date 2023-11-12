@@ -37,6 +37,7 @@ def send_mail_post_comment_to_articles(sender, instance, created, **kwargs):
             ]
             send_mail(subject, message, from_email, recipient_list)
 
+
 @receiver(post_save, sender=Article)
 def article_send_to_approve_box(sender, instance, created, **kwargs):
     if created:

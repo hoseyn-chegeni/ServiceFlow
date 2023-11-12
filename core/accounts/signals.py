@@ -26,18 +26,18 @@ def send_mail_create_user(sender, instance, created, **kwargs):
 #         user.save()
 
 
-
 @receiver(post_save, sender=User)
 def log_user_creation(sender, instance, created, **kwargs):
     if created:
         DatabaseLog.objects.create(
             user=instance,
-            event_type='create',
-            table_name='auth_user',
+            event_type="create",
+            table_name="auth_user",
             record_id=instance.id,
-            field_name='All fields',  # Add the specific field name if available
-            additional_info='User created',
+            field_name="All fields",  # Add the specific field name if available
+            additional_info="User created",
         )
+
 
 # Signal to log user update
 @receiver(post_save, sender=User)
@@ -45,21 +45,22 @@ def log_user_update(sender, instance, created, **kwargs):
     if not created:
         DatabaseLog.objects.create(
             user=instance,
-            event_type='update',
-            table_name='auth_user',
+            event_type="update",
+            table_name="auth_user",
             record_id=instance.id,
-            field_name='All fields',  # Add the specific field name if available
-            additional_info='User updated',
+            field_name="All fields",  # Add the specific field name if available
+            additional_info="User updated",
         )
+
 
 # Signal to log user deletion
 @receiver(pre_delete, sender=User)
 def log_user_deletion(sender, instance, **kwargs):
     DatabaseLog.objects.create(
         user=instance,
-        event_type='delete',
-        table_name='auth_user',
+        event_type="delete",
+        table_name="auth_user",
         record_id=instance.id,
-        field_name='All fields',  # Add the specific field name if available
-        additional_info='User deleted',
+        field_name="All fields",  # Add the specific field name if available
+        additional_info="User deleted",
     )
