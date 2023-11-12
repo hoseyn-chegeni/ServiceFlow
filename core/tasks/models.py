@@ -59,12 +59,13 @@ class TaskPriority(models.Model):
 
 
 
+    
+
+
 
 
 class TaskAssignmentHistory(models.Model):
-    task = models.ForeignKey(
-        Task, on_delete=models.CASCADE, related_name="assignment_history"
-    )
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="assignment_history")
     assigned_to = models.ForeignKey(User, on_delete=models.CASCADE)
     assigned_by = models.ForeignKey(
         User,
@@ -78,6 +79,8 @@ class TaskAssignmentHistory(models.Model):
 
     def __str__(self):
         return f"{self.task.title}/{self.assigned_to.email}"
+
+
 
 
 class TaskComment(models.Model):
