@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "articles",
     "mail",
     "db_events",
+    "asset",
 ]
 
 MIDDLEWARE = [
