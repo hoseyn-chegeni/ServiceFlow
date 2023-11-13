@@ -21,6 +21,9 @@ class Asset(models.Model):
     assigned_ip_address = models.GenericIPAddressField(null=True, blank=True)
     software_installed = models.TextField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
+    created_by = models.ForeignKey('accounts.User', on_delete = models.SET_NULL, blank = True, null = True, related_name = 'asset_creator')
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
 
     def __str__(self):
         return self.asset_name
@@ -28,9 +31,26 @@ class Asset(models.Model):
 
 
 class AssetType(models.Model):
-    pass
+    name = models.CharField(max_length=50, unique=True)
+    description = models.TextField(blank = True, null = True)
+    created_by = models.ForeignKey('accounts.User', on_delete = models.SET_NULL, blank = True, null = True)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+
+
 
 class AsetStatus(models.Model):
-    pass
+    name = models.CharField(max_length=50, unique=True)
+    description = models.TextField(blank = True, null = True)
+    created_by = models.ForeignKey('accounts.User', on_delete = models.SET_NULL, blank = True, null = True)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+
+
+
 class AssetCondition(models.Model):
-    pass
+    name = models.CharField(max_length=50, unique=True)
+    description = models.TextField(blank = True, null = True)
+    created_by = models.ForeignKey('accounts.User', on_delete = models.SET_NULL, blank = True, null = True)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
