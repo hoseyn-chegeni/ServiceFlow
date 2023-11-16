@@ -99,7 +99,7 @@ class TaskStatusAdmin(admin.ModelAdmin):
 
 
 class TaskCommentAdmin(admin.ModelAdmin):
-    list_display = ("task", "user", "commented_at","attachments")
+    list_display = ("task", "user", "commented_at", "attachments")
     list_filter = ("task", "user", "commented_at")
     search_fields = ("task__title", "user__email", "comment")
     readonly_fields = ("commented_at",)
@@ -107,7 +107,7 @@ class TaskCommentAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             "Comment Information",
-            {"fields": ("task", "user", "comment", "commented_at","attachments")},
+            {"fields": ("task", "user", "comment", "commented_at", "attachments")},
         ),
     )
 

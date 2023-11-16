@@ -11,7 +11,7 @@ from django.urls import reverse_lazy
 class TaskCommentView(CreateView):
     model = TaskComment
     template_name = "tasks/task_comment.html"
-    fields = ["comment","attachments"]
+    fields = ["comment", "attachments"]
 
     def form_valid(self, form):
         task = get_object_or_404(Task, pk=self.kwargs["pk"])

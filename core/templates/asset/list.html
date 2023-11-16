@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button><a href="{%url 'asset:create'%}"> add New asset</a></button>
+    <form action="" method="get">
+        {%csrf_token%}
+        {{filter.form.as_p}}
+        <input type="submit">
+    </form>
+    {%for i in asset%}
+    {{i.id}}:{{i.name}},<a href="{%url 'asset:detail' i.id%}"> Detail</a>,<a href="{%url 'asset:update' i.id %}">Update</a>,<a href="{%url 'asset:delete' i.id %}">Delete</a><br>
+    {%endfor%}
+</body>
+</html>
