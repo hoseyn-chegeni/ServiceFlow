@@ -13,6 +13,7 @@ from django.views.generic import (
 from django_filters.views import FilterView
 from .models import (
     Article,
+    PendingArticle,
     ArticleTags,
     ShareArticle,
     CommentShareArticle,
@@ -29,12 +30,6 @@ class ListArticleView(FilterView):
     context_object_name = "article"
     template_name = "article/list.html"
     filterset_class = ArticleFilter
-
-    def get_queryset(self, **kwargs):
-        qs = super().get_queryset(**kwargs)
-        return qs.filter(
-            approval_status=ArticleApprovalStatus.objects.get(name="Approved")
-        )
 
 
 class MyArticleView(FilterView):
@@ -184,7 +179,7 @@ class AddCommentView(CreateView):
 
 
 class PendingArticleList(FilterView):
-    model = Article
+    model = PendingArticle
     template_name = "article/pending_list.html"
     context_object_name = "tags"
     filterset_class = ArticleFilter
@@ -197,7 +192,7 @@ class PendingArticleList(FilterView):
 
 
 class RejectArticleList(FilterView):
-    model = Article
+    model = PendingArticle
     template_name = "article/reject_list.html"
     context_object_name = "tags"
     filterset_class = ArticleFilter
@@ -210,20 +205,28 @@ class RejectArticleList(FilterView):
 
 
 class ApproveArticleView(UpdateView):
-    model = Article
+    model = PendingArticle
     template_name = "article/approve.html"
     fields = ("approve_comment",)
     success_url = reverse_lazy("article:pending_list")
 
     def form_valid(self, form):
+        article = form.save(commit=False)
+        article.save()
         form.instance.approval_status = ArticleApprovalStatus.objects.get(
             name="Approved"
+        )
+        Article.objects.create(
+            title=article.title,
+            content=article.content,
+            author=article.author,
+            approve_comment=article.approve_comment,
         )
         return super().form_valid(form)
 
 
 class RejectArticleView(UpdateView):
-    model = Article
+    model = PendingArticle
     template_name = "article/reject.html"
     fields = ("approve_comment",)
     success_url = reverse_lazy("article:pending_list")

@@ -1,10 +1,10 @@
 from django import forms
-from .models import Article, ArticleTags
+from .models import Article, ArticleTags, PendingArticle
 
 
 class CreateArticleForms(forms.ModelForm):
     class Meta:
-        model = Article
+        model = PendingArticle
         fields = (
             "title",
             "content",

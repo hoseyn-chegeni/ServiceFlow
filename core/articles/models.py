@@ -18,17 +18,10 @@ class ArticleApprovalStatus(models.Model):
 
 
 def generate_pk():
-    if Article.objects.last() is not None:
-        number = (Article.objects.last().id) + 1
-        return f"ART-{number}"
-    else:
-        return f"ART-1"
+    pass
 
 
 class Article(models.Model):
-    art = models.CharField(
-        default=generate_pk, max_length=255, unique=True, editable=False
-    )
     title = models.CharField(max_length=255)
     content = models.TextField()
     tags = models.ManyToManyField("ArticleTags", blank=True)
@@ -36,6 +29,33 @@ class Article(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
     related_articles = models.ManyToManyField("self", blank=True)
+    is_active = models.BooleanField(default=False)
+    approval_status = models.ForeignKey(
+        "ArticleApprovalStatus",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
+    approve_comment = models.TextField(blank=True, null=True)
+    importance = models.CharField(
+        max_length=20,
+        choices=[("HIGH", "HIGH"), ("MEDIUM", "MEDIUM"), ("LOW", "LOW")],
+        default="MEDIUM",
+    )
+    attachments = models.FileField(upload_to="attachments", blank=True, null=True)
+
+    def __str__(self):
+        return self.title
+
+
+class PendingArticle(models.Model):
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+    tags = models.ManyToManyField("ArticleTags", blank=True)
+    author = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
+    related_articles = models.ManyToManyField(Article, blank=True)
     is_active = models.BooleanField(default=False)
     approval_status = models.ForeignKey(
         "ArticleApprovalStatus",

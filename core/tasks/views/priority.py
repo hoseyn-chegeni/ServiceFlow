@@ -63,11 +63,10 @@ class ChangePriorityView(UpdateView):
         TaskLog.objects.create(
             task=task,
             user=self.request.user,
-            event_type = 'Priority Change', 
+            event_type="Priority Change",
             additional_info=f"{self.request.user} Set '{task.priority}' Priority for {task}",
         )
         return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy("tasks:detail", kwargs={"pk": self.object.pk})
-

@@ -5,7 +5,7 @@ from django.views.generic import (
     UpdateView,
 )
 from ..models import Task
-from  db_events.models import TaskLog
+from db_events.models import TaskLog
 
 
 class TaskAssignToMe(UpdateView):
@@ -20,8 +20,8 @@ class TaskAssignToMe(UpdateView):
         form.instance.assign_to = self.request.user
 
         TaskLog.objects.create(
-            user= self.request.user,
-            task = task,
+            user=self.request.user,
+            task=task,
             event_type="Assignment",
             additional_info=f"{self.request.user} Assigned Task to {task.assign_to}",
         )
@@ -39,11 +39,9 @@ class TaskAssignTo(UpdateView):
         task.save()
 
         TaskLog.objects.create(
-            user= self.request.user,
-            task = task,
+            user=self.request.user,
+            task=task,
             event_type="Assignment",
             additional_info=f"{self.request.user} Assigned Task to {task.assign_to}",
         )
         return super().form_valid(form)
-
-

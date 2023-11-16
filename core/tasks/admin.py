@@ -98,7 +98,6 @@ class TaskStatusAdmin(admin.ModelAdmin):
     toggle_is_active.short_description = "Toggle is_active status"
 
 
-
 class TaskCommentAdmin(admin.ModelAdmin):
     list_display = ("task", "user", "commented_at")
     list_filter = ("task", "user", "commented_at")
@@ -118,4 +117,3 @@ admin.site.register(TaskType, TaskStatusAdmin)
 admin.site.register(TaskStatus, TaskStatusAdmin)
 admin.site.register(TaskComment, TaskCommentAdmin)
 admin.site.register(TaskPriority, TaskStatusAdmin)
-
