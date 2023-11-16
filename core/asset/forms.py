@@ -26,6 +26,7 @@ class CreateAssetForm(forms.ModelForm):
             "notes",
         )
 
+
 class CreateAssetStatusForm(forms.ModelForm):
     class Meta:
         model = AssetStatus
@@ -33,6 +34,7 @@ class CreateAssetStatusForm(forms.ModelForm):
             "name",
             "description",
         )
+
 
 class CreateAssetTypeForm(forms.ModelForm):
     class Meta:
@@ -42,6 +44,7 @@ class CreateAssetTypeForm(forms.ModelForm):
             "description",
         )
 
+
 class CreateAssetConditionForm(forms.ModelForm):
     class Meta:
         model = AssetCondition
@@ -49,4 +52,3 @@ class CreateAssetConditionForm(forms.ModelForm):
             "name",
             "description",
         )
- 

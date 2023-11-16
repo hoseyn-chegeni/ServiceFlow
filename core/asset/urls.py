@@ -6,7 +6,15 @@ from .views.asset import (
     AssetDeleteView,
     AssetCreateView,
 )
-from .views.asset_status import AssetStatusCreateView, AssetStatusDeleteView,AssetStatusDetailView,AssetStatusListView,AssetStatusUpdateView
+from .views.asset_status import (
+    AssetStatusCreateView,
+    AssetStatusDeleteView,
+    AssetStatusDetailView,
+    AssetStatusListView,
+    AssetStatusUpdateView,
+)
+
+from .views.asset_type import AssetTypeCreateView, AssetTypeDeleteView, AssetTypeDetailView, AssetTypeListView,AssetTypeUpdateView
 
 app_name = "asset"
 
@@ -17,10 +25,28 @@ urlpatterns = [
     path("detail/<int:pk>", AssetDetailView.as_view(), name="detail"),
     path("update/<int:pk>", AssetUpdateView.as_view(), name="update"),
     path("delete/<int:pk>", AssetDeleteView.as_view(), name="delete"),
-    #ASSET STATUS
+    # ASSET STATUS
     path("status_list/", AssetStatusListView.as_view(), name="status_list"),
     path("status_create/", AssetStatusCreateView.as_view(), name="status_create"),
-    path("status_detail/<int:pk>", AssetStatusDetailView.as_view(), name="status_detail"),
-    path("status_update/<int:pk>", AssetStatusUpdateView.as_view(), name="status_update"),
-    path("status_delete/<int:pk>", AssetStatusDeleteView.as_view(), name="status_delete"),
+    path(
+        "status_detail/<int:pk>", AssetStatusDetailView.as_view(), name="status_detail"
+    ),
+    path(
+        "status_update/<int:pk>", AssetStatusUpdateView.as_view(), name="status_update"
+    ),
+    path(
+        "status_delete/<int:pk>", AssetStatusDeleteView.as_view(), name="status_delete"
+    ),
+    # ASSET TYPE
+    path("type_list/", AssetTypeListView.as_view(), name="type_list"),
+    path("type_create/", AssetTypeCreateView.as_view(), name="type_create"),
+    path(
+        "type_detail/<int:pk>", AssetTypeDetailView.as_view(), name="type_detail"
+    ),
+    path(
+        "type_update/<int:pk>", AssetTypeUpdateView.as_view(), name="type_update"
+    ),
+    path(
+        "type_delete/<int:pk>", AssetTypeDeleteView.as_view(), name="type_delete"
+    ),
 ]

@@ -51,7 +51,7 @@ class AssetUpdateView(UpdateView):
         "notes",
     )
 
-    success_url = reverse_lazy('asset:list')
+    success_url = reverse_lazy("asset:list")
 
 
 class AssetDeleteView(DeleteView):

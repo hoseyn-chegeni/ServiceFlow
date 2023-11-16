@@ -1,9 +1,13 @@
-from django.views.generic import ListView, DeleteView, CreateView, UpdateView, DetailView
-from django_filters.views import FilterView
+from django.views.generic import (
+    ListView,
+    DeleteView,
+    CreateView,
+    UpdateView,
+    DetailView,
+)
 from ..models.asset_status import AssetStatus
 from django.urls import reverse_lazy
 from ..forms import CreateAssetStatusForm
-
 
 
 class AssetStatusListView(ListView):
@@ -38,7 +42,7 @@ class AssetStatusUpdateView(UpdateView):
         "description",
     )
 
-    success_url = reverse_lazy('asset:status_list')
+    success_url = reverse_lazy("asset:status_list")
 
 
 class AssetStatusDeleteView(DeleteView):
