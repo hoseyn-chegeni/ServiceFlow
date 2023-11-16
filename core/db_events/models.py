@@ -26,3 +26,6 @@ class TaskLog(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     additional_info = models.TextField(blank=True, null=True)
     is_success = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.additional_info
