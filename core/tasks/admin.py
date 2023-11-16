@@ -3,7 +3,6 @@ from .models import (
     Task,
     TaskStatus,
     TaskType,
-    TaskAssignmentHistory,
     TaskComment,
     TaskPriority,
 )
@@ -99,27 +98,6 @@ class TaskStatusAdmin(admin.ModelAdmin):
     toggle_is_active.short_description = "Toggle is_active status"
 
 
-class TaskAssignmentHistoryAdmin(admin.ModelAdmin):
-    list_display = ("task", "assigned_to", "assigned_by", "assigned_at", "comment")
-    list_filter = ("assigned_to", "assigned_by", "assigned_at")
-    search_fields = ("task__title", "assigned_to__email", "assigned_by__email")
-    readonly_fields = ("assigned_at",)
-
-    fieldsets = (
-        (
-            "Assignment Information",
-            {
-                "fields": (
-                    "task",
-                    "assigned_to",
-                    "assigned_by",
-                    "assigned_at",
-                    "comment",
-                )
-            },
-        ),
-    )
-
 
 class TaskCommentAdmin(admin.ModelAdmin):
     list_display = ("task", "user", "commented_at")
@@ -138,7 +116,6 @@ class TaskCommentAdmin(admin.ModelAdmin):
 admin.site.register(Task, TaskAdmin)
 admin.site.register(TaskType, TaskStatusAdmin)
 admin.site.register(TaskStatus, TaskStatusAdmin)
-admin.site.register(TaskAssignmentHistory, TaskAssignmentHistoryAdmin)
 admin.site.register(TaskComment, TaskCommentAdmin)
 admin.site.register(TaskPriority, TaskStatusAdmin)
 

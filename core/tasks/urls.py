@@ -11,7 +11,6 @@ from .views.task import (
     TaskDetailLogView,
 )
 from .views.assignee import (
-    TaskAssignmentLogsView,
     TaskAssignTo,
     TaskAssignToMe,
 )
@@ -56,7 +55,6 @@ urlpatterns = [
     path("tasks_assigned_to_my_team/", MyTeamTasks.as_view(), name="my_team"),
     path("assign_to_me/<int:pk>/", TaskAssignToMe.as_view(), name="assign_to_me"),
     path("assign_to/<int:pk>/", TaskAssignTo.as_view(), name="assign_to"),
-    path("assign_log/<int:pk>/", TaskAssignmentLogsView.as_view(), name="assign_log"),
     # COMMENT
     path("comment/<int:pk>/", TaskCommentView.as_view(), name="task_comment"),
     # STATUS

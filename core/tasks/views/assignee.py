@@ -1,11 +1,11 @@
-from typing import Any
+from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.views.generic import (
     ListView,
     UpdateView,
 )
-from ..models import Task, TaskAssignmentHistory
-from django.urls import reverse_lazy
+from ..models import Task
+from  db_events.models import TaskLog
 
 
 class TaskAssignToMe(UpdateView):
@@ -18,8 +18,12 @@ class TaskAssignToMe(UpdateView):
         task = form.save(commit=False)
         task.save()
         form.instance.assign_to = self.request.user
-        TaskAssignmentHistory.objects.create(
-            task=task, assigned_by=self.request.user, assigned_to=self.request.user
+
+        TaskLog.objects.create(
+            user= self.request.user,
+            task = task,
+            event_type="Assignment",
+            additional_info=f"{self.request.user} Assigned Task to {task.assign_to}",
         )
         return super().form_valid(form)
 
@@ -34,22 +38,12 @@ class TaskAssignTo(UpdateView):
         task = form.save(commit=False)
         task.save()
 
-        TaskAssignmentHistory.objects.create(
-            task=task, assigned_by=self.request.user, assigned_to=task.assign_to
+        TaskLog.objects.create(
+            user= self.request.user,
+            task = task,
+            event_type="Assignment",
+            additional_info=f"{self.request.user} Assigned Task to {task.assign_to}",
         )
         return super().form_valid(form)
 
 
-class TaskAssignmentLogsView(ListView):
-    model = TaskAssignmentHistory
-    template_name = "tasks/assign_log.html"
-    context_object_name = "log"
-
-    def get_queryset(self):
-        task = get_object_or_404(Task, pk=self.kwargs["pk"])
-        return task.assignment_history.all()
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["task"] = get_object_or_404(Task, pk=self.kwargs["pk"])
-        return context
