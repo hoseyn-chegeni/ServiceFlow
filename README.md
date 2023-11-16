@@ -1,3 +1,2 @@
 # itest
-IT System Management
-Operation System Support
+IT System Management and Operation System Support Using djang
