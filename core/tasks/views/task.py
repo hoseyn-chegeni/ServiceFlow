@@ -83,7 +83,7 @@ class MyTeamTasks(ListView):
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(type__assigned_to=self.request.user.member_of)
-    
+
 
 class TaskDetailLogView(ListView):
     model = TaskLog

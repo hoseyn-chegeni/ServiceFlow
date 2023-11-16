@@ -6,9 +6,10 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from ..models import TaskStatus, Task, TaskStatusChange
+from ..models import TaskStatus, Task
 from django.urls import reverse_lazy
 from ..forms import CreateTaskStatusForm
+from db_events.models import TaskLog
 
 
 class StatusListView(ListView):
@@ -59,8 +60,11 @@ class ChangeStatusView(UpdateView):
         task = form.save(commit=False)
         task.save()
 
-        TaskStatusChange.objects.create(
-            task=task, status=task.status, changed_by=self.request.user
+        TaskLog.objects.create(
+            task=task,
+            user=self.request.user,
+            event_type = 'Status Change', 
+            additional_info=f"{self.request.user} Set '{task.status}' for {task}",
         )
         return super().form_valid(form)
 
@@ -68,16 +72,3 @@ class ChangeStatusView(UpdateView):
         return reverse_lazy("tasks:detail", kwargs={"pk": self.object.pk})
 
 
-class ChangeStatusLogView(ListView):
-    model = TaskStatusChange
-    template_name = "tasks/status/change_log.html"
-    context_object_name = "log"
-
-    def get_queryset(self):
-        task = get_object_or_404(Task, pk=self.kwargs["pk"])
-        return task.change_log.all()
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["task"] = get_object_or_404(Task, pk=self.kwargs["pk"])
-        return context

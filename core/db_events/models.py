@@ -18,10 +18,15 @@ class DatabaseLog(models.Model):
         return f"{self.event_type} on {self.table_name} at {self.timestamp}"
 
 
-
 class TaskLog(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    task  = models.ForeignKey('tasks.Task', on_delete = models.SET_NULL, blank = True, null = True, related_name = 'log')
+    task = models.ForeignKey(
+        "tasks.Task",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="log",
+    )
     event_type = models.CharField(max_length=255)
     timestamp = models.DateTimeField(auto_now_add=True)
     additional_info = models.TextField(blank=True, null=True)
