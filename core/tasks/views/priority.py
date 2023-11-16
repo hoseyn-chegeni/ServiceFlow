@@ -6,9 +6,10 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from ..models import TaskPriority, Task, TaskPriorityChange
+from ..models import TaskPriority, Task
 from django.urls import reverse_lazy
 from ..forms import CreateTaskPriorityForm
+from db_events.models import TaskLog
 
 
 class PriorityListView(ListView):
@@ -59,25 +60,14 @@ class ChangePriorityView(UpdateView):
         task = form.save(commit=False)
         task.save()
 
-        TaskPriorityChange.objects.create(
-            task=task, priority=task.priority, changed_by=self.request.user
+        TaskLog.objects.create(
+            task=task,
+            user=self.request.user,
+            event_type = 'Priority Change', 
+            additional_info=f"{self.request.user} Set '{task.priority}' Priority for {task}",
         )
         return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy("tasks:detail", kwargs={"pk": self.object.pk})
 
-
-class ChangePriorityLogView(ListView):
-    model = TaskPriorityChange
-    template_name = "tasks/priority/log.html"
-    context_object_name = "log"
-
-    def get_queryset(self):
-        task = get_object_or_404(Task, pk=self.kwargs["pk"])
-        return task.priority_log.all()
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["task"] = get_object_or_404(Task, pk=self.kwargs["pk"])
-        return context

@@ -64,7 +64,7 @@ class ChangeStatusView(UpdateView):
             task=task,
             user=self.request.user,
             event_type = 'Status Change', 
-            additional_info=f"{self.request.user} Set '{task.status}' for {task}",
+            additional_info=f"{self.request.user} Set '{task.status}' Status for {task}",
         )
         return super().form_valid(form)
 
