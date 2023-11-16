@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from django_filters.views import FilterView
 from django.views.generic import (
     ListView,
@@ -11,6 +12,7 @@ from ..models import Task
 from ..forms import CreateTaskForm
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from db_events.models import TaskLog
 
 
 class TaskView(FilterView):
@@ -81,3 +83,18 @@ class MyTeamTasks(ListView):
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(type__assigned_to=self.request.user.member_of)
+    
+
+class TaskDetailLogView(ListView):
+    model = TaskLog
+    template_name = "tasks/change_log.html"
+    context_object_name = "log"
+
+    def get_queryset(self):
+        task = get_object_or_404(Task, pk=self.kwargs["pk"])
+        return task.log.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["task"] = get_object_or_404(Task, pk=self.kwargs["pk"])
+        return context
