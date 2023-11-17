@@ -1,8 +1,7 @@
 from typing import Any
-from django.db import models
-from django.db.models.query import QuerySet
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
     ListView,
     UpdateView,
@@ -25,14 +24,14 @@ from .filters import ArticleFilter, ArticleTagFilter
 # Create your views here.
 
 
-class ListArticleView(FilterView):
+class ListArticleView(LoginRequiredMixin, FilterView):
     model = Article
     context_object_name = "article"
     template_name = "article/list.html"
     filterset_class = ArticleFilter
 
 
-class MyArticleView(FilterView):
+class MyArticleView(LoginRequiredMixin, FilterView):
     model = Article
     context_object_name = "article"
     template_name = "article/my_list.html"
@@ -46,7 +45,7 @@ class MyArticleView(FilterView):
         )
 
 
-class ArchiveArticleView(FilterView):
+class ArchiveArticleView(LoginRequiredMixin, FilterView):
     model = Article
     context_object_name = "article"
     template_name = "article/archive.html"
@@ -57,7 +56,7 @@ class ArchiveArticleView(FilterView):
         return qs.filter(is_active=False, author_id=self.request.user.id)
 
 
-class CreateArticleView(CreateView):
+class CreateArticleView(LoginRequiredMixin, CreateView):
     template_name = "article/create.html"
     form_class = CreateArticleForms
     success_url = reverse_lazy("article:list")
@@ -67,7 +66,7 @@ class CreateArticleView(CreateView):
         return super().form_valid(form)
 
 
-class UpdateArticleView(UpdateView):
+class UpdateArticleView(LoginRequiredMixin, UpdateView):
     model = Article
     fields = (
         "title",
@@ -81,39 +80,39 @@ class UpdateArticleView(UpdateView):
     success_url = reverse_lazy("article:my_list")
 
 
-class DetailArticleView(DetailView):
+class DetailArticleView(LoginRequiredMixin, DetailView):
     model = Article
     template_name = "article/detail.html"
 
 
-class DeleteArticleView(DeleteView):
+class DeleteArticleView(LoginRequiredMixin, DeleteView):
     model = Article
     template_name = "article/delete.html"
     success_url = reverse_lazy("article:list")
 
 
 # TAGS
-class ListArticleTag(FilterView):
+class ListArticleTag(LoginRequiredMixin, FilterView):
     model = ArticleTags
     template_name = "article/tags/list.html"
     context_object_name = "tags"
     filterset_class = ArticleTagFilter
 
 
-class CreateArticleTag(CreateView):
+class CreateArticleTag(LoginRequiredMixin, CreateView):
     template_name = "article/tags/create.html"
     form_class = CreateArticleTags
     success_url = reverse_lazy("article:tag_list")
 
 
-class UpdateArticleTag(UpdateView):
+class UpdateArticleTag(LoginRequiredMixin, UpdateView):
     model = ArticleTags
     template_name = "article/tags/update.html"
     fields = ("name",)
     success_url = reverse_lazy("article:tag_list")
 
 
-class DeleteArticleTag(DeleteView):
+class DeleteArticleTag(LoginRequiredMixin, DeleteView):
     model = ArticleTags
     template_name = "article/tags/delete.html"
     success_url = reverse_lazy("article:tag_list")
@@ -122,7 +121,7 @@ class DeleteArticleTag(DeleteView):
 # SHARED
 
 
-class ShareArticleDetailView(DetailView):
+class ShareArticleDetailView(LoginRequiredMixin, DetailView):
     template_name = "article/shared/detail.html"
     model = ShareArticle
 
@@ -132,7 +131,7 @@ class ShareArticleDetailView(DetailView):
         return context
 
 
-class SentArticleListView(ListView):
+class SentArticleListView(LoginRequiredMixin, ListView):
     model = ShareArticle
     context_object_name = "article"
     template_name = "article/shared/sent.html"
@@ -142,7 +141,7 @@ class SentArticleListView(ListView):
         return qs.filter(sender_id=self.request.user.id)
 
 
-class SentArticleView(CreateView):
+class SentArticleView(LoginRequiredMixin, CreateView):
     model = ShareArticle
     fields = (
         "recipient",
@@ -158,7 +157,7 @@ class SentArticleView(CreateView):
         return super().form_valid(form)
 
 
-class AddCommentView(CreateView):
+class AddCommentView(LoginRequiredMixin, CreateView):
     model = CommentShareArticle
     fields = ("content",)
     template_name = "article/shared/comment.html"
@@ -178,7 +177,7 @@ class AddCommentView(CreateView):
 # APPROVAL WORK FLOW
 
 
-class PendingArticleList(FilterView):
+class PendingArticleList(LoginRequiredMixin, FilterView):
     model = PendingArticle
     template_name = "article/pending_list.html"
     context_object_name = "tags"
@@ -191,7 +190,7 @@ class PendingArticleList(FilterView):
         )
 
 
-class RejectArticleList(FilterView):
+class RejectArticleList(LoginRequiredMixin, FilterView):
     model = PendingArticle
     template_name = "article/reject_list.html"
     context_object_name = "tags"
@@ -204,7 +203,7 @@ class RejectArticleList(FilterView):
         )
 
 
-class ApproveArticleView(UpdateView):
+class ApproveArticleView(LoginRequiredMixin, UpdateView):
     model = PendingArticle
     template_name = "article/approve.html"
     fields = ("approve_comment",)
@@ -225,7 +224,7 @@ class ApproveArticleView(UpdateView):
         return super().form_valid(form)
 
 
-class RejectArticleView(UpdateView):
+class RejectArticleView(LoginRequiredMixin, UpdateView):
     model = PendingArticle
     template_name = "article/reject.html"
     fields = ("approve_comment",)
