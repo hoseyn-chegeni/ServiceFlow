@@ -7,10 +7,11 @@ from notes.models import Note
 from meetings.models import Meetings
 from organization.models import Organization
 from articles.models import ShareArticle
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Create your views here.
-class IndexView(TemplateView):
+class IndexView(LoginRequiredMixin, TemplateView):
     template_name = "index.html"
 
     def get_context_data(self, **kwargs: Any):
