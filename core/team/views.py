@@ -8,12 +8,12 @@ from .models import Team
 from .forms import TeamCreteForm
 from django.urls import reverse_lazy
 from accounts.models import User
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 
 # Create your views here.
 
 
-class TeamView(FilterView):
+class TeamView(LoginRequiredMixin, FilterView):
     model = Team
     filterset_class = TeamFilter
     context_object_name = "team"
@@ -32,7 +32,7 @@ class TeamDetailView(PermissionRequiredMixin, DetailView):
         return context
 
 
-class TeamUpdateView(UpdateView):
+class TeamUpdateView(LoginRequiredMixin, UpdateView):
     model = Team
     template_name = "team/update.html"
     fields = (
@@ -46,7 +46,7 @@ class TeamUpdateView(UpdateView):
     success_url = reverse_lazy("team:team_list")
 
 
-class TeamCreateView(CreateView):
+class TeamCreateView(LoginRequiredMixin, CreateView):
     model = Team
     template_name = "team/create.html"
     form_class = TeamCreteForm
@@ -57,7 +57,7 @@ class TeamCreateView(CreateView):
         return super().form_valid(form)
 
 
-class TeamDeleteView(DeleteView):
+class TeamDeleteView(LoginRequiredMixin, DeleteView):
     model = Team
     template_name = "team/delete.html"
     success_url = reverse_lazy("team:team_list")
