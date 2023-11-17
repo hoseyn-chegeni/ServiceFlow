@@ -8,20 +8,21 @@ from django.views.generic import (
 from ..models.asset_condition import AssetCondition
 from django.urls import reverse_lazy
 from ..forms import CreateAssetConditionForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class AssetConditionListView(ListView):
+class AssetConditionListView(LoginRequiredMixin, ListView):
     model = AssetCondition
     template_name = "asset/condition/list.html"
     context_object_name = "asset"
 
 
-class AssetConditionDetailView(DetailView):
+class AssetConditionDetailView(LoginRequiredMixin, DetailView):
     model = AssetCondition
     template_name = "asset/condition/detail.html"
 
 
-class AssetConditionCreateView(CreateView):
+class AssetConditionCreateView(LoginRequiredMixin, CreateView):
     model = AssetCondition
     template_name = "asset/condition/create.html"
     form_class = CreateAssetConditionForm
@@ -34,7 +35,7 @@ class AssetConditionCreateView(CreateView):
         return super().form_valid(form)
 
 
-class AssetConditionUpdateView(UpdateView):
+class AssetConditionUpdateView(LoginRequiredMixin, UpdateView):
     model = AssetCondition
     template_name = "asset/condition/update.html"
     fields = (
@@ -45,7 +46,7 @@ class AssetConditionUpdateView(UpdateView):
     success_url = reverse_lazy("asset:condition_list")
 
 
-class AssetConditionDeleteView(DeleteView):
+class AssetConditionDeleteView(LoginRequiredMixin, DeleteView):
     model = AssetCondition
     template_name = "asset/condition/delete.html"
     success_url = reverse_lazy("asset:condition_list")

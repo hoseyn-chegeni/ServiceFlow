@@ -8,20 +8,20 @@ from django.views.generic import (
 from ..models.asset_status import AssetStatus
 from django.urls import reverse_lazy
 from ..forms import CreateAssetStatusForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-
-class AssetStatusListView(ListView):
+class AssetStatusListView(LoginRequiredMixin, ListView):
     model = AssetStatus
     template_name = "asset/status/list.html"
     context_object_name = "asset"
 
 
-class AssetStatusDetailView(DetailView):
+class AssetStatusDetailView(LoginRequiredMixin, DetailView):
     model = AssetStatus
     template_name = "asset/status/detail.html"
 
 
-class AssetStatusCreateView(CreateView):
+class AssetStatusCreateView(LoginRequiredMixin, CreateView):
     model = AssetStatus
     template_name = "asset/status/create.html"
     form_class = CreateAssetStatusForm
@@ -34,7 +34,7 @@ class AssetStatusCreateView(CreateView):
         return super().form_valid(form)
 
 
-class AssetStatusUpdateView(UpdateView):
+class AssetStatusUpdateView(LoginRequiredMixin, UpdateView):
     model = AssetStatus
     template_name = "asset/status/update.html"
     fields = (
@@ -45,7 +45,7 @@ class AssetStatusUpdateView(UpdateView):
     success_url = reverse_lazy("asset:status_list")
 
 
-class AssetStatusDeleteView(DeleteView):
+class AssetStatusDeleteView(LoginRequiredMixin, DeleteView):
     model = AssetStatus
     template_name = "asset/status/delete.html"
     success_url = reverse_lazy("asset:status_list")

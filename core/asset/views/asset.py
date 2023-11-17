@@ -4,21 +4,21 @@ from ..models.asset import Asset
 from django.urls import reverse_lazy
 from ..forms import CreateAssetForm
 from ..filters import AssetFilters
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-
-class AssetListView(FilterView):
+class AssetListView(LoginRequiredMixin, FilterView):
     model = Asset
     template_name = "asset/list.html"
     filterset_class = AssetFilters
     context_object_name = "asset"
 
 
-class AssetDetailView(DetailView):
+class AssetDetailView(LoginRequiredMixin, DetailView):
     model = Asset
     template_name = "asset/detail.html"
 
 
-class AssetCreateView(CreateView):
+class AssetCreateView(LoginRequiredMixin, CreateView):
     model = Asset
     template_name = "asset/create.html"
     form_class = CreateAssetForm
@@ -31,7 +31,7 @@ class AssetCreateView(CreateView):
         return super().form_valid(form)
 
 
-class AssetUpdateView(UpdateView):
+class AssetUpdateView(LoginRequiredMixin, UpdateView):
     model = Asset
     template_name = "asset/update.html"
     fields = (
@@ -54,7 +54,7 @@ class AssetUpdateView(UpdateView):
     success_url = reverse_lazy("asset:list")
 
 
-class AssetDeleteView(DeleteView):
+class AssetDeleteView(LoginRequiredMixin, DeleteView):
     model = Asset
     template_name = "asset/delete.html"
     success_url = reverse_lazy("asset:list")
