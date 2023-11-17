@@ -1,13 +1,10 @@
-from typing import Any
-from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic.base import TemplateView
 from django.views.generic import CreateView, ListView
 from .models import Mail
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
-class MailBoxView(CreateView):
+class MailBoxView(LoginRequiredMixin, CreateView):
     template_name = "mail/mail_box.html"
     model = Mail
     fields = [
@@ -31,7 +28,7 @@ class MailBoxView(CreateView):
         return super().form_valid(form)
 
 
-class SentItemView(ListView):
+class SentItemView(LoginRequiredMixin, ListView):
     model = Mail
     template_name = "mail/sent.html"
 
