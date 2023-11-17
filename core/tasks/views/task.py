@@ -11,11 +11,11 @@ from ..filters import TaskFilter
 from ..models import Task
 from ..forms import CreateTaskForm
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from db_events.models import TaskLog
 
 
-class TaskView(FilterView):
+class TaskView(LoginRequiredMixin, FilterView):
     model = Task
     filterset_class = TaskFilter
     paginate_by = 2
@@ -23,7 +23,7 @@ class TaskView(FilterView):
     template_name = "tasks/tasks.html"
 
 
-class MyTaskView(ListView):
+class MyTaskView(LoginRequiredMixin, ListView):
     model = Task
     context_object_name = "tasks"
     template_name = "tasks/myTask.html"
@@ -33,7 +33,7 @@ class MyTaskView(ListView):
         return qs.filter(assign_to_id=self.request.user.id)
 
 
-class MyCreatedTaskView(ListView):
+class MyCreatedTaskView(LoginRequiredMixin, ListView):
     template_name = "tasks/myCreatedTask.html"
     model = Task
     context_object_name = "tasks"
@@ -85,7 +85,7 @@ class MyTeamTasks(ListView):
         return qs.filter(type__assigned_to=self.request.user.member_of)
 
 
-class TaskDetailLogView(ListView):
+class TaskDetailLogView(LoginRequiredMixin, ListView):
     model = TaskLog
     template_name = "tasks/change_log.html"
     context_object_name = "log"

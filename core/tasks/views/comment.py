@@ -6,9 +6,9 @@ from django.views.generic import (
 
 from ..models import Task, TaskComment
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-
-class TaskCommentView(CreateView):
+class TaskCommentView(LoginRequiredMixin, CreateView):
     model = TaskComment
     template_name = "tasks/task_comment.html"
     fields = ["comment", "attachments"]

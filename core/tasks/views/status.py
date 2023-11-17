@@ -10,21 +10,21 @@ from ..models import TaskStatus, Task
 from django.urls import reverse_lazy
 from ..forms import CreateTaskStatusForm
 from db_events.models import TaskLog
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-
-class StatusListView(ListView):
+class StatusListView(LoginRequiredMixin, ListView):
     model = TaskStatus
     context_object_name = "status"
     template_name = "tasks/status/list.html"
 
 
-class StatusDetailView(DetailView):
+class StatusDetailView(LoginRequiredMixin, DetailView):
     model = TaskStatus
     template_name = "tasks/status/detail.html"
     context_object_name = "status"
 
 
-class StatusCreateView(CreateView):
+class StatusCreateView(LoginRequiredMixin, CreateView):
     template_name = "tasks/status/create.html"
     form_class = CreateTaskStatusForm
 
@@ -36,7 +36,7 @@ class StatusCreateView(CreateView):
         return reverse_lazy("tasks:detail_status", kwargs={"pk": self.object.pk})
 
 
-class StatusUpdateView(UpdateView):
+class StatusUpdateView(LoginRequiredMixin, UpdateView):
     model = TaskStatus
     fields = ("name", "description", "is_active")
     template_name = "tasks/status/update.html"
@@ -45,13 +45,13 @@ class StatusUpdateView(UpdateView):
         return reverse_lazy("tasks:detail_status", kwargs={"pk": self.object.pk})
 
 
-class StatusDeleteView(DeleteView):
+class StatusDeleteView(LoginRequiredMixin, DeleteView):
     model = TaskStatus
     template_name = "tasks/status/delete.html"
     success_url = reverse_lazy("tasks:list_status")
 
 
-class ChangeStatusView(UpdateView):
+class ChangeStatusView(LoginRequiredMixin, UpdateView):
     template_name = "tasks/status/change_status.html"
     model = Task
     fields = ("status",)

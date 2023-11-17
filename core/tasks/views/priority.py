@@ -10,21 +10,21 @@ from ..models import TaskPriority, Task
 from django.urls import reverse_lazy
 from ..forms import CreateTaskPriorityForm
 from db_events.models import TaskLog
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-
-class PriorityListView(ListView):
+class PriorityListView(LoginRequiredMixin, ListView):
     model = TaskPriority
     context_object_name = "priority"
     template_name = "tasks/priority/list.html"
 
 
-class PriorityDetailView(DetailView):
+class PriorityDetailView(LoginRequiredMixin, DetailView):
     model = TaskPriority
     template_name = "tasks/priority/detail.html"
     context_object_name = "priority"
 
 
-class PriorityCreateView(CreateView):
+class PriorityCreateView(LoginRequiredMixin, CreateView):
     template_name = "tasks/priority/create.html"
     form_class = CreateTaskPriorityForm
 
@@ -36,7 +36,7 @@ class PriorityCreateView(CreateView):
         return reverse_lazy("tasks:detail_priority", kwargs={"pk": self.object.pk})
 
 
-class PriorityUpdateView(UpdateView):
+class PriorityUpdateView(LoginRequiredMixin, UpdateView):
     model = TaskPriority
     fields = ("name", "description", "is_active")
     template_name = "tasks/priority/update.html"
@@ -45,13 +45,13 @@ class PriorityUpdateView(UpdateView):
         return reverse_lazy("tasks:detail_priority", kwargs={"pk": self.object.pk})
 
 
-class PriorityDeleteView(DeleteView):
+class PriorityDeleteView(LoginRequiredMixin, DeleteView):
     model = TaskPriority
     template_name = "tasks/priority/delete.html"
     success_url = reverse_lazy("tasks:list_priority")
 
 
-class ChangePriorityView(UpdateView):
+class ChangePriorityView(LoginRequiredMixin, UpdateView):
     template_name = "tasks/priority/change.html"
     model = Task
     fields = ("priority",)

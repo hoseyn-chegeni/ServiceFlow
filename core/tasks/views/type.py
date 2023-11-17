@@ -8,21 +8,21 @@ from django.views.generic import (
 from ..models import TaskType
 from django.urls import reverse_lazy
 from ..forms import CreateTaskTypeForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-
-class TypeListView(ListView):
+class TypeListView(LoginRequiredMixin, ListView):
     model = TaskType
     context_object_name = "type"
     template_name = "tasks/type/list.html"
 
 
-class TypeDetailView(DetailView):
+class TypeDetailView(LoginRequiredMixin, DetailView):
     model = TaskType
     template_name = "tasks/type/detail.html"
     context_object_name = "type"
 
 
-class TypeCreateView(CreateView):
+class TypeCreateView(LoginRequiredMixin, CreateView):
     template_name = "tasks/type/create.html"
     form_class = CreateTaskTypeForm
 
@@ -34,7 +34,7 @@ class TypeCreateView(CreateView):
         return reverse_lazy("tasks:detail_type", kwargs={"pk": self.object.pk})
 
 
-class TypeUpdateView(UpdateView):
+class TypeUpdateView(LoginRequiredMixin, UpdateView):
     model = TaskType
     fields = ("name", "description", "is_active")
     template_name = "tasks/type/update.html"
@@ -43,7 +43,7 @@ class TypeUpdateView(UpdateView):
         return reverse_lazy("tasks:detail_type", kwargs={"pk": self.object.pk})
 
 
-class TypeDeleteView(DeleteView):
+class TypeDeleteView(LoginRequiredMixin, DeleteView):
     model = TaskType
     template_name = "tasks/type/delete.html"
     success_url = reverse_lazy("tasks:list_type")
