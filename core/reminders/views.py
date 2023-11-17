@@ -11,11 +11,12 @@ from django.views.generic import (
 )
 from .models import Reminder
 from .forms import ReminderCreateForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
 
-class MyCreatedReminder(ListView):
+class MyCreatedReminder(LoginRequiredMixin, ListView):
     template_name = "reminder/my_created_reminder.html"
     model = Reminder
     context_object_name = "reminders"
@@ -25,7 +26,7 @@ class MyCreatedReminder(ListView):
         return qs.filter(created_by_id=self.request.user.id)
 
 
-class AssignedReminder(ListView):
+class AssignedReminder(LoginRequiredMixin, ListView):
     template_name = "reminder/assigned_reminder.html"
     model = Reminder
     context_object_name = "reminder"
@@ -35,19 +36,19 @@ class AssignedReminder(ListView):
         return Reminder.objects.filter(assign_to=user)
 
 
-class ReminderDetailView(DetailView):
+class ReminderDetailView(LoginRequiredMixin, DetailView):
     model = Reminder
     template_name = "reminder/detail.html"
 
 
-class ReminderUpdateView(UpdateView):
+class ReminderUpdateView(LoginRequiredMixin, UpdateView):
     model = Reminder
     template_name = "reminder/update.html"
     fields = ("title", "description", "date", "time", "assign_to", "is_completed")
     success_url = reverse_lazy("reminders:my_created_reminders")
 
 
-class ReminderCreateView(CreateView):
+class ReminderCreateView(LoginRequiredMixin, CreateView):
     model = Reminder
     template_name = "reminder/create.html"
     form_class = ReminderCreateForm
@@ -58,7 +59,7 @@ class ReminderCreateView(CreateView):
         return super().form_valid(form)
 
 
-class ReminderDeleteView(DeleteView):
+class ReminderDeleteView(LoginRequiredMixin, DeleteView):
     model = Reminder
     template_name = "reminder/delete.html"
     success_url = reverse_lazy("reminders:my_created_reminders")
