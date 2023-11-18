@@ -9,5 +9,14 @@
     {{object.email}}<br>
     {{object.first_name}} {{object.last_name}}<br>
   <img src="{{object.image.url}}"><br>
+
+  <h2>User Permissions:</h2>
+  <ul>
+      {% for permission in user_permissions %}
+          <li>{{ permission }}</li>
+      {% empty %}
+          <li>No permissions found.</li>
+      {% endfor %}
+  </ul>
 </body>
 </html>

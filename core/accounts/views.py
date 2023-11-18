@@ -1,4 +1,6 @@
+from django.db.models.base import Model as Model
 from django.urls import reverse, reverse_lazy
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.views.generic import ListView, UpdateView, DetailView, DeleteView
 from django.urls import reverse_lazy
@@ -44,6 +46,15 @@ class UserUpdate(LoginRequiredMixin, UpdateView):
 class UserDetail(LoginRequiredMixin, DetailView):
     model = User
     template_name = "registration/detail.html"
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(User, pk=self.kwargs.get('pk'))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.get_object()
+        context['user_permissions'] = user.user_permissions.all()
+        return context
 
 
 class UserDelete(LoginRequiredMixin, DeleteView):
