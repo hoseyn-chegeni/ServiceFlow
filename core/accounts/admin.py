@@ -16,6 +16,7 @@ class CustomUserAdmin(UserAdmin):
         "first_name",
         "last_name",
         "member_of",
+        "last_login",
     )
     list_filter = ("email", "is_staff", "is_active")
     fieldsets = (
@@ -29,6 +30,7 @@ class CustomUserAdmin(UserAdmin):
                     "last_name",
                     "image",
                     "member_of",
+                    "last_login",
                 )
             },
         ),
