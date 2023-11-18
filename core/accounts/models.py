@@ -18,7 +18,9 @@ class User(AbstractUser):
         related_name="member",
     )
     image = models.ImageField(upload_to="images", default="images/default.jpeg")
+    login_attempts = models.IntegerField(default=0)
 
+    
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 

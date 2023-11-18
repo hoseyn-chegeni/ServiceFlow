@@ -1,5 +1,6 @@
 from django.dispatch import receiver
 from django.db.models.signals import post_save, pre_delete
+from django.contrib.auth.signals import user_logged_in
 from django.core.mail import send_mail
 from django.conf import settings
 from .models import User
@@ -64,3 +65,11 @@ def log_user_deletion(sender, instance, **kwargs):
         field_name="All fields",  # Add the specific field name if available
         additional_info="User deleted",
     )
+
+
+
+@receiver(user_logged_in)
+def update_login_attempts(sender, user, request, **kwargs):
+    # Increment the login attempt count for the user
+    user.login_attempts += 1
+    user.save()
