@@ -56,6 +56,7 @@ class UserDetail(LoginRequiredMixin, DetailView):
         user = self.get_object()
         context['user_permissions'] = user.user_permissions.all()
         context['user_created_task'] = Task.objects.filter(creator_id = user.id).count()
+        context['user_assigned_task'] = Task.objects.filter(assign_to_id = user.id).count()
         return context
 
 
