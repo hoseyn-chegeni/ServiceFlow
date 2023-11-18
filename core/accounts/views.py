@@ -8,6 +8,7 @@ from django.views.generic import CreateView
 from .models import User
 from .forms import CustomUserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from tasks.models import Task
 
 # Create your views here.
 
@@ -54,6 +55,7 @@ class UserDetail(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         user = self.get_object()
         context['user_permissions'] = user.user_permissions.all()
+        context['user_created_task'] = Task.objects.filter(creator_id = user.id).count()
         return context
 
 
