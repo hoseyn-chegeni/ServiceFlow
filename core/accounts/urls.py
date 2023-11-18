@@ -8,6 +8,9 @@ from .views import (
     UserDetail,
     UserDelete,
     UserPasswordChangeView,
+    SuspendUserView,
+    ReactiveUserView,
+    SuspendUserListView,
 )
 
 app_name = "accounts"
@@ -21,4 +24,7 @@ urlpatterns = [
     path("detail/<int:pk>/", UserDetail.as_view(), name="detail"),
     path("delete/<int:pk>/", UserDelete.as_view(), name="delete"),
     path("change_password/", UserPasswordChangeView.as_view(), name="change_password"),
+    path("suspend/<int:pk>/", SuspendUserView.as_view(), name="suspend"),
+    path("reactive/<int:pk>/", ReactiveUserView.as_view(), name="reactive"),
+    path("suspended/", SuspendUserListView.as_view(), name="suspended_list"),
 ]

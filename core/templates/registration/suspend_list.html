@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button><a href="{%url 'accounts:create_user'%}"> Create New User</a></button><br>
+    {%for i in object_list%}
+    {{i.id}}. {{i.first_name}} {{i.last_name}}//// {{i.email}}, <a href="{%url 'accounts:update' i.id %}">update</a>,<a href="{%url 'accounts:detail' i.id %}">detail</a>,<a href="{%url 'accounts:delete' i.id %}">delete</a>,<a href="{%url 'accounts:reactive' i.id %}">reactive User</a> <br>
+    {%endfor%} 
+</body>
+</html>

@@ -1,4 +1,8 @@
+from typing import Any
 from django.db.models.base import Model as Model
+from django.db.models.query import QuerySet
+from django.forms.models import BaseModelForm
+from django.http import HttpResponse
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
@@ -16,6 +20,10 @@ from tasks.models import Task
 class UserView(LoginRequiredMixin, ListView):
     model = User
     template_name = "registration/user_list.html"
+
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        return qs.filter(is_active=True)
 
 
 class UserLogin(LoginView):
@@ -69,3 +77,34 @@ class UserDelete(LoginRequiredMixin, DeleteView):
 class UserPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     template_name = "registration/change_password.html"
     success_url = reverse_lazy("index:home")
+
+
+class SuspendUserView(UpdateView):
+    model = User
+    fields = ('is_active',)
+    template_name = 'registration/suspend_user.html'
+    success_url = reverse_lazy('accounts:users')
+
+    def form_valid(self, form):
+        form.instance.is_active = False
+        return super().form_valid(form)
+    
+
+class ReactiveUserView(UpdateView):
+    model = User
+    fields = ('is_active',)
+    template_name = 'registration/reactive_user.html'
+    success_url = reverse_lazy('accounts:suspended_list')
+
+    def form_valid(self, form):
+        form.instance.is_active = True
+        return super().form_valid(form)
+    
+
+class SuspendUserListView(ListView):
+    model = User
+    template_name = 'registration/suspend_list.html'
+
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        return qs.filter(is_active=False)
