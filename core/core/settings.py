@@ -77,7 +77,7 @@ MIDDLEWARE = [
     'axes.middleware.AxesMiddleware',
 ]
 
-AXES_ONLY_USER_FAILURES=True
+# AXES_ONLY_USER_FAILURES=True
 
 
 

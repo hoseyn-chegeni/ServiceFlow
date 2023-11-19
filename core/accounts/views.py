@@ -14,6 +14,7 @@ from .forms import CustomUserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from tasks.models import Task
 from db_events.models import TaskLog
+from db_events.models import UserAuthenticationLog
 
 # Create your views here.
 
@@ -29,6 +30,26 @@ class UserView(LoginRequiredMixin, ListView):
 
 class UserLogin(LoginView):
     redirect_authenticated_user = True
+
+    def form_valid(self, form):
+        # Log successful login
+        response = super().form_valid(form)
+        UserAuthenticationLog.objects.create(
+            user=self.request.user,
+            ip_address=self.request.META.get('REMOTE_ADDR'),
+            status='Success'
+        )
+        return response
+
+    def form_invalid(self, form):
+        # Log failed login
+        response = super().form_invalid(form)
+        UserAuthenticationLog.objects.create(
+            user=None,  # User is None for failed login attempts
+            ip_address=self.request.META.get('REMOTE_ADDR'),
+            status='Failure'
+        )
+        return response
 
     def get_success_url(self):
         return reverse("index:home")
