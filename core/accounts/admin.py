@@ -18,7 +18,7 @@ class CustomUserAdmin(UserAdmin):
         "member_of",
         "last_login",
     )
-    list_filter = ("email", "is_staff", "is_active")
+    list_filter = ("is_staff", "is_active")
     fieldsets = (
         (
             None,

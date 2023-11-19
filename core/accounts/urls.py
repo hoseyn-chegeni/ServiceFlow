@@ -12,6 +12,7 @@ from .views import (
     ReactiveUserView,
     SuspendUserListView,
     UserActivitiesOnTasks,
+    BulkUserImportView,
 )
 
 app_name = "accounts"
@@ -29,4 +30,5 @@ urlpatterns = [
     path("reactive/<int:pk>/", ReactiveUserView.as_view(), name="reactive"),
     path("suspended/", SuspendUserListView.as_view(), name="suspended_list"),
     path("task_activity/<int:pk>/", UserActivitiesOnTasks.as_view(), name="task_activity"),
+    path("user_bulk_upload/", BulkUserImportView.as_view(), name="user_bulk_upload"),
 ]

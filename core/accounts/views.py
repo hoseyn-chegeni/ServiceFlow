@@ -1,10 +1,6 @@
-from typing import Any
 from django.db.models.base import Model as Model
-from django.db.models.query import QuerySet
-from django.forms.models import BaseModelForm
-from django.http import HttpResponse
 from django.urls import reverse, reverse_lazy
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.views.generic import ListView, UpdateView, DetailView, DeleteView
 from django.urls import reverse_lazy
@@ -15,6 +11,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from tasks.models import Task
 from db_events.models import TaskLog
 from db_events.models import UserAuthenticationLog
+import csv
+from django.views import View
+from dotenv import load_dotenv
+from decouple import config
+
+load_dotenv()
+
 
 # Create your views here.
 
@@ -144,3 +147,36 @@ class UserActivitiesOnTasks(ListView):
         context = super().get_context_data(**kwargs)
         context["user"] = get_object_or_404(User, pk=self.kwargs["pk"])
         return context
+    
+
+
+class BulkUserImportView(View):
+    template_name = 'registration/import_form.html'
+    success_template_name = 'registration/import_success.html'
+    error_template_name = 'registration/import_error.html'
+    default_password = config("DEFAULT_PASSWORD")
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request):
+        if request.method == 'POST' and request.FILES.get('file'):
+            file = request.FILES['file']
+            if file.name.endswith('.csv'):
+                users_added = 0
+                decoded_file = file.read().decode('utf-8')
+                csv_data = csv.reader(decoded_file.splitlines(), delimiter=',')
+                for row in csv_data:
+                    email = row[0]
+                    first_name = row[1]
+                    last_name = row[2]
+                    user, created = User.objects.get_or_create(email=email, first_name=first_name,last_name = last_name)
+                    if created:
+                        user.set_password(self.default_password)  # Set default password
+                        user.save()
+                        users_added += 1
+                
+                return render(request, self.success_template_name, {'users_added': users_added})
+            else:
+                return render(request, self.error_template_name)
+        return render(request, self.template_name)

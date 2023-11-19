@@ -44,6 +44,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif};
   </div>
   <div class="w3-bar-block">
     <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+    <a href="{%url 'accounts:user_bulk_upload'%}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bullseye fa-fw"></i> Upload Bulk User</a>
     <a href="{%url 'reminders:my_created_reminders'%}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bullseye fa-fw"></i>  My Created Reminders</a>
     <a href="{%url 'reminders:assigned_reminder'%}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-diamond fa-fw"></i>  Assigned Reminder</a>
     <a href="{%url 'article:sent'%}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>  Sent Articles</a>
