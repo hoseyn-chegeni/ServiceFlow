@@ -18,7 +18,7 @@ from .views import (
 app_name = "accounts"
 
 urlpatterns = [
-    path('api/', include('accounts.api.urls')),
+    path("api/", include("accounts.api.urls")),
     path("users/", UserView.as_view(), name="users"),
     path("login/", UserLogin.as_view(), name="login"),
     path("logout/", UserLogout.as_view(), name="logout"),
@@ -34,5 +34,4 @@ urlpatterns = [
         "task_activity/<int:pk>/", UserActivitiesOnTasks.as_view(), name="task_activity"
     ),
     path("user_bulk_upload/", BulkUserImportView.as_view(), name="user_bulk_upload"),
-
 ]

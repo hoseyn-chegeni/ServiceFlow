@@ -15,3 +15,5 @@ pyproject
 drf_yasg
 djoser
 django-axes
+django-otp
+qrcode
