@@ -71,7 +71,7 @@ class NoteDetailView(LoginRequiredMixin, DetailView):
     template_name = "notes/detail.html"
 
 
-class NoteUpdateView (LoginRequiredMixin, UpdateView):
+class NoteUpdateView(LoginRequiredMixin, UpdateView):
     model = Note
     template_name = "notes/update.html"
     success_url = reverse_lazy("notes:my_notes")

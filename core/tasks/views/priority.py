@@ -12,6 +12,7 @@ from ..forms import CreateTaskPriorityForm
 from db_events.models import TaskLog
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+
 class PriorityListView(LoginRequiredMixin, ListView):
     model = TaskPriority
     context_object_name = "priority"

@@ -1,7 +1,6 @@
 django
 django-rest-framework
 django-filter
-mysqlclient
 Pillow
 black
 python-dotenv
@@ -14,3 +13,5 @@ python-decouple
 python-social-auth
 pyproject
 drf_yasg
+djoser
+django-axes

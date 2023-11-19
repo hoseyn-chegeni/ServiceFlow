@@ -3,6 +3,7 @@ from django.views.generic import CreateView, ListView
 from .models import Mail
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+
 # Create your views here.
 class MailBoxView(LoginRequiredMixin, CreateView):
     template_name = "mail/mail_box.html"

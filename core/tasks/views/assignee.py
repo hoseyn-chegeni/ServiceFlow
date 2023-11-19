@@ -8,6 +8,7 @@ from ..models import Task
 from db_events.models import TaskLog
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+
 class TaskAssignToMe(LoginRequiredMixin, UpdateView):
     template_name = "tasks/assign_to_me.html"
     success_url = reverse_lazy("tasks:my_team")

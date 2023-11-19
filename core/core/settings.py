@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "drf_yasg",
-    'axes',
+    "djoser",
+    "axes",
     "accounts",
     "index",
     "tasks",
@@ -61,10 +62,9 @@ INSTALLED_APPS = [
 
 AUTHENTICATION_BACKENDS = [
     # AxesBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
-    'axes.backends.AxesBackend',
-
+    "axes.backends.AxesBackend",
     # Django ModelBackend is the default authentication backend.
-    'django.contrib.auth.backends.ModelBackend',
+    "django.contrib.auth.backends.ModelBackend",
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -74,11 +74,10 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'axes.middleware.AxesMiddleware',
+    "axes.middleware.AxesMiddleware",
 ]
 
 # AXES_ONLY_USER_FAILURES=True
-
 
 
 ROOT_URLCONF = "core.urls"

@@ -12,6 +12,7 @@ from ..forms import CreateTaskStatusForm
 from db_events.models import TaskLog
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+
 class StatusListView(LoginRequiredMixin, ListView):
     model = TaskStatus
     context_object_name = "status"

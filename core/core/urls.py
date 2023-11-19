@@ -34,7 +34,7 @@ urlpatterns = (
         path("articles/", include("articles.urls")),
         path("mail/", include("mail.urls")),
         path("asset/", include("asset.urls")),
-        path('api/', include('core.swagger')),
+        path("", include("core.swagger")),
     ]
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

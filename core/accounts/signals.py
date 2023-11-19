@@ -67,7 +67,6 @@ def log_user_deletion(sender, instance, **kwargs):
     )
 
 
-
 @receiver(user_logged_in)
 def update_login_attempts(sender, user, request, **kwargs):
     # Increment the login attempt count for the user

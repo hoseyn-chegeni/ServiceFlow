@@ -19,7 +19,9 @@ class DatabaseLog(models.Model):
 
 
 class TaskLog(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name = 'user')
+    user = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, blank=True, related_name="user"
+    )
     task = models.ForeignKey(
         "tasks.Task",
         on_delete=models.SET_NULL,
@@ -40,4 +42,4 @@ class UserAuthenticationLog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     login_time = models.DateTimeField(auto_now_add=True)
     ip_address = models.CharField(max_length=50)
-    status = models.CharField(max_length=20) 
+    status = models.CharField(max_length=20)

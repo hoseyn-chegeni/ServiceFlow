@@ -12,7 +12,6 @@ from .models import Meetings, MeetingStatus
 from .forms import CreateMeetingsForm
 
 
-
 # Create your views here.
 # ----------SELECT----------
 class InvitedMeetings(LoginRequiredMixin, FilterView):

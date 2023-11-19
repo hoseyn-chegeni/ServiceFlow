@@ -10,6 +10,7 @@ from django.urls import reverse_lazy
 from ..forms import CreateTaskTypeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+
 class TypeListView(LoginRequiredMixin, ListView):
     model = TaskType
     context_object_name = "type"

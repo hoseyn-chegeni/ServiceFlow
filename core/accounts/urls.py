@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from .views import (
     UserLogin,
     UserLogout,
@@ -18,6 +18,7 @@ from .views import (
 app_name = "accounts"
 
 urlpatterns = [
+    path('api/', include('accounts.api.urls')),
     path("users/", UserView.as_view(), name="users"),
     path("login/", UserLogin.as_view(), name="login"),
     path("logout/", UserLogout.as_view(), name="logout"),
@@ -29,6 +30,9 @@ urlpatterns = [
     path("suspend/<int:pk>/", SuspendUserView.as_view(), name="suspend"),
     path("reactive/<int:pk>/", ReactiveUserView.as_view(), name="reactive"),
     path("suspended/", SuspendUserListView.as_view(), name="suspended_list"),
-    path("task_activity/<int:pk>/", UserActivitiesOnTasks.as_view(), name="task_activity"),
+    path(
+        "task_activity/<int:pk>/", UserActivitiesOnTasks.as_view(), name="task_activity"
+    ),
     path("user_bulk_upload/", BulkUserImportView.as_view(), name="user_bulk_upload"),
+
 ]

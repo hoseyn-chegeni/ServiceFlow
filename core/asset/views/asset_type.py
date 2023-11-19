@@ -10,6 +10,7 @@ from django.urls import reverse_lazy
 from ..forms import CreateAssetTypeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+
 class AssetTypeListView(LoginRequiredMixin, ListView):
     model = AssetType
     template_name = "asset/type/list.html"

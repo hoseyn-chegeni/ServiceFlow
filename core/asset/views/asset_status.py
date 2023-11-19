@@ -10,6 +10,7 @@ from django.urls import reverse_lazy
 from ..forms import CreateAssetStatusForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+
 class AssetStatusListView(LoginRequiredMixin, ListView):
     model = AssetStatus
     template_name = "asset/status/list.html"

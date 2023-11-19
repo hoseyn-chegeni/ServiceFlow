@@ -39,8 +39,8 @@ class UserLogin(LoginView):
         response = super().form_valid(form)
         UserAuthenticationLog.objects.create(
             user=self.request.user,
-            ip_address=self.request.META.get('REMOTE_ADDR'),
-            status='Success'
+            ip_address=self.request.META.get("REMOTE_ADDR"),
+            status="Success",
         )
         return response
 
@@ -49,8 +49,8 @@ class UserLogin(LoginView):
         response = super().form_invalid(form)
         UserAuthenticationLog.objects.create(
             user=None,  # User is None for failed login attempts
-            ip_address=self.request.META.get('REMOTE_ADDR'),
-            status='Failure'
+            ip_address=self.request.META.get("REMOTE_ADDR"),
+            status="Failure",
         )
         return response
 
@@ -58,7 +58,7 @@ class UserLogin(LoginView):
         return reverse("index:home")
 
 
-class UserLogout( LogoutView):
+class UserLogout(LogoutView):
     def get_success_url(self):
         return reverse("accounts:login")
 
@@ -82,14 +82,16 @@ class UserDetail(LoginRequiredMixin, DetailView):
     template_name = "registration/detail.html"
 
     def get_object(self, queryset=None):
-        return get_object_or_404(User, pk=self.kwargs.get('pk'))
+        return get_object_or_404(User, pk=self.kwargs.get("pk"))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.get_object()
-        context['user_permissions'] = user.user_permissions.all()
-        context['user_created_task'] = Task.objects.filter(creator_id = user.id).count()
-        context['user_assigned_task'] = Task.objects.filter(assign_to_id = user.id).count()
+        context["user_permissions"] = user.user_permissions.all()
+        context["user_created_task"] = Task.objects.filter(creator_id=user.id).count()
+        context["user_assigned_task"] = Task.objects.filter(
+            assign_to_id=user.id
+        ).count()
         return context
 
 
@@ -106,77 +108,81 @@ class UserPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
 
 class SuspendUserView(UpdateView):
     model = User
-    fields = ('is_active',)
-    template_name = 'registration/suspend_user.html'
-    success_url = reverse_lazy('accounts:users')
+    fields = ("is_active",)
+    template_name = "registration/suspend_user.html"
+    success_url = reverse_lazy("accounts:users")
 
     def form_valid(self, form):
         form.instance.is_active = False
         return super().form_valid(form)
-    
+
 
 class ReactiveUserView(UpdateView):
     model = User
-    fields = ('is_active',)
-    template_name = 'registration/reactive_user.html'
-    success_url = reverse_lazy('accounts:suspended_list')
+    fields = ("is_active",)
+    template_name = "registration/reactive_user.html"
+    success_url = reverse_lazy("accounts:suspended_list")
 
     def form_valid(self, form):
         form.instance.is_active = True
         return super().form_valid(form)
-    
+
 
 class SuspendUserListView(ListView):
     model = User
-    template_name = 'registration/suspend_list.html'
+    template_name = "registration/suspend_list.html"
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(is_active=False)
-    
+
 
 class UserActivitiesOnTasks(ListView):
     model = TaskLog
-    template_name = 'registration/user_activities_on_tasks.html'
-    context_object_name = 'log'
+    template_name = "registration/user_activities_on_tasks.html"
+    context_object_name = "log"
+
     def get_queryset(self):
         task = get_object_or_404(User, pk=self.kwargs["pk"])
         return task.user.all()
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["user"] = get_object_or_404(User, pk=self.kwargs["pk"])
         return context
-    
 
 
 class BulkUserImportView(View):
-    template_name = 'registration/import_form.html'
-    success_template_name = 'registration/import_success.html'
-    error_template_name = 'registration/import_error.html'
+    template_name = "registration/import_form.html"
+    success_template_name = "registration/import_success.html"
+    error_template_name = "registration/import_error.html"
     default_password = config("DEFAULT_PASSWORD")
 
     def get(self, request):
         return render(request, self.template_name)
 
     def post(self, request):
-        if request.method == 'POST' and request.FILES.get('file'):
-            file = request.FILES['file']
-            if file.name.endswith('.csv'):
+        if request.method == "POST" and request.FILES.get("file"):
+            file = request.FILES["file"]
+            if file.name.endswith(".csv"):
                 users_added = 0
-                decoded_file = file.read().decode('utf-8')
-                csv_data = csv.reader(decoded_file.splitlines(), delimiter=',')
+                decoded_file = file.read().decode("utf-8")
+                csv_data = csv.reader(decoded_file.splitlines(), delimiter=",")
                 for row in csv_data:
                     email = row[0]
                     first_name = row[1]
                     last_name = row[2]
-                    user, created = User.objects.get_or_create(email=email, first_name=first_name,last_name = last_name)
+                    user, created = User.objects.get_or_create(
+                        email=email, first_name=first_name, last_name=last_name
+                    )
                     if created:
                         user.set_password(self.default_password)  # Set default password
                         user.save()
                         users_added += 1
-                
-                return render(request, self.success_template_name, {'users_added': users_added})
+
+                return render(
+                    request, self.success_template_name, {"users_added": users_added}
+                )
             else:
                 return render(request, self.error_template_name)
         return render(request, self.template_name)

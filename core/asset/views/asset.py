@@ -6,6 +6,7 @@ from ..forms import CreateAssetForm
 from ..filters import AssetFilters
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+
 class AssetListView(LoginRequiredMixin, FilterView):
     model = Asset
     template_name = "asset/list.html"

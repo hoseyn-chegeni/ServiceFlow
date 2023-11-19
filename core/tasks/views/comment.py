@@ -9,6 +9,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from db_events.models import TaskLog
 
+
 class TaskCommentView(LoginRequiredMixin, CreateView):
     model = TaskComment
     template_name = "tasks/task_comment.html"
