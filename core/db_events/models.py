@@ -37,7 +37,7 @@ class TaskLog(models.Model):
 
 
 class UserAuthenticationLog(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank = True, null = True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     login_time = models.DateTimeField(auto_now_add=True)
     ip_address = models.CharField(max_length=50)
     status = models.CharField(max_length=20) 

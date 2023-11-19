@@ -180,3 +180,8 @@ STATICFILES_DIRS = [
 ]
 
 TEST_RUNNER = "django.test.runner.DiscoverRunner"
+
+
+AXES_FAILURE_LIMIT = 5  # Maximum login attempts before lockout
+AXES_LOCK_OUT_AT_FAILURE = True  # Enable account lockout on reaching the failure limit
+AXES_COOLOFF_TIME = 1  # Lockout duration in minutes (e.g., 1 minute)
