@@ -13,6 +13,7 @@ from .models import User
 from .forms import CustomUserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from tasks.models import Task
+from db_events.models import TaskLog
 
 # Create your views here.
 
@@ -108,3 +109,17 @@ class SuspendUserListView(ListView):
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(is_active=False)
+    
+
+class UserActivitiesOnTasks(ListView):
+    model = TaskLog
+    template_name = 'registration/user_activities_on_tasks.html'
+    context_object_name = 'log'
+    def get_queryset(self):
+        task = get_object_or_404(User, pk=self.kwargs["pk"])
+        return task.user.all()
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user"] = get_object_or_404(User, pk=self.kwargs["pk"])
+        return context

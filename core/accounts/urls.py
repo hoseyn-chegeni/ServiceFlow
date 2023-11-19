@@ -11,6 +11,7 @@ from .views import (
     SuspendUserView,
     ReactiveUserView,
     SuspendUserListView,
+    UserActivitiesOnTasks,
 )
 
 app_name = "accounts"
@@ -27,4 +28,5 @@ urlpatterns = [
     path("suspend/<int:pk>/", SuspendUserView.as_view(), name="suspend"),
     path("reactive/<int:pk>/", ReactiveUserView.as_view(), name="reactive"),
     path("suspended/", SuspendUserListView.as_view(), name="suspended_list"),
+    path("task_activity/<int:pk>/", UserActivitiesOnTasks.as_view(), name="task_activity"),
 ]

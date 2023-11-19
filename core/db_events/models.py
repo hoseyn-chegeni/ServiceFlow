@@ -19,7 +19,7 @@ class DatabaseLog(models.Model):
 
 
 class TaskLog(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name = 'user')
     task = models.ForeignKey(
         "tasks.Task",
         on_delete=models.SET_NULL,

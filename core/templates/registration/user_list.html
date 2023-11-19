@@ -8,7 +8,12 @@
 <body>
     <button><a href="{%url 'accounts:create_user'%}"> Create New User</a></button><button><a href="{%url 'accounts:suspended_list'%}"> Suspended user</a></button><br>
     {%for i in object_list%}
-    {{i.id}}. {{i.first_name}} {{i.last_name}}//// {{i.email}}, <a href="{%url 'accounts:update' i.id %}">update</a>,<a href="{%url 'accounts:detail' i.id %}">detail</a>,<a href="{%url 'accounts:delete' i.id %}">delete</a>,<a href="{%url 'accounts:suspend' i.id %}">Suspend User</a> <br>
+    {{i.id}}. {{i.first_name}} {{i.last_name}}//// {{i.email}}
+    , <a href="{%url 'accounts:update' i.id %}">update</a>,
+    <a href="{%url 'accounts:detail' i.id %}">detail</a>
+    ,<a href="{%url 'accounts:delete' i.id %}">delete</a>,
+    <a href="{%url 'accounts:suspend' i.id %}">Suspend User</a>,
+    <a href="{%url 'accounts:task_activity' i.id %}">Task Activity Logs</a> <br>
     {%endfor%} 
 </body>
 </html>
