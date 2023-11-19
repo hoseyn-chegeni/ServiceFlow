@@ -15,6 +15,7 @@ from .views import (
     BulkUserImportView,
 )
 
+
 app_name = "accounts"
 
 urlpatterns = [

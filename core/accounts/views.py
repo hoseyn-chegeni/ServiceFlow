@@ -15,7 +15,7 @@ import csv
 from django.views import View
 from dotenv import load_dotenv
 from decouple import config
-
+from django_otp.forms import OTPAuthenticationForm
 load_dotenv()
 
 
@@ -25,6 +25,7 @@ load_dotenv()
 class UserView(LoginRequiredMixin, ListView):
     model = User
     template_name = "registration/user_list.html"
+    
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
@@ -33,6 +34,7 @@ class UserView(LoginRequiredMixin, ListView):
 
 class UserLogin(LoginView):
     redirect_authenticated_user = True
+    authentication_form = OTPAuthenticationForm
 
     def form_valid(self, form):
         # Log successful login
@@ -186,3 +188,5 @@ class BulkUserImportView(View):
             else:
                 return render(request, self.error_template_name)
         return render(request, self.template_name)
+
+
