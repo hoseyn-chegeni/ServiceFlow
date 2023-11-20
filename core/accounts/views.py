@@ -16,6 +16,14 @@ from django.views import View
 from dotenv import load_dotenv
 from decouple import config
 from django_otp.forms import OTPAuthenticationForm
+from django.contrib.auth.views import (
+    PasswordResetView,
+    PasswordResetDoneView,
+    PasswordResetConfirmView,
+    PasswordResetCompleteView,
+)
+
+
 load_dotenv()
 
 
@@ -25,7 +33,6 @@ load_dotenv()
 class UserView(LoginRequiredMixin, ListView):
     model = User
     template_name = "registration/user_list.html"
-    
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
@@ -190,3 +197,20 @@ class BulkUserImportView(View):
         return render(request, self.template_name)
 
 
+class CustomPasswordResetView(PasswordResetView):
+    template_name = "registration/forgot_password/password_reset.html"
+    email_template_name = "registration/forgot_password/password_reset_email.html"
+    success_url = reverse_lazy("accounts:password_reset_done")
+
+
+class CustomPasswordResetDoneView(PasswordResetDoneView):
+    template_name = "registration/forgot_password/password_reset_done.html"
+
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = "registration/forgot_password/password_reset_confirm.html"
+    success_url = reverse_lazy("accounts:password_reset_complete")
+
+
+class CustomPasswordResetCompleteView(PasswordResetCompleteView):
+    template_name = "registration/forgot_password/password_reset_complete.html"

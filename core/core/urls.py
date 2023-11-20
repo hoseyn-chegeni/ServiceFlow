@@ -21,18 +21,17 @@ from django.conf.urls.static import static
 from two_factor.urls import urlpatterns as tf_urls
 
 
-
 urlpatterns = (
     [
         path("admin/", admin.site.urls),
-        path('',include(tf_urls)),
+        path("", include(tf_urls)),
         path("index/", include("index.urls")),
         path("tasks/", include("tasks.urls")),
         path("accounts/", include("accounts.urls")),
         path("notes/", include("notes.urls")),
         path("reminders/", include("reminders.urls")),
         path("team/", include("team.urls")),
-        path("meetings/", include("meetings.urls")), 
+        path("meetings/", include("meetings.urls")),
         path("organization/", include("organization.urls")),
         path("department/", include("department.urls")),
         path("articles/", include("articles.urls")),
