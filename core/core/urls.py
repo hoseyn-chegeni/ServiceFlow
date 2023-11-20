@@ -18,34 +18,21 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from two_factor.urls import urlpatterns as tf_urls
 
-from django.contrib.auth.models import User
-from django_otp.admin import OTPAdminSite
-from django_otp.plugins.otp_totp.models import TOTPDevice
-from django_otp.plugins.otp_totp.admin import TOTPDeviceAdmin
-
-
-class OTPAdmin(OTPAdminSite):
-    def has_permission(self, request):
-        return super().has_permission(request)
-
-
-admin_site = OTPAdmin(name="OTPAdmin")
-admin_site.register(User)
-admin_site.register(TOTPDevice, TOTPDeviceAdmin)
 
 
 urlpatterns = (
     [
         path("admin/", admin.site.urls),
-        path("dadmin/", admin_site.urls),
+        path('',include(tf_urls)),
         path("index/", include("index.urls")),
         path("tasks/", include("tasks.urls")),
         path("accounts/", include("accounts.urls")),
         path("notes/", include("notes.urls")),
         path("reminders/", include("reminders.urls")),
         path("team/", include("team.urls")),
-        path("meetings/", include("meetings.urls")),
+        path("meetings/", include("meetings.urls")), 
         path("organization/", include("organization.urls")),
         path("department/", include("department.urls")),
         path("articles/", include("articles.urls")),

@@ -62,7 +62,7 @@ class UserLogin(LoginView):
 
 class UserLogout(LogoutView):
     def get_success_url(self):
-        return reverse("accounts:login")
+        return reverse("two_factor:login")
 
 
 class CreateUser(LoginRequiredMixin, CreateView):

@@ -45,8 +45,12 @@ INSTALLED_APPS = [
     "drf_yasg",
     "djoser",
     "axes",
-    "django_otp",
-    "django_otp.plugins.otp_totp",
+    #2fa
+    'django_otp',
+    'django_otp.plugins.otp_static',
+    'django_otp.plugins.otp_totp',
+    'two_factor',
+
     "accounts",
     "index",
     "tasks",
@@ -73,8 +77,8 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
-    "django_otp.middleware.OTPMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    'django_otp.middleware.OTPMiddleware',
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "axes.middleware.AxesMiddleware",
@@ -159,7 +163,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.User"
 
-LOGIN_URL = "accounts:login"
+LOGIN_URL = "two_factor:login"
+LOGIN_REDIRECT_URL = 'index:home'
 LOGOUT_URL = "accounts:logout"
 
 

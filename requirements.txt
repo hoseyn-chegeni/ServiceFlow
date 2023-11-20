@@ -17,3 +17,5 @@ djoser
 django-axes
 django-otp
 qrcode
+django-two-factor-auth
+phonenumbers
