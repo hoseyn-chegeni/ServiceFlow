@@ -1,5 +1,5 @@
 from django.urls import path
-from .views.user_role import AssignRoleToUser
+from .views.user_role import AssignRoleToUser,UserRolesListView
 from .views.role import (
     RoleListView,
     RoleCreateView,
@@ -17,6 +17,7 @@ urlpatterns = [
         AssignRoleToUser.as_view(),
         name="assign_role_to_user",
     ),
+    path('user_role_list/',UserRolesListView.as_view(),name='user_role_list'),
     #  ROLE MANAGEMENT
     path("role_list/", RoleListView.as_view(), name="role_list"),
     path("role_create/", RoleCreateView.as_view(), name="role_create"),
