@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "mail",
     "db_events",
     "asset",
+    "rbac",
 ]
 
 AUTHENTICATION_BACKENDS = [
