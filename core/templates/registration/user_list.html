@@ -13,7 +13,8 @@
     <a href="{%url 'accounts:detail' i.id %}">detail</a>
     ,<a href="{%url 'accounts:delete' i.id %}">delete</a>,
     <a href="{%url 'accounts:suspend' i.id %}">Suspend User</a>,
-    <a href="{%url 'accounts:task_activity' i.id %}">Task Activity Logs</a> <br>
+    <a href="{%url 'accounts:task_activity' i.id %}">Task Activity Logs</a>, 
+    <a href="{%url 'rbac:assign_role_to_user' i.id %}">Assign Role</a>,<br>
     {%endfor%} 
 </body>
 </html>
