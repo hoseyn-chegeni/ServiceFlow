@@ -12,7 +12,6 @@ def update_user_permissions(sender, instance, created, **kwargs):
         user.user_permissions.add(*permissions)
 
 
-
 @receiver(post_delete, sender=UserRole)
 def remove_user_permissions(sender, instance, **kwargs):
     user = instance.user

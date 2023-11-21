@@ -30,10 +30,11 @@ load_dotenv()
 # Create your views here.
 
 
-class UserView(LoginRequiredMixin,PermissionRequiredMixin, ListView):
+class UserView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = User
     template_name = "registration/user_list.html"
-    permission_required = 'accounts.view_user'
+    permission_required = "accounts.view_user"
+
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(is_active=True)

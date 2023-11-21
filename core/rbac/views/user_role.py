@@ -7,7 +7,7 @@ from django.views.generic import (
     ListView,
     DetailView,
 )
-from .models import UserRole, Role
+from ..models import UserRole
 from accounts.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
