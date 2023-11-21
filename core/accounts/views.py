@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from .models import User
 from .forms import CustomUserCreationForm
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from tasks.models import Task
 from db_events.models import TaskLog
 from db_events.models import UserAuthenticationLog
@@ -30,10 +30,10 @@ load_dotenv()
 # Create your views here.
 
 
-class UserView(LoginRequiredMixin, ListView):
+class UserView(LoginRequiredMixin,PermissionRequiredMixin, ListView):
     model = User
     template_name = "registration/user_list.html"
-
+    permission_required = 'accounts.view_user'
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(is_active=True)

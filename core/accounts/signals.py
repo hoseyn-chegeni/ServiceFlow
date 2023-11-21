@@ -72,3 +72,5 @@ def update_login_attempts(sender, user, request, **kwargs):
     # Increment the login attempt count for the user
     user.login_attempts += 1
     user.save()
+
+
