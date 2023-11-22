@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import  CreateView
+from django.views.generic import  CreateView, DeleteView
 from django_filters.views import FilterView
 from ..filters import UserRoleFilter
 from ..models import UserRole
@@ -33,3 +33,11 @@ class UserRolesListView(LoginRequiredMixin, PermissionRequiredMixin, FilterView)
     permission_required = "rbac.view_userrole"
 
 
+class UserRoleDeleteFromProfile(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    model = UserRole
+    permission_required = "rbac.delete_userrole"
+    template_name = "rbac/delete.html"
+    def get_success_url(self):
+        user_role = self.get_object()  # Get the UserRole object
+        user_id = user_role.user.pk  # Retrieve the user_id from the UserRole object
+        return reverse_lazy('accounts:detail', kwargs={'pk': user_id})
