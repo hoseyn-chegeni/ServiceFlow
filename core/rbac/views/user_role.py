@@ -13,7 +13,7 @@ from ..forms import AddUserToGroupForm
 
 class AssignRoleToUser(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = User
-    fields = ('member_of',)
+    fields = ('groups',)
     template_name = "rbac/assign_role_to_user.html"
     permission_required = 'auth.change_group'  # Permission required to add users to group
     success_url = reverse_lazy("accounts:users")# Replace 'group_list' with your actual URL name
@@ -23,14 +23,6 @@ class AssignRoleToUser(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         user = get_object_or_404(User, id=self.kwargs['pk'])
         user.groups.add(group)
         return super().form_valid(form)
-
-
-class UserRolesListView(LoginRequiredMixin, PermissionRequiredMixin, FilterView):
-    model = UserRole
-    filterset_class = UserRoleFilter
-    template_name = "rbac/user_role_list.html"
-    context_object_name = "role"
-    permission_required = "rbac.view_userrole"
 
 
 class UserRoleDeleteFromProfile(

@@ -28,8 +28,8 @@
 
 <h2>User Roles:</h2>
 <ul>
-    {% for i in user_roles %}
-        <li>{{i.role}}, <a href="{%url 'rbac:user_role_delete_from_profile' i.id%}">delete Role</a> </li>
+    {% for i in object.groups.all %}
+        <li>{{i.name}}</li>
     {% empty %}
         <li>No Roles found.</li>
     {% endfor %}

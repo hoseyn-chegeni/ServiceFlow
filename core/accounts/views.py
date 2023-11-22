@@ -22,7 +22,7 @@ from django.contrib.auth.views import (
     PasswordResetConfirmView,
     PasswordResetCompleteView,
 )
-from rbac.models import UserRole
+
 
 load_dotenv()
 
@@ -102,7 +102,6 @@ class UserDetail(LoginRequiredMixin, DetailView):
         context["user_assigned_task"] = Task.objects.filter(
             assign_to_id=user.id
         ).count()
-        context["user_roles"] = UserRole.objects.filter(user_id=user.id)
         return context
 
 
