@@ -1,5 +1,5 @@
 from django.urls import path
-from .views.user_role import AssignRoleToUser,UserRolesListView, UserRoleDeleteFromProfile
+from .views.user_role import AssignRoleToUser,UserRolesListView, UserRoleDeleteFromProfile, UserRoleDeleteFromRoleDetail
 from .views.role import (
     RoleListView,
     RoleCreateView,
@@ -20,6 +20,8 @@ urlpatterns = [
     ),
     path('user_role_list/',UserRolesListView.as_view(),name='user_role_list'),
     path('user_role_delete_from_profile/<int:pk>/',UserRoleDeleteFromProfile.as_view(), name='user_role_delete_from_profile'),
+    path('user_role_delete_from_role_detail/<int:pk>/',UserRoleDeleteFromRoleDetail.as_view(), name='user_role_delete_from_role_detail'),
+
     #  ROLE MANAGEMENT
     path("role_list/", RoleListView.as_view(), name="role_list"),
     path("role_create/", RoleCreateView.as_view(), name="role_create"),
