@@ -20,7 +20,7 @@
           <li>No permissions found.</li>
       {% endfor %}
   </ul>
-
+<p> <a href="{%url 'rbac:assign_permission' object.id %}">Assign Permission</a></p>
 <p> CREATED TASK: {{user_created_task}}</p>
 <p> ASSIGNED TASK: {{user_assigned_task}}</p>
 <p> CREATED INCIDENT: 0</p>

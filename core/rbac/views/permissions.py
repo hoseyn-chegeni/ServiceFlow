@@ -8,6 +8,8 @@ from django.views.generic import (
 )
 from django.contrib.auth.models import Permission
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from accounts.models import User
+from ..forms import PermissionForm
 
 
 class PermissionListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
@@ -48,3 +50,14 @@ class PermissionDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteVi
     permission_required = "permission.delete_permission"
     def get_success_url(self):
         return reverse_lazy('rbac:permission_list')
+    
+
+class AssignPermissionView(LoginRequiredMixin, PermissionRequiredMixin,UpdateView):
+    model = User
+    fields = ("user_permissions",)
+    template_name = 'rbac/permission/assign_permission.html'
+    permission_required = 'auth.change_user'
+
+    def get_success_url(self):
+        user = self.get_object()
+        return reverse_lazy('accounts:detail', kwargs={"pk": user.id})
