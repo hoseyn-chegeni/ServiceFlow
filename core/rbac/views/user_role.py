@@ -25,27 +25,3 @@ class AssignRoleToUser(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class UserRoleDeleteFromProfile(
-    LoginRequiredMixin, PermissionRequiredMixin, DeleteView
-):
-    model = UserRole
-    permission_required = "rbac.delete_userrole"
-    template_name = "rbac/delete.html"
-
-    def get_success_url(self):
-        user_role = self.get_object()
-        user_id = user_role.user.pk
-        return reverse_lazy("accounts:detail", kwargs={"pk": user_id})
-
-
-class UserRoleDeleteFromRoleDetail(
-    LoginRequiredMixin, PermissionRequiredMixin, DeleteView
-):
-    model = UserRole
-    permission_required = "rbac.delete_userrole"
-    template_name = "rbac/delete.html"
-
-    def get_success_url(self):
-        user_role = self.get_object()
-        role_id = user_role.role.pk
-        return reverse_lazy("rbac:role_detail", kwargs={"pk": role_id})
