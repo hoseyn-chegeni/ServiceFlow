@@ -9,10 +9,16 @@ from django.views.generic import (
 from django.contrib.auth.models import Permission
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
+
 class PermissionListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Permission
-    template_name = 'rbac/permissions/list.html'
-    permission_required = 'permission.view_permission'
-    context_object_name = 'permission'
-    ordering = ['id']
+    template_name = "rbac/permission/list.html"
+    permission_required = "permission.view_permission"
+    context_object_name = "permission"
+    ordering = ["id"]
 
+
+class PermissionDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+    model = Permission
+    template_name = "rbac/permission/detail.html"
+    permission_required = "rbac.view_permission"

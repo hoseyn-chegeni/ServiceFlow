@@ -17,7 +17,6 @@ class RoleListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     context_object_name = "role"
 
 
-
 class RoleDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Role
     template_name = "rbac/role/detail.html"
@@ -25,8 +24,9 @@ class RoleDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['users'] = UserRole.objects.filter(role_id = self.kwargs['pk'])
+        context["users"] = UserRole.objects.filter(role_id=self.kwargs["pk"])
         return context
+
 
 class RoleCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Role
