@@ -12,7 +12,7 @@ from .views.role import (
     RoleDetailView,
     RoleUpdateView,
 )
-from .views.permissions import PermissionListView, PermissionDetailView
+from .views.permissions import PermissionListView, PermissionDetailView, PermissionUpdateView, PermissionCreateView, PermissionDeleteView
 
 app_name = "rbac"
 
@@ -47,4 +47,11 @@ urlpatterns = [
         PermissionDetailView.as_view(),
         name="permission_detail",
     ),
+    path(
+        "permission_update/<int:pk>/",
+        PermissionUpdateView.as_view(),
+        name="permission_update",
+    ),
+    path("permission_create/",PermissionCreateView.as_view(),name="permission_create"),
+    path("permission_delete/<int:pk>/",PermissionDeleteView.as_view(),name="permission_delete"),
 ]
