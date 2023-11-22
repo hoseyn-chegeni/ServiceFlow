@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROLES LIST</title>
+    <title>PERMISSIONS</title>
 </head>
 <body>
-    {%for i in role%}
-    {{i.user}}:{{i.role}} <br>
+    {%for i in permission%}
+   <p>{{i.id}}. {{i.name}} </p><br>
     {%endfor%}
 </body>
 </html>
