@@ -24,5 +24,15 @@
 <p> CREATED TASK: {{user_created_task}}</p>
 <p> ASSIGNED TASK: {{user_assigned_task}}</p>
 <p> CREATED INCIDENT: 0</p>
+
+
+<h2>User Roles:</h2>
+<ul>
+    {% for i in user_roles %}
+        <li>{{i.role}} </li>
+    {% empty %}
+        <li>No Roles found.</li>
+    {% endfor %}
+</ul>
 </body>
 </html>
