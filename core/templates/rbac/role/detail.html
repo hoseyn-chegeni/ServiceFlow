@@ -12,7 +12,7 @@
    <h2>Users:</h2>
    <ul>
        {% for i in users %}
-           <li>{{i.user}} <a href="{%url 'rbac:user_role_delete_from_role_detail' i.id%}">delete Role</a> </li>
+           <li>{{i.user}},<a href="{%url 'accounts:detail' i.user.id%}"> View User</a> ,<a href="{%url 'rbac:user_role_delete_from_role_detail' i.id%}">delete Role</a> </li>
        {% empty %}
            <li>No Roles found.</li>
        {% endfor %}

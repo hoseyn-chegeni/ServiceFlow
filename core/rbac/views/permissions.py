@@ -30,34 +30,37 @@ class PermissionUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateVi
     model = Permission
     template_name = "rbac/permission/update.html"
     permission_required = "permission.change_permission"
-    fields = ("__all__")
+    fields = "__all__"
+
     def get_success_url(self):
-        return reverse_lazy('rbac:permission_detail',kwargs={"pk": self.kwargs['pk']})
-    
+        return reverse_lazy("rbac:permission_detail", kwargs={"pk": self.kwargs["pk"]})
+
 
 class PermissionCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Permission
     template_name = "rbac/permission/create.html"
     permission_required = "permission.add_permission"
-    fields = ("__all__")
+    fields = "__all__"
+
     def get_success_url(self):
-        return reverse_lazy('rbac:permission_list')
-    
+        return reverse_lazy("rbac:permission_list")
+
 
 class PermissionDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Permission
     template_name = "rbac/permission/delete.html"
     permission_required = "permission.delete_permission"
-    def get_success_url(self):
-        return reverse_lazy('rbac:permission_list')
-    
 
-class AssignPermissionView(LoginRequiredMixin, PermissionRequiredMixin,UpdateView):
+    def get_success_url(self):
+        return reverse_lazy("rbac:permission_list")
+
+
+class AssignPermissionView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = User
     fields = ("user_permissions",)
-    template_name = 'rbac/permission/assign_permission.html'
-    permission_required = 'auth.change_user'
+    template_name = "rbac/permission/assign_permission.html"
+    permission_required = "auth.change_user"
 
     def get_success_url(self):
         user = self.get_object()
-        return reverse_lazy('accounts:detail', kwargs={"pk": user.id})
+        return reverse_lazy("accounts:detail", kwargs={"pk": user.id})
