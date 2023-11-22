@@ -6,19 +6,19 @@ from django.views.generic import (
     ListView,
     DetailView,
 )
-from ..models import Role, UserRole
+from ..models import UserRole
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-
+from django.contrib.auth.models import Group
 
 class RoleListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-    model = Role
+    model  = Group
     template_name = "rbac/role/list.html"
     permission_required = "rbac.view_role"
     context_object_name = "role"
 
 
 class RoleDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
-    model = Role
+    model = Group
     template_name = "rbac/role/detail.html"
     permission_required = "rbac.view_role"
 
@@ -29,7 +29,7 @@ class RoleDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
 
 
 class RoleCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
-    model = Role
+    model = Group
     template_name = "rbac/role/create.html"
     permission_required = "rbac.view_role"
     fields = (
@@ -46,7 +46,7 @@ class RoleCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
 
 class RoleUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
-    model = Role
+    model = Group
     template_name = "rbac/role/update.html"
     permission_required = "rbac.view_role"
     fields = (
@@ -58,7 +58,7 @@ class RoleUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
 
 class RoleDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
-    model = Role
+    model = Group
     template_name = "rbac/role/delete.html"
     permission_required = "rbac.view_role"
     success_url = reverse_lazy("rbac:role_list")
