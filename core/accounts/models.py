@@ -11,7 +11,7 @@ class User(AbstractUser):
     first_name = models.CharField(max_length=255, blank=True, null=True)
     last_name = models.CharField(max_length=255, blank=True, null=True)
     member_of = models.ForeignKey(
-        "team.Team",
+        "auth.Group",
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
