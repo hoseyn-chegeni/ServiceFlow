@@ -6,7 +6,7 @@ from django.views.generic import (
     ListView,
     DetailView,
 )
-from ..models import Role
+from ..models import Role, UserRole
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 
@@ -17,11 +17,16 @@ class RoleListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     context_object_name = "role"
 
 
+
 class RoleDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Role
     template_name = "rbac/role/detail.html"
     permission_required = "rbac.view_role"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['users'] = UserRole.objects.filter(role_id = self.kwargs['pk'])
+        return context
 
 class RoleCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Role

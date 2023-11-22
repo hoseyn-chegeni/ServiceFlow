@@ -8,6 +8,14 @@
 <body>
    name: {{object.name}}<br>
    PERMISSIONS: {%for i in object.permissions.all%} {{i}}, {%endfor%}<br>
-
+   
+   <h2>Users:</h2>
+   <ul>
+       {% for i in users %}
+           <li>{{i.user}} </li>
+       {% empty %}
+           <li>No Roles found.</li>
+       {% endfor %}
+   </ul>
 </body>
 </html>
