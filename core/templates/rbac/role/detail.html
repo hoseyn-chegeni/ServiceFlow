@@ -23,10 +23,11 @@
    <h2>Users:</h2>
    <ul>
        {% for i in users %}
-           <li>{{i}},<a href="{%url 'accounts:detail' i.id%}"> View User</a> ,<a href="{%url 'rbac:user_role_delete_from_role_detail' i.id%}">delete Role</a> </li>
+           <li>{{i}},<a href="{%url 'accounts:detail' i.id%}"> View User</a>,<a href="{%url 'rbac:manage_user_role' i.id %}">Manage User Roles</a>  </li>
        {% empty %}
            <li>No Users found.</li>
        {% endfor %}
+       <li><a href="{%url 'accounts:users' %}">Add User</a></li>
    </ul>
 </body>
 </html>

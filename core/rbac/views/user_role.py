@@ -16,7 +16,9 @@ class AssignRoleToUser(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     fields = ('groups',)
     template_name = "rbac/assign_role_to_user.html"
     permission_required = 'auth.change_group'  # Permission required to add users to group
-    success_url = reverse_lazy("accounts:users")# Replace 'group_list' with your actual URL name
+
+    def get_success_url(self):
+        return reverse_lazy('accounts:detail', kwargs= {'pk':self.kwargs['pk']})
 
     def form_valid(self, form):
         group = form.instance.member_of
@@ -25,3 +27,17 @@ class AssignRoleToUser(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
+class ManageUserRolesFromROleDetailPage(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    model = User
+    fields = ('groups',)
+    template_name = "rbac/assign_role_to_user.html"
+    permission_required = 'auth.change_group'  # Permission required to add users to group
+
+    def get_success_url(self):
+        return reverse_lazy('role:detail', kwargs= {'pk':self.kwargs['pk']})
+
+    def form_valid(self, form):
+        group = form.instance.member_of
+        user = get_object_or_404(User, id=self.kwargs['pk'])
+        user.groups.add(group)
+        return super().form_valid(form)

@@ -19,8 +19,9 @@
       {% empty %}
           <li>No permissions found.</li>
       {% endfor %}
+      <li> <a href="{%url 'rbac:assign_permission' object.id %}">Manage Permissions</a></li>
   </ul>
-<p> <a href="{%url 'rbac:assign_permission' object.id %}">Assign Permission</a></p>
+
 <p> CREATED TASK: {{user_created_task}}</p>
 <p> ASSIGNED TASK: {{user_assigned_task}}</p>
 <p> CREATED INCIDENT: 0</p>
@@ -33,6 +34,7 @@
     {% empty %}
         <li>No Roles found.</li>
     {% endfor %}
+        <li> <a href="{%url 'rbac:assign_role_to_user' object.id %}">Manage Roles</a></li>
 </ul>
 </body>
 </html>
