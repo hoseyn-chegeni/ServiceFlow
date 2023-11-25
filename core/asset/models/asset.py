@@ -26,6 +26,7 @@ class Asset(models.Model):
     depreciation_rate = models.DecimalField(max_digits=5, decimal_places=2)
     assigned_ip_address = models.GenericIPAddressField(null=True, blank=True)
     software_installed = models.TextField(null=True, blank=True)
+    imei = models.CharField(max_length=50, blank=True, null=True)
     notes = models.TextField(null=True, blank=True)
     created_by = models.ForeignKey(
         "accounts.User",
@@ -36,6 +37,17 @@ class Asset(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    image = models.ImageField(
+        upload_to="images",blank=True, null=True
+    )
+    supplier = models.CharField(max_length=255, blank=True, null=True)
+    # eol_date = models.DateField()
+    warranty = models.CharField(max_length=255, blank=True, null=True)
+    # chechkouts = models.ManyToManyField()
+    # checkins = models.ManyToManyField()
+    # requests = models.ManyToManyField()
+    # checkout_date = models.DateField()
+    byod = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
