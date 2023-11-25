@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models.asset import Asset
 from .models.asset_type import AssetType
 from .models.asset_status import AssetStatus
-from .models.license import License,LicenseCategory
+from .models.license import License, LicenseCategory
 from .models.accessory import Accessory, AccessoryCategory
 from .models.component import Component, ComponentCategory
 

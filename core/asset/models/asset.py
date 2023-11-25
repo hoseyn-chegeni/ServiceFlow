@@ -37,9 +37,7 @@ class Asset(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    image = models.ImageField(
-        upload_to="images",blank=True, null=True
-    )
+    image = models.ImageField(upload_to="images", blank=True, null=True)
     supplier = models.CharField(max_length=255, blank=True, null=True)
     # eol_date = models.DateField()
     warranty = models.CharField(max_length=255, blank=True, null=True)
