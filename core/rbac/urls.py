@@ -23,8 +23,16 @@ app_name = "rbac"
 
 urlpatterns = [
     # USER ROLE
-    path("assign_role_to_user/<int:pk>/",AssignRoleToUser.as_view(),name="assign_role_to_user"),
-    path('manage_users_role/<int:pk>/',ManageUserRolesFromROleDetailPage.as_view(), name= 'manage_user_role'),
+    path(
+        "assign_role_to_user/<int:pk>/",
+        AssignRoleToUser.as_view(),
+        name="assign_role_to_user",
+    ),
+    path(
+        "manage_users_role/<int:pk>/",
+        ManageUserRolesFromROleDetailPage.as_view(),
+        name="manage_user_role",
+    ),
     #  ROLE MANAGEMENT
     path("role_list/", RoleListView.as_view(), name="role_list"),
     path("role_create/", RoleCreateView.as_view(), name="role_create"),

@@ -43,7 +43,6 @@ class AssetUpdateView(LoginRequiredMixin, UpdateView):
         "location",
         "assigned_user",
         "status",
-        "condition",
         "maintenance_schedule",
         "purchase_cost",
         "depreciation_rate",

@@ -19,9 +19,6 @@ class Asset(models.Model):
     status = models.ForeignKey(
         "AssetStatus", on_delete=models.SET_NULL, blank=True, null=True
     )
-    condition = models.ForeignKey(
-        "AssetCondition", on_delete=models.SET_NULL, blank=True, null=True
-    )
     maintenance_schedule = models.CharField(max_length=100, blank=True, null=True)
     # last_maintenance_date = models.DateField()
     purchase_cost = models.DecimalField(max_digits=10, decimal_places=2)

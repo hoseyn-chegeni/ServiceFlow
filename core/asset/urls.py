@@ -21,13 +21,7 @@ from .views.asset_type import (
     AssetTypeListView,
     AssetTypeUpdateView,
 )
-from .views.asset_condition import (
-    AssetConditionCreateView,
-    AssetConditionDeleteView,
-    AssetConditionDetailView,
-    AssetConditionListView,
-    AssetConditionUpdateView,
-)
+
 
 app_name = "asset"
 
@@ -56,24 +50,4 @@ urlpatterns = [
     path("type_detail/<int:pk>", AssetTypeDetailView.as_view(), name="type_detail"),
     path("type_update/<int:pk>", AssetTypeUpdateView.as_view(), name="type_update"),
     path("type_delete/<int:pk>", AssetTypeDeleteView.as_view(), name="type_delete"),
-    # ASSET CONDITION
-    path("condition_list/", AssetConditionListView.as_view(), name="condition_list"),
-    path(
-        "condition_create/", AssetConditionCreateView.as_view(), name="condition_create"
-    ),
-    path(
-        "condition_detail/<int:pk>",
-        AssetConditionDetailView.as_view(),
-        name="condition_detail",
-    ),
-    path(
-        "condition_update/<int:pk>",
-        AssetConditionUpdateView.as_view(),
-        name="condition_update",
-    ),
-    path(
-        "condition_delete/<int:pk>",
-        AssetConditionDeleteView.as_view(),
-        name="condition_delete",
-    ),
 ]

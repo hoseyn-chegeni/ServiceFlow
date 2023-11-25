@@ -11,8 +11,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.contrib.auth.models import Group
 from accounts.models import User
 
+
 class RoleListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-    model  = Group
+    model = Group
     template_name = "rbac/role/list.html"
     permission_required = "rbac.view_role"
     context_object_name = "role"
@@ -25,7 +26,7 @@ class RoleDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["users"] = User.objects.filter(groups =self.kwargs["pk"])
+        context["users"] = User.objects.filter(groups=self.kwargs["pk"])
         return context
 
 
@@ -50,7 +51,7 @@ class RoleUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Group
     template_name = "rbac/role/update.html"
     permission_required = "rbac.view_role"
-    fields = ('__all__')
+    fields = "__all__"
     success_url = reverse_lazy("rbac:role_list")
 
 

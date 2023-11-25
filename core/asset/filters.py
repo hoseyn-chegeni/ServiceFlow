@@ -15,5 +15,4 @@ class AssetFilters(FilterSet):
             "location",
             "assigned_user",
             "status",
-            "condition",
         ]
