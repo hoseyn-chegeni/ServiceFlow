@@ -3,6 +3,7 @@ from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.views.generic import ListView, UpdateView, DetailView, DeleteView
+from django.views.generic.base import TemplateView
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from .models import User
@@ -40,6 +41,21 @@ class UserView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(is_active=True)
+    
+
+class UserMeView(LoginRequiredMixin,TemplateView):
+    template_name = 'registration/user_me.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = User.objects.get(id = self.request.user.id)
+        context['user'] = user
+        context["user_permissions"] = user.user_permissions.all()
+        context["user_created_task"] = Task.objects.filter(creator_id=user.id).count()
+        context["user_assigned_task"] = Task.objects.filter(
+            assign_to_id=user.id
+        ).count()
+        return context
 
 
 class UserLogin(LoginView):

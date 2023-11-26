@@ -4,6 +4,7 @@ from .views import (
     UserLogout,
     CreateUser,
     UserView,
+    UserMeView,
     UserUpdate,
     UserDetail,
     UserDelete,
@@ -13,8 +14,6 @@ from .views import (
     SuspendUserListView,
     UserActivitiesOnTasks,
     BulkUserImportView,
-)
-from .views import (
     CustomPasswordResetView,
     CustomPasswordResetDoneView,
     CustomPasswordResetConfirmView,
@@ -27,6 +26,7 @@ app_name = "accounts"
 urlpatterns = [
     path("api/", include("accounts.api.urls")),
     path("users/", UserView.as_view(), name="users"),
+    path('user_me/',UserMeView.as_view(),name='user_me'),
     path("login/", UserLogin.as_view(), name="login"),
     path("logout/", UserLogout.as_view(), name="logout"),
     path("create_user/", CreateUser.as_view(), name="create_user"),
