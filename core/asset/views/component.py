@@ -42,7 +42,7 @@ class ComponentCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateVie
 
 
 class ComponentUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
-    model = ComponentCategory
+    model = Component
     template_name = "asset/component/update.html"
     fields = "__all__"
     permission_required = "asset.change_component"
@@ -50,7 +50,7 @@ class ComponentUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateVie
 
 
 class ComponentDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
-    model = ComponentCategory
+    model = Component
     template_name = "asset/component/delete.html"
     success_url = reverse_lazy("asset:component_list")
     permission_required = "asset.delete_component"
