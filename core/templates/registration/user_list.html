@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends 'base.html'%}
+{%block content_1%}
     <button><a href="{%url 'accounts:create_user'%}"> Create New User</a></button><button><a href="{%url 'accounts:suspended_list'%}"> Suspended user</a></button><br>
     {%for i in users%}
     {{i.id}}. {{i.first_name}} {{i.last_name}}//// {{i.email}}
@@ -34,5 +28,4 @@
         {% endif %}
     </span>
 </div>
-</body>
-</html>
+{%endblock%}
