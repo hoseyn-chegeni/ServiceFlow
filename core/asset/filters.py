@@ -1,6 +1,7 @@
 import django_filters
 from django_filters import FilterSet
 from .models.asset import Asset
+from .models.component import Component
 
 
 class AssetFilters(FilterSet):
@@ -16,3 +17,18 @@ class AssetFilters(FilterSet):
             "assigned_user",
             "status",
         ]
+
+
+class ComponentFilters(FilterSet):
+    company = django_filters.CharFilter(lookup_expr="icontains")
+    name = django_filters.CharFilter(lookup_expr="icontains")
+
+    fields = [
+        "company",
+        "name",
+        "serial",
+        "category",
+        "supplier",
+        "location",
+        "order_number",
+    ]
