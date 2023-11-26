@@ -34,7 +34,19 @@ from .views.component import (
     ComponentCategoryUpdateView,
 )
 
-from .views.license import LicenseCreateView, LicenseDeleteView, LicenseDetailView, LicenseListView,LicenseUpdateView
+from .views.license import (
+    LicenseCreateView,
+    LicenseDeleteView,
+    LicenseDetailView,
+    LicenseListView,
+    LicenseUpdateView,
+    LicenseCategoryDeleteView,
+    LicenseCategoryCreateView,
+    LicenseCategoryDetailView,
+    LicenseCategoryListView,
+    LicenseCategoryUpdateView,
+)
+
 app_name = "asset"
 
 urlpatterns = [
@@ -65,19 +77,89 @@ urlpatterns = [
     # COMPONENT
     path("component_list/", ComponentListView.as_view(), name="component_list"),
     path("component_create/", ComponentCreateView.as_view(), name="component_create"),
-    path("component_detail/<int:pk>",ComponentDetailView.as_view(),name="component_detail",),
-    path("component_update/<int:pk>",ComponentUpdateView.as_view(),name="component_update",),
-    path("component_delete/<int:pk>",ComponentDeleteView.as_view(),name="component_delete",),
-     # COMPONENT CATEGORY
-    path("component_category_list/", ComponentCategoryListView.as_view(), name="component_category_list"),
-    path("component_category_create/", ComponentCategoryCreateView.as_view(), name="component_category_create"),
-    path("component_category_detail/<int:pk>",ComponentCategoryDetailView.as_view(),name="component_category_detail",),
-    path("component_category_update/<int:pk>",ComponentCategoryUpdateView.as_view(),name="component_category_update",),
-    path("component_category_delete/<int:pk>",ComponentCategoryDeleteView.as_view(),name="component_category_delete",),
+    path(
+        "component_detail/<int:pk>",
+        ComponentDetailView.as_view(),
+        name="component_detail",
+    ),
+    path(
+        "component_update/<int:pk>",
+        ComponentUpdateView.as_view(),
+        name="component_update",
+    ),
+    path(
+        "component_delete/<int:pk>",
+        ComponentDeleteView.as_view(),
+        name="component_delete",
+    ),
+    # COMPONENT CATEGORY
+    path(
+        "component_category_list/",
+        ComponentCategoryListView.as_view(),
+        name="component_category_list",
+    ),
+    path(
+        "component_category_create/",
+        ComponentCategoryCreateView.as_view(),
+        name="component_category_create",
+    ),
+    path(
+        "component_category_detail/<int:pk>",
+        ComponentCategoryDetailView.as_view(),
+        name="component_category_detail",
+    ),
+    path(
+        "component_category_update/<int:pk>",
+        ComponentCategoryUpdateView.as_view(),
+        name="component_category_update",
+    ),
+    path(
+        "component_category_delete/<int:pk>",
+        ComponentCategoryDeleteView.as_view(),
+        name="component_category_delete",
+    ),
     # LICENSE
     path("license_list/", LicenseListView.as_view(), name="license_list"),
     path("license_create/", LicenseCreateView.as_view(), name="license_create"),
-    path("license_detail/<int:pk>",LicenseDetailView.as_view(),name="license_detail",),
-    path("license_update/<int:pk>",LicenseUpdateView.as_view(),name="license_update",),
-    path("license_delete/<int:pk>",LicenseDeleteView.as_view(),name="license_delete",),
+    path(
+        "license_detail/<int:pk>",
+        LicenseDetailView.as_view(),
+        name="license_detail",
+    ),
+    path(
+        "license_update/<int:pk>",
+        LicenseUpdateView.as_view(),
+        name="license_update",
+    ),
+    path(
+        "license_delete/<int:pk>",
+        LicenseDeleteView.as_view(),
+        name="license_delete",
+    ),
+    # LICENSE CATEGORY
+    path(
+        "license_category_list/",
+        LicenseCategoryListView.as_view(),
+        name="license_category_list",
+    ),
+    path(
+        "license_category_create/",
+        LicenseCategoryCreateView.as_view(),
+        name="license_category_create",
+    ),
+    path(
+        "license_category_detail/<int:pk>",
+        LicenseCategoryDetailView.as_view(),
+        name="license_category_detail",
+    ),
+    path(
+        "license_category_update/<int:pk>",
+        LicenseCategoryUpdateView.as_view(),
+        name="license_category_update",
+    ),
+    path(
+        "license_category_delete/<int:pk>",
+        LicenseCategoryDeleteView.as_view(),
+        name="license_category_delete",
+    ),
 ]
