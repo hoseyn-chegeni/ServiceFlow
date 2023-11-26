@@ -172,23 +172,23 @@
                   Profile
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Profile</a></li>
+                  <li><a class="dropdown-item" href="#">Profile(No Link)</a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item" href="#">Change Password</a></li>
+                  <li><a class="dropdown-item" href="{%url 'accounts:change_password'%}">Change Password</a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>                                   
-                  <li><a class="dropdown-item" href="#">Two Factor Authentication</a></li>
+                  <li><a class="dropdown-item" href="{%url 'two_factor:setup'%}">Two Factor Authentication</a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>  
-                  <li><a class="dropdown-item" href="#">Mail Box</a></li>    
+                  <li><a class="dropdown-item" href="{%url 'mail:inbox'%}">Mail Box</a></li>    
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item" href="#">Settings</a></li>
+                  <li><a class="dropdown-item" href="#">Settings(No Link)</a></li>
                 </ul>
               </li>
 
@@ -199,15 +199,15 @@
                   Accounting
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">users</a></li>
+                  <li><a class="dropdown-item" href="{%url 'accounts:users'%}">users</a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item" href="#">Add New User</a></li>
+                  <li><a class="dropdown-item" href="{%url 'accounts:create_user'%}">Add New User</a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>                                   
-                  <li><a class="dropdown-item" href="#">Upload Bulk User</a></li>                          
+                  <li><a class="dropdown-item" href="{%url 'accounts:user_bulk_upload'%}">Upload Bulk User</a></li>                          
                 </ul>
               </li>
 
@@ -218,19 +218,18 @@
                   Organization
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Organization</a></li>
+                  <li><a class="dropdown-item" href="{%url 'organization:list'%}">Organization</a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item" href="#">Departments</a></li>
+                  <li><a class="dropdown-item" href="{%url 'department:list'%}">Departments</a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>                                   
-                  <li><a class="dropdown-item" href="#">Teams</a></li>
+                  <li><a class="dropdown-item" href="{%url 'team:team_list'%}">Teams</a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>                            
-                  <li><a class="dropdown-item" href="#">Users</a></li>
                 </ul>
               </li>
 
@@ -239,15 +238,15 @@
                   Reminders
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">My Created Reminders</a></li>
+                  <li><a class="dropdown-item" href="{%url 'reminders:my_created_reminders'%}">My Created Reminders</a></li>
                   <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">Assigned Reminders</a></li>
+                  <li><a class="dropdown-item" href="{%url 'reminders:assigned_reminder'%}">Assigned Reminders</a></li>
                   <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">Set New Reminder</a></li>
+                  <li><a class="dropdown-item" href="{%url 'reminders:create'%}">Set New Reminder</a></li>
                 </ul>
               </li>
 
@@ -258,15 +257,15 @@
                   Meetings
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">My Meetings</a></li>
+                  <li><a class="dropdown-item" href="{%url 'meetings:invited_meetings'%}">My Meetings</a></li>
                   <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">My Created Meetings</a></li>
+                  <li><a class="dropdown-item" href="{%url 'meetings:my_created_meetings'%}">My Created Meetings</a></li>
                   <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">Set New Meetings</a></li>
+                  <li><a class="dropdown-item" href="{%url 'meetings:create'%}">Set New Meetings</a></li>
                 </ul>
               </li>
 
@@ -275,43 +274,39 @@
                   Articles
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">All Articles</a></li>
+                  <li><a class="dropdown-item" href="{%url 'article:list' %}">All Articles</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">My Articles</a></li>
+                  <li><a class="dropdown-item" href="{%url 'article:my_list' %}">My Articles</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">My Archive Articles</a></li>
+                  <li><a class="dropdown-item" href="{%url 'article:archive' %}">My Archive Articles</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">My Archive Articles</a></li>
+                  <li><a class="dropdown-item" href="{%url 'article:create' %}">Add New Articles</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">Add New Articles</a></li>
+                  <li><a class="dropdown-item" href="{%url 'article:tag_list' %}">Manage Article Tags </a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">Manage Article Tags </a></li>
+                  <li><a class="dropdown-item" href="{%url 'article:pending_list' %}">Pending List </a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">Pending List </a></li>
+                  <li><a class="dropdown-item" href="{%url 'article:reject_list' %}">Reject List </a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">Reject List </a></li>
+                <li><a class="dropdown-item" href="#">Shared Article Inbox (No Link)</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item" href="#">Shared Article Inbox </a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Sent Article </a></li>
+                <li><a class="dropdown-item" href="{%url 'article:sent'%}">Sent Article </a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
@@ -323,35 +318,35 @@
                   Task
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">All Tasks</a></li>
+                  <li><a class="dropdown-item" href="{%url 'tasks:task_list'%}">All Tasks</a></li>
                   <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">My Tasks</a></li>
+                  <li><a class="dropdown-item" href="{%url 'tasks:myTask_list'%}">My Tasks</a></li>
                   <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">Tasks Assigned To My Team</a></li>
+                  <li><a class="dropdown-item" href="{%url 'tasks:my_team' %}">Tasks Assigned To My Team</a></li>
                   <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">My Created Task</a></li>
+                  <li><a class="dropdown-item" href="{%url 'tasks:myCreatedTask_list' %}">My Created Task</a></li>
                   <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">Create Task</a></li>
+                  <li><a class="dropdown-item" href="{%url 'tasks:create_task' %}">Create Task</a></li>
                   <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">Manage Task Status</a></li>
+                  <li><a class="dropdown-item" href="{%url 'tasks:list_status' %}">Manage Task Status</a></li>
                   <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">Manage Task Type</a></li>
+                  <li><a class="dropdown-item" href="{%url 'tasks:list_type' %}">Manage Task Type</a></li>
                   <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">Manage Task priority</a></li>
+                  <li><a class="dropdown-item" href="{%url 'tasks:list_priority' %}">Manage Task priority</a></li>
                 </ul>
               </li>
 
@@ -360,23 +355,23 @@
                   Notes
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Public Notes</a></li>
+                  <li><a class="dropdown-item" href="{%url 'notes:public_notes'%}">Public Notes</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">My Notes</a></li>
+                  <li><a class="dropdown-item" href="{%url 'notes:my_notes'%}">My Notes</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">Archive Notes</a></li>
+                  <li><a class="dropdown-item" href="{%url 'notes:my_archive_notes' %}">Archive Notes</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">Create Notes</a></li>
+                  <li><a class="dropdown-item" href="{%url 'notes:create_note' %}">Create Notes</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">Manage Note Tags</a></li>
+                  <li><a class="dropdown-item" href="{%url 'notes:list_tag' %}">Manage Note Tags</a></li>
                 </ul>
               </li>
 
@@ -385,35 +380,35 @@
                   Assets
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">All Assets</a></li>
+                  <li><a class="dropdown-item" href="{%url 'asset:list'%}">All Assets</a></li>
                   <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">Manage Asset Status</a></li>
+                  <li><a class="dropdown-item" href="{%url 'asset:status_list'%}">Manage Asset Status</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">Manage Asset Type</a></li>
+                  <li><a class="dropdown-item" href="{%url 'asset:type_list'%}">Manage Asset Type</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">Components</a></li>
+                  <li><a class="dropdown-item" href="{%url 'asset:component_list'%}">Components</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">Manage Components Category</a></li>
+                  <li><a class="dropdown-item" href="{%url 'asset:component_category_list'%}">Manage Components Category</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">Licenses</a></li>
+                  <li><a class="dropdown-item" href="{%url 'asset:license_list'%}">Licenses</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">Manage License Categories</a></li>
+                  <li><a class="dropdown-item" href="{%url 'asset:license_category_list'%}">Manage License Categories</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">Consumable</a></li>
+                  <li><a class="dropdown-item" href="{%url 'asset:consumable_list'%}">Consumable</a></li>
                 </ul>
               </li>
 
@@ -423,16 +418,19 @@
                   Role Based Access Control
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Roles list</a></li>
+                  <li><a class="dropdown-item" href="{%url 'rbac:role_list'%}">Roles list</a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item" href="#">Create Role</a></li>
+                  <li><a class="dropdown-item" href="{%url 'rbac:role_create'%}">Create Role</a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item" href="#">All Permissions</a></li>
+                  <li><a class="dropdown-item" href="{%url 'rbac:permission_list' %}">All Permissions</a></li>
                 </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{%url 'accounts:logout'%}">Logout</a>
               </li>
             </ul>
 
