@@ -34,6 +34,8 @@ class UserView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = User
     template_name = "registration/user_list.html"
     permission_required = "accounts.view_user"
+    context_object_name = 'users'
+    paginate_by = 10
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
