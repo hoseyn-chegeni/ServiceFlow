@@ -6,24 +6,26 @@ from django.views.generic import (
     DetailView,
 )
 from ..models.asset_status import AssetStatus
-from .. models.asset import Asset
+from ..models.asset import Asset
 from django.urls import reverse_lazy
 from ..forms import CreateAssetStatusForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
 
+
 class AssetStatusListView(LoginRequiredMixin, ListView):
     model = AssetStatus
     template_name = "asset/status/list.html"
     context_object_name = "asset"
-    queryset = AssetStatus.objects.annotate(asset_count=Count('asset'))
+    queryset = AssetStatus.objects.annotate(asset_count=Count("asset"))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['status_counts'] = self.queryset.values_list('id','name', 'asset_count')
+        context["status_counts"] = self.queryset.values_list(
+            "id", "name", "asset_count"
+        )
+        context["BYOD"] = Asset.objects.filter(byod=True).count()
         return context
-    
-
 
 
 class AssetStatusDetailView(LoginRequiredMixin, DetailView):
@@ -59,3 +61,13 @@ class AssetStatusDeleteView(LoginRequiredMixin, DeleteView):
     model = AssetStatus
     template_name = "asset/status/delete.html"
     success_url = reverse_lazy("asset:status_list")
+
+
+class AllBYODListView(LoginRequiredMixin, ListView):
+    model = Asset
+    template_name = "asset/status/BYOD.html"
+    context_object_name = "byod"
+
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        return qs.filter(byod=True)

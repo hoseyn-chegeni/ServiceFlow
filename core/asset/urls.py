@@ -12,6 +12,7 @@ from .views.asset_status import (
     AssetStatusDetailView,
     AssetStatusListView,
     AssetStatusUpdateView,
+    AllBYODListView,
 )
 
 from .views.asset_type import (
@@ -68,6 +69,7 @@ urlpatterns = [
     path(
         "status_delete/<int:pk>", AssetStatusDeleteView.as_view(), name="status_delete"
     ),
+    path("BYOD", AllBYODListView.as_view(), name="BYOD"),
     # ASSET TYPE
     path("type_list/", AssetTypeListView.as_view(), name="type_list"),
     path("type_create/", AssetTypeCreateView.as_view(), name="type_create"),
