@@ -7,8 +7,10 @@
 </head>
 <body>
     <button><a href="{%url 'asset:status_create'%}"> add New status</a></button>
-    {%for i in asset%}
-    {{i.id}}:{{i.name}},<a href="{%url 'asset:status_detail' i.id%}"> Detail</a>,<a href="{%url 'asset:status_update' i.id %}">Update</a>,<a href="{%url 'asset:status_delete' i.id %}">Delete</a><br>
-    {%endfor%}
+    <ul>
+        {% for id, status_name, asset_count in status_counts %}
+          <li>{{ status_name }}: {{ asset_count }}, <a href="{%url 'asset:status_detail' id%}"> Detail</a>,<a href="{%url 'asset:status_update' id %}">Update</a>,<a href="{%url 'asset:status_delete' id %}">Delete</a></li>
+        {% endfor %}
+      </ul>
 </body>
 </html>

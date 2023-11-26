@@ -6,15 +6,24 @@ from django.views.generic import (
     DetailView,
 )
 from ..models.asset_status import AssetStatus
+from .. models.asset import Asset
 from django.urls import reverse_lazy
 from ..forms import CreateAssetStatusForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.db.models import Count
 
 class AssetStatusListView(LoginRequiredMixin, ListView):
     model = AssetStatus
     template_name = "asset/status/list.html"
     context_object_name = "asset"
+    queryset = AssetStatus.objects.annotate(asset_count=Count('asset'))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['status_counts'] = self.queryset.values_list('id','name', 'asset_count')
+        return context
+    
+
 
 
 class AssetStatusDetailView(LoginRequiredMixin, DetailView):
