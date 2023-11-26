@@ -1,16 +1,57 @@
 {% extends 'base.html'%}
 {%block content_1%}
-    <button><a href="{%url 'accounts:create_user'%}"> Create New User</a></button><button><a href="{%url 'accounts:suspended_list'%}"> Suspended user</a></button><br>
-    {%for i in users%}
-    {{i.id}}. {{i.first_name}} {{i.last_name}}//// {{i.email}}
-    , <a href="{%url 'accounts:update' i.id %}">update</a>,
-    <a href="{%url 'accounts:detail' i.id %}">detail</a>
-    ,<a href="{%url 'accounts:delete' i.id %}">delete</a>,
-    <a href="{%url 'accounts:suspend' i.id %}">Suspend User</a>,
-    <a href="{%url 'accounts:task_activity' i.id %}">Task Activity Logs</a>, 
-    <a href="{%url 'rbac:assign_role_to_user' i.id %}">Manage Roles</a>,<br>
-    {%endfor%} 
+    <section class="vh-100 gradient-custom-2">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-12 col-xl-10">
+      
+              <div class="card mask-custom">
+                <div class="card-body p-4 text-white">
+      
+                  <div class="text-center pt-3 pb-2">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"
+                      alt="Check" width="60">
+                    <h2 class="my-4">Users</h2>
+                  </div>
+      
+                  <table class="table text-white mb-0">
+                    <thead>
+                      <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Last Login</th>
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {%for i in users%}
+                      <tr class="fw-normal">
+                        <th>
+                          <img src="{{i.image.url}}"
+                            alt="avatar 1" style="width: 45px; height: auto;">
+                          <span class="ms-2">{{i.first_name}} {{i.last_name}}</span>
+                        </th>
+                        <td class="align-middle">
+                          <span>{{i.email}}</span>
+                        </td>
+                        <td class="align-middle">
+                            <span>{{i.last_login}}</span>
+                          </td>
+                        <td class="align-middle">
+                            <a href="{%url 'accounts:detail' i.id %}" data-mdb-toggle="tooltip" title="Detail" style="color:#808080;"> <i class="fas fa-info-circle"></i></a>
+                          <a href="{%url 'accounts:update' i.id %}" data-mdb-toggle="tooltip" title="Update" style="color: #0000FF;"><i class="fas fa-edit" ></i></a>
+                          <a href="{%url 'rbac:assign_role_to_user' i.id %}" data-mdb-toggle="tooltip" title="Manage Roles" style="color:#556B2F"> <i class="fas fa-shield-alt"></i></a>
+                          <a href="{%url 'accounts:task_activity' i.id %}" data-mdb-toggle="tooltip" title="Task Activity Logs" style="color:#708090"><i class="fas fa-history"></i></a>
+                          <a href="{%url 'accounts:suspend' i.id %}" data-mdb-toggle="tooltip" title="Suspend User" style="color:black"><i class="fas fa-ban"></i></a>
+                          <a href="{%url 'accounts:delete' i.id %}" data-mdb-toggle="tooltip" title="Delete" style="color:crimson"><i class="fas fa-trash-alt"></i></a>
+                        </td>
+                      </tr>
+                      {%endfor%}
+                      </tbody>
+                  </table>
+      
 
+      
 <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
@@ -28,4 +69,12 @@
         {% endif %}
     </span>
 </div>
+                </div>
+              </div>
+      
+            </div>
+          </div>
+        </div>
+      </section>
+
 {%endblock%}
