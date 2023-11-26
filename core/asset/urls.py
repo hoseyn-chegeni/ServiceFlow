@@ -27,6 +27,11 @@ from .views.component import (
     ComponentDetailView,
     ComponentListView,
     ComponentUpdateView,
+    ComponentCategoryCreateView,
+    ComponentCategoryDeleteView,
+    ComponentCategoryDetailView,
+    ComponentCategoryListView,
+    ComponentCategoryUpdateView,
 )
 
 app_name = "asset"
@@ -56,11 +61,17 @@ urlpatterns = [
     path("type_detail/<int:pk>", AssetTypeDetailView.as_view(), name="type_detail"),
     path("type_update/<int:pk>", AssetTypeUpdateView.as_view(), name="type_update"),
     path("type_delete/<int:pk>", AssetTypeDeleteView.as_view(), name="type_delete"),
-
     # COMPONENT
     path("component_list/", ComponentListView.as_view(), name="component_list"),
     path("component_create/", ComponentCreateView.as_view(), name="component_create"),
-    path("component_detail/<int:pk>", ComponentDetailView.as_view(), name="component_detail"),
-    path("component_update/<int:pk>", ComponentUpdateView.as_view(), name="component_update"),
-    path("component_delete/<int:pk>", ComponentDeleteView.as_view(), name="component_delete"),
+    path("component_detail/<int:pk>",ComponentDetailView.as_view(),name="component_detail",),
+    path("component_update/<int:pk>",ComponentUpdateView.as_view(),name="component_update",),
+    path("component_delete/<int:pk>",ComponentDeleteView.as_view(),name="component_delete",),
+     # COMPONENT CATEGORY
+    path("component_category_list/", ComponentCategoryListView.as_view(), name="component_category_list"),
+    path("component_category_create/", ComponentCategoryCreateView.as_view(), name="component_category_create"),
+    path("component_category_detail/<int:pk>",ComponentCategoryDetailView.as_view(),name="component_category_detail",),
+    path("component_category_update/<int:pk>",ComponentCategoryUpdateView.as_view(),name="component_category_update",),
+    path("component_category_delete/<int:pk>",ComponentCategoryDeleteView.as_view(),name="component_category_delete",),
+
 ]
