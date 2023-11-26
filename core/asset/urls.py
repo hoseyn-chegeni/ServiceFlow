@@ -34,6 +34,7 @@ from .views.component import (
     ComponentCategoryUpdateView,
 )
 
+from .views.license import LicenseCreateView, LicenseDeleteView, LicenseDetailView, LicenseListView,LicenseUpdateView
 app_name = "asset"
 
 urlpatterns = [
@@ -73,5 +74,10 @@ urlpatterns = [
     path("component_category_detail/<int:pk>",ComponentCategoryDetailView.as_view(),name="component_category_detail",),
     path("component_category_update/<int:pk>",ComponentCategoryUpdateView.as_view(),name="component_category_update",),
     path("component_category_delete/<int:pk>",ComponentCategoryDeleteView.as_view(),name="component_category_delete",),
-
+    # LICENSE
+    path("license_list/", LicenseListView.as_view(), name="license_list"),
+    path("license_create/", LicenseCreateView.as_view(), name="license_create"),
+    path("license_detail/<int:pk>",LicenseDetailView.as_view(),name="license_detail",),
+    path("license_update/<int:pk>",LicenseUpdateView.as_view(),name="license_update",),
+    path("license_delete/<int:pk>",LicenseDeleteView.as_view(),name="license_delete",),
 ]
