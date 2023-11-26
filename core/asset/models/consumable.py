@@ -1,8 +1,11 @@
 from django.db import models
 
+
 class Consumable(models.Model):
     name = models.CharField(max_length=100)
-    category = models.ForeignKey('ConsumableCategory', on_delete = models.SET_NULL,  blank=True, null=True)
+    category = models.ForeignKey(
+        "ConsumableCategory", on_delete=models.SET_NULL, blank=True, null=True
+    )
     model_number = models.CharField(max_length=100, blank=True, null=True)
     item_number = models.CharField(max_length=100, blank=True, null=True)
     total = models.PositiveIntegerField(default=0)

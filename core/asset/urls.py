@@ -48,6 +48,15 @@ from .views.license import (
     LicenseCategoryUpdateView,
 )
 
+
+from .views.consumable import (
+    ConsumableCreateView,
+    ConsumableDeleteView,
+    ConsumableDetailView,
+    ConsumableListView,
+    ConsumableUpdateView,
+)
+
 app_name = "asset"
 
 urlpatterns = [
@@ -163,5 +172,25 @@ urlpatterns = [
         "license_category_delete/<int:pk>",
         LicenseCategoryDeleteView.as_view(),
         name="license_category_delete",
+    ),
+    # CONSUMABLE
+    path("consumable_list/", ConsumableListView.as_view(), name="consumable_list"),
+    path(
+        "consumable_create/", ConsumableCreateView.as_view(), name="consumable_create"
+    ),
+    path(
+        "consumable_detail/<int:pk>",
+        ConsumableDetailView.as_view(),
+        name="consumable_detail",
+    ),
+    path(
+        "consumable_update/<int:pk>",
+        ConsumableUpdateView.as_view(),
+        name="consumable_update",
+    ),
+    path(
+        "consumable_delete/<int:pk>",
+        ConsumableDeleteView.as_view(),
+        name="consumable_delete",
     ),
 ]

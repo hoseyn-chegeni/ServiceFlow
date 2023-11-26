@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button><a href="{%url 'asset:consumable_create'%}"> add New consumable</a></button>
+    {%for i in consumable%}
+    {{i.id}}:{{i.name}},<a href="{%url 'asset:consumable_detail' i.id%}"> Detail</a>,<a href="{%url 'asset:consumable_update' i.id %}">Update</a>,<a href="{%url 'asset:consumable_delete' i.id %}">Delete</a><br>
+    {%endfor%}
+</body>
+</html>
