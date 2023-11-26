@@ -19,3 +19,4 @@ django-otp
 qrcode
 django-two-factor-auth
 phonenumbers
+django-bootstrap-v5 
