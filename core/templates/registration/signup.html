@@ -1,59 +1,65 @@
-{% load static %}
-  <!DOCTYPE html>
-  <html lang="en" dir="ltr">
-     <head>
-        <meta charset="utf-8">
-        <title>Sign Up</title>
-        <link rel="stylesheet" href="{% static 'registration/signup.css' %}">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   </head>
+{%extends 'base.html' %}
+{%block title %} Sign Up {%endblock%}
 
-
-
-   <body>
-      <div class="wrapper">
-         <div class="title">
-            Sign Up Form
-         </div>
-         <form action="" method="post">
-          {% csrf_token%}
-
-          <div class="field">
-            <input name="email" type="email" required>
-            <label>Email</label>
-         </div>
-
-            <div class="field">
-               <input  name="first_name" type="text" required>
-               <label>First Name</label>
-            </div>
-
-
-            <div class="field">
-              <input name="last_name" type="text" required>
-              <label>Last Name</label>
-           </div>
-
-
-         <div class="field">
-          <input name="password1" type="password" required>
-          <label>Password</label>
-       </div>
-
-       <div class="field">
-        <input  name="password2" type="password" required>
-        <label>Confirm Password</label>
-     </div>
-     <div class="content">
-      <div class="checkbox">
-         <input type="checkbox" id="remember-me">
-         <label for="remember-me">I accept the <a href="#">privacy policy</a></label>
+{%block content %} 
+   
+<div class="container">
+    <main>
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="" width="62" height="47">
+        <h2>Add New User</h2>
+        <p class="lead">Below is an example form built entirely with Bootstrap’s form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
       </div>
-   </div>
- <div class="field">
-  <input type="submit" value="Submit">
+  
+
+        <div class="col-md-7 col-lg-8">
+          <h4 class="mb-3">Add Information</h4>
+          <form class="needs-validation" method="post">
+            {%csrf_token%}
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label for="firstName" class="form-label">First name</label>
+                <input type="text" class="form-control" id="firstName" placeholder="" value="" name="first_name" required>
+                <div class="invalid-feedback">
+                  Valid first name is required.
+                </div>
+              </div>
+  
+              <div class="col-sm-6">
+                <label for="lastName" class="form-label">Last name</label>
+                <input type="text" class="form-control" id="lastName" placeholder="" value="" name="last_name" required>
+                <div class="invalid-feedback">
+                  Valid last name is required.
+                </div>
+              </div>
+  
+  
+              <div class="col-12">
+                <label for="email" class="form-label">Email <span class="text-body-secondary"></span></label>
+                <input type="email" class="form-control" id="email" placeholder="you@example.com" name="email" required>
+                <div class="invalid-feedback">
+                  Please enter a valid email address for shipping updates.
+                </div>
+              </div>
+
+                 <div class="row g-3">
+                 <div class="col-sm-6">
+                   <label for="firstName" class="form-label">Password</label>
+                   <input type="password" class="form-control" id="firstName" placeholder="" value="" name="password1" required>
+                   <div class="invalid-feedback">
+                     Valid Password is required.
+                   </div>
+                 </div>
+     
+                 <div class="col-sm-6">
+                   <label for="lastName" class="form-label">Confirm Password</label>
+                   <input type="password" class="form-control" id="lastName" placeholder="" value="" name="password2" required>
+                 </div>  
+            <button class="w-100 btn btn-primary btn-lg" type="submit">Register</button>
+          </form>
+        </div>
+      </div>
+    </main>
 </div>
-         </form>
-      </div>
-   </body>
-</html>
+
+{%endblock%}
