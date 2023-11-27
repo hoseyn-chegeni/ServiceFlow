@@ -144,6 +144,7 @@ class ReactiveUserView(UpdateView):
 class SuspendUserListView(ListView):
     model = User
     template_name = "registration/suspend_list.html"
+    context_object_name = 'users'
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
