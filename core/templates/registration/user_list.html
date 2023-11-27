@@ -13,6 +13,27 @@
                       alt="Check" width="60">
                     <h2 class="my-4">Users</h2>
                   </div>
+
+                  <form class="needs-validation" method="get">
+                    {%csrf_token%}
+                    <div class="row g-3">
+                      <div class="col-sm-6">
+                        <label for="id_id" class="form-label">Id</label>
+                        <input  class="form-control" type="number" name="id" step="any" id="id_id"value="{{ request.GET.id }}" >
+                      </div>
+          
+                      <div class="col-sm-6">
+                        <label for="email" class="form-label">email</label>
+                        <input  class="form-control" type="text" name="email" step="any" id="email" value="{{ request.GET.email }}" >
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="name" class="form-label">Name</label>
+                        <input  class="form-control" type="text" name="name" step="any" id="name" value="{{ request.GET.name }}" >
+                      </div>
+
+                      <button class="w-100 btn btn-lg btn-outline-success" type="submit">Search</button>
+                    </form>
       
                   <table class="table text-white mb-0">
                     <thead>
@@ -24,7 +45,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                        {%for i in users%}
+                        {%for i in filter.qs%}
                       <tr class="fw-normal">
                         <th>
                           <img src="{{i.image.url}}"

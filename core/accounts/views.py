@@ -22,6 +22,8 @@ from django.contrib.auth.views import (
     PasswordResetConfirmView,
     PasswordResetCompleteView,
 )
+from django_filters.views import FilterView
+from .filters import UserFilter
 
 
 load_dotenv()
@@ -30,12 +32,12 @@ load_dotenv()
 # Create your views here.
 
 
-class UserView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+class UserView(LoginRequiredMixin, PermissionRequiredMixin, FilterView):
     model = User
     template_name = "registration/user_list.html"
     permission_required = "accounts.view_user"
-    context_object_name = 'users'
     paginate_by = 10
+    filterset_class = UserFilter
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
