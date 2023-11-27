@@ -108,7 +108,7 @@ class UserUpdate(LoginRequiredMixin, UpdateView):
 class UserDetail(LoginRequiredMixin, DetailView):
     model = User
     template_name = "registration/detail.html"
-
+    context_object_name = 'user'
     def get_object(self, queryset=None):
         return get_object_or_404(User, pk=self.kwargs.get("pk"))
 
