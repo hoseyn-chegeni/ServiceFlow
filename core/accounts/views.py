@@ -38,7 +38,6 @@ class UserView(LoginRequiredMixin, PermissionRequiredMixin, FilterView):
     model = User
     template_name = "registration/user_list.html"
     permission_required = "accounts.view_user"
-    paginate_by = 10
     filterset_class = UserFilter
     context_object_name = 'users'
 
@@ -156,14 +155,19 @@ class ReactiveUserView(UpdateView):
         return super().form_valid(form)
 
 
-class SuspendUserListView(ListView):
+class SuspendUserListView(FilterView):
     model = User
     template_name = "registration/suspend_list.html"
+    filterset_class = UserFilter
     context_object_name = 'users'
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(is_active=False)
+    
+    def get_paginate_by(self, queryset):
+        user_selected_value = self.request.session.get('items_per_page', 10) 
+        return user_selected_value
 
 
 class UserActivitiesOnTasks(ListView):
