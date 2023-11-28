@@ -26,7 +26,7 @@ from django.contrib.auth.views import (
 from django_filters.views import FilterView
 from .filters import UserFilter
 from django.http import HttpResponseRedirect
-
+from django.contrib import messages
 
 load_dotenv()
 
@@ -39,17 +39,20 @@ class UserView(LoginRequiredMixin, PermissionRequiredMixin, FilterView):
     template_name = "registration/user_list.html"
     permission_required = "accounts.view_user"
     filterset_class = UserFilter
-    context_object_name = 'users'
+    context_object_name = "users"
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(is_active=True)
-    
+
     def get_paginate_by(self, queryset):
         # Get the value for paginate_by dynamically (e.g., from a form input or session)
         # Example: Set paginate_by to a user-selected value stored in session
-        user_selected_value = self.request.session.get('items_per_page', 10)  # Default to 10
+        user_selected_value = self.request.session.get(
+            "items_per_page", 10
+        )  # Default to 10
         return user_selected_value
+
 
 class UserLogin(LoginView):
     redirect_authenticated_user = True
@@ -101,7 +104,8 @@ class UserUpdate(LoginRequiredMixin, UpdateView):
 class UserDetail(LoginRequiredMixin, DetailView):
     model = User
     template_name = "registration/detail.html"
-    context_object_name = 'user'
+    context_object_name = "user"
+
     def get_object(self, queryset=None):
         return get_object_or_404(User, pk=self.kwargs.get("pk"))
 
@@ -120,6 +124,7 @@ class UserDelete(LoginRequiredMixin, DeleteView):
     model = User
     template_name = "registration/delete.html"
     success_url = reverse_lazy("accounts:users")
+
     def get(self, request, *args, **kwargs):
         # Get the object to be deleted
         self.object = self.get_object()
@@ -137,34 +142,40 @@ class UserPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
 
 class SuspendUserView(View):
     def get(self, request, pk):
-        user = User.objects.filter(pk=pk).first() 
+        user = User.objects.filter(pk=pk).first()
         if user:
             user.is_active = False
-            user.save()
-        return HttpResponseRedirect(reverse_lazy('accounts:users')) 
+            messages.success(
+                self.request, f"User Suspended '{user.email}' successfully!"
+            )
+            user.save
+        return HttpResponseRedirect(reverse_lazy("accounts:users"))
 
 
 class ReactiveUserView(View):
     def get(self, request, pk):
-        user = User.objects.filter(pk=pk).first() 
+        user = User.objects.filter(pk=pk).first()
         if user:
-            user.is_active = True  
+            user.is_active = True
+            messages.success(
+                self.request, f"User Reactive '{user.email}' successfully!"
+            )
             user.save()
-        return HttpResponseRedirect(reverse_lazy('accounts:suspended_list'))
+        return HttpResponseRedirect(reverse_lazy("accounts:suspended_list"))
 
 
 class SuspendUserListView(FilterView):
     model = User
     template_name = "registration/suspend_list.html"
     filterset_class = UserFilter
-    context_object_name = 'users'
+    context_object_name = "users"
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(is_active=False)
-    
+
     def get_paginate_by(self, queryset):
-        user_selected_value = self.request.session.get('items_per_page', 10) 
+        user_selected_value = self.request.session.get("items_per_page", 10)
         return user_selected_value
 
 
