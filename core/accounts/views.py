@@ -25,6 +25,7 @@ from django.contrib.auth.views import (
 )
 from django_filters.views import FilterView
 from .filters import UserFilter
+from django.http import HttpResponseRedirect
 
 
 load_dotenv()
@@ -120,6 +121,14 @@ class UserDelete(LoginRequiredMixin, DeleteView):
     model = User
     template_name = "registration/delete.html"
     success_url = reverse_lazy("accounts:users")
+    def get(self, request, *args, **kwargs):
+        # Get the object to be deleted
+        self.object = self.get_object()
+
+        # Perform the delete operation directly without displaying a confirmation template
+        success_url = self.get_success_url()
+        self.object.delete()
+        return HttpResponseRedirect(success_url)
 
 
 class UserPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
