@@ -1,3 +1,4 @@
+from typing import Any
 from django.db.models.base import Model as Model
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, render
@@ -38,12 +39,17 @@ class UserView(LoginRequiredMixin, PermissionRequiredMixin, FilterView):
     permission_required = "accounts.view_user"
     paginate_by = 10
     filterset_class = UserFilter
+    context_object_name = 'users'
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(is_active=True)
     
-
+    def get_paginate_by(self, queryset):
+        # Get the value for paginate_by dynamically (e.g., from a form input or session)
+        # Example: Set paginate_by to a user-selected value stored in session
+        user_selected_value = self.request.session.get('items_per_page', 10)  # Default to 10
+        return user_selected_value
 
 class UserLogin(LoginView):
     redirect_authenticated_user = True

@@ -1,6 +1,6 @@
 {% extends 'base.html'%}
 {%block content%}
-    <section class="vh-100 gradient-custom-2" style="margin-bottom: 20%;">
+    <section class="vh-100 gradient-custom-2" style="margin-bottom: 35%;">
         <div class="container py-5 h-100">
           <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-md-12 col-xl-10">
@@ -45,7 +45,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                        {%for i in filter.qs%}
+                        {%for i in users%}
                       <tr class="fw-normal">
                         <th>
                           <img src="{{i.image.url}}"
