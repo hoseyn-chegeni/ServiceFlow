@@ -63,7 +63,7 @@
                           <a href="{%url 'accounts:update' i.id %}" data-mdb-toggle="tooltip" title="Update" style="color: #0000FF;"><i class="fas fa-edit" ></i></a>
                           <a href="{%url 'rbac:assign_role_to_user' i.id %}" data-mdb-toggle="tooltip" title="Manage Roles" style="color:#556B2F"> <i class="fas fa-shield-alt"></i></a>
                           <a href="{%url 'accounts:task_activity' i.id %}" data-mdb-toggle="tooltip" title="Task Activity Logs" style="color:#708090"><i class="fas fa-history"></i></a>
-                          <a href="{%url 'accounts:reactive' i.id %}" data-mdb-toggle="tooltip" title="Reactive User" style="color:green"><i class="fas fa-check-square"></i></a>
+                          <a href="#" data-toggle="modal" data-target="#exampleModal2"  title="Reactive User" ><i class="fas fa-check-circle"></i></a>
                           <a href="#" data-toggle="modal" data-target="#exampleModal"  title="Delete" ><i class="fas fa-trash-alt"></i></a>
                         </td>
                       </tr>
@@ -94,7 +94,7 @@
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel1">Suspend Confirmation</h5>
+                              <h5 class="modal-title" id="exampleModalLabel1">Reactive Confirmation</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
@@ -103,7 +103,7 @@
                               Are you sure you want to Suspend this item?
                             </div>
                             <div class="modal-footer">
-                              <a class="btn btn-primary" href="{% url 'accounts:suspend' pk=i.pk %}" class="btn">Suspend</a>
+                              <a class="btn btn-primary" href="{% url 'accounts:reactive' pk=i.pk %}" class="btn">Yes, Reactive User</a>
                           </div>
                           </div>
                         </div>

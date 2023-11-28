@@ -137,22 +137,20 @@ class UserPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
 
 class SuspendUserView(View):
     def get(self, request, pk):
-        user = User.objects.filter(pk=pk).first()  # Get the user object
+        user = User.objects.filter(pk=pk).first() 
         if user:
-            user.is_active = False  # Activate the user
+            user.is_active = False
             user.save()
         return HttpResponseRedirect(reverse_lazy('accounts:users')) 
 
 
-class ReactiveUserView(UpdateView):
-    model = User
-    fields = ("is_active",)
-    template_name = "registration/reactive_user.html"
-    success_url = reverse_lazy("accounts:suspended_list")
-
-    def form_valid(self, form):
-        form.instance.is_active = True
-        return super().form_valid(form)
+class ReactiveUserView(View):
+    def get(self, request, pk):
+        user = User.objects.filter(pk=pk).first() 
+        if user:
+            user.is_active = True  
+            user.save()
+        return HttpResponseRedirect(reverse_lazy('accounts:suspended_list'))
 
 
 class SuspendUserListView(FilterView):
