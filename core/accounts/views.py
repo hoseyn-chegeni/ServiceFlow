@@ -136,15 +136,13 @@ class UserPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     success_url = reverse_lazy("index:home")
 
 
-class SuspendUserView(UpdateView):
-    model = User
-    fields = ("is_active",)
-    template_name = "registration/suspend_user.html"
-    success_url = reverse_lazy("accounts:users")
-
-    def form_valid(self, form):
-        form.instance.is_active = False
-        return super().form_valid(form)
+class SuspendUserView(View):
+    def get(self, request, pk):
+        user = User.objects.filter(pk=pk).first()  # Get the user object
+        if user:
+            user.is_active = False  # Activate the user
+            user.save()
+        return HttpResponseRedirect(reverse_lazy('accounts:users')) 
 
 
 class ReactiveUserView(UpdateView):
