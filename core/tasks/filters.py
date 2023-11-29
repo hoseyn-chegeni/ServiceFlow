@@ -5,6 +5,8 @@ from .models import Task
 
 class TaskFilter(FilterSet):
     title = django_filters.CharFilter(lookup_expr="icontains")
+    assign_to = django_filters.CharFilter(field_name='assign_to__email', )
+    creator =  django_filters.CharFilter(field_name='creator__email', )
 
     class Meta:
         model = Task

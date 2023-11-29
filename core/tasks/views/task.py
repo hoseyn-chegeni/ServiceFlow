@@ -18,11 +18,17 @@ from db_events.models import TaskLog
 class TaskView(LoginRequiredMixin, FilterView):
     model = Task
     filterset_class = TaskFilter
-    paginate_by = 2
-    context_object_name = "task"
+    context_object_name = "tasks"
     template_name = "tasks/tasks.html"
 
+    def get_paginate_by(self, queryset):
+        # Get the value for paginate_by dynamically (e.g., from a form input or session)
+        # Example: Set paginate_by to a user-selected value stored in session
+        user_selected_value = self.request.session.get(
+            "items_per_page", 10
+        )  # Default to 10
 
+        return user_selected_value
 class MyTaskView(LoginRequiredMixin, ListView):
     model = Task
     context_object_name = "tasks"
