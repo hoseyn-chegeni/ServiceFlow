@@ -221,12 +221,10 @@ class BulkUserImportView(View):
                         user.set_password(self.default_password)  # Set default password
                         user.save()
                         users_added += 1
-
-                return render(
-                    request, self.success_template_name, {"users_added": users_added}
-                )
+                messages.success(self.request, f"{users_added} User Successfully added")
+                return HttpResponseRedirect(reverse_lazy("accounts:user_bulk_upload"))
             else:
-                return render(request, self.error_template_name)
+                messages.error(self.request, f"There was an error importing the file. Please make sure the file format is correct.")
         return render(request, self.template_name)
 
 
