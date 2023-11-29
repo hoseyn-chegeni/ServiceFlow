@@ -1,18 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h3> Activity on Tasks</h3>
-    <ul>
-      {% for i in log %}
-        <li>
-            {{i}}
-        </li>
-      {% endfor %}
-    </ul>
-</body>
-</html>
+{% extends 'base.html' %}
+   {%block head%}Document{%endblock%}
+{%block content%}
+<main style="margin: 10% 10%;">
+  <h3>Activities on Tasks</h3>
+  <br>
+<table class="table table-bordered">
+
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">User</th>
+      <th scope="col">Task</th>
+      <th scope="col">Event Type</th>
+      <th scope="col">Timestamp</th>
+    </tr>
+  </thead>
+  <tbody>
+    {%for i in log%}
+    <tr>
+      <th scope="row">{{i.id}}</th>
+      <td>{{i.user}}</td>
+      <td>{{i.task}}</td>
+      <td>@{{i.event_type}}</td>
+      <td>@{{i.timestamp}}</td>
+    </tr>
+    {%endfor%}
+  </tbody>
+</table>
+</main>
+{%endblock%}
