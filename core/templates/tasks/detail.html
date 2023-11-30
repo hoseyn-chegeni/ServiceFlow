@@ -1,33 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    {{object.task}}<br>
-    {{object.title}}<br>
-    {{object.description}}<br>
-   creator: {{object.creator}}<br>
-    {{object.status}}<br>
-   Team: {{object.type.assigned_to.name}} <br>
-    assignee {{object.assign_to}}<br>
-    Priority: {{object.priority}}<br>
-    <p>------------------------------------------------------------------------------------------------------------------------------------------------------</p>
-    <a href="{% url 'tasks:log' object.id%}">Task Log</a><br>
-    <p>------------------------------------------------------------------------------------------------------------------------------------------------------</p>
-<a href="{% url 'tasks:change_status' object.id%}">Task Change Status</a> <br>
-<a href="{% url 'tasks:change_priority' object.id%}">Task Change Priority</a> <br>
+{% extends 'base.html' %}
+    {%block title %} {{object.title}}{%endblock%}
+{%block content%}
+
+    <div class="container mt-4">
+        <h2>{{object.title}}</h2>
+        <br>
+        <div class="card mb-4">
+          <div class="card-body">
+              <p class="card-text"><strong>ID:</strong>{{object.id}}</p>
+              <hr>
+              <p class="card-text"><strong>Title:</strong>{{object.title}}</p>
+              <hr>
+              <p class="card-text"><strong>Description:</strong>{{object.description}}</p>
+              <hr>
+              <p class="card-text"><strong>Creator: </strong>{{object.creator}}</p>
+              <hr>
+              <p class="card-text"><strong>Assignee: </strong>{{object.assign_to}}</p>
+              <hr>
+              <p class="card-text"><strong>Type: </strong>{{object.type}}</p>
+              <hr>
+              <p class="card-text"><strong>Status: </strong>{{object.status}}</p>
+              <hr>
+              <p class="card-text"><strong>Priority: </strong>{{object.priority}}</p>
+              <hr>
+              <p class="card-text"><strong>Created at: </strong>{{object.created_date}}</p>
+              <hr>
+              <p class="card-text"><strong>Last Change: </strong>{{object.last_change}}</p>
+              <!-- Add other task details as needed -->
+          </div>
+      </div>    
+
+        <!-- Buttons to change status, priority, add comment, etc. -->
+        <div class="mb-4">
+          <a href="{% url 'tasks:log' object.id%}" class="btn btn-primary me-2">Task Log</a>
+          <a href="{% url 'tasks:change_status' object.id%}" class="btn btn-primary me-2">Change Status</a>
+          <a href="{% url 'tasks:change_priority' object.id%}" class="btn btn-primary me-2">Change Priority</a>
+
+        </div>
+
+        <!-- Participant information -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Participants</h5>
+                <!-- Participant list -->
+            </div>
+        </div>
+
+        <!-- Comment section -->
+        <div class="card">
+            <div class="card-header">
+                Comments
+            </div>
+            <div class="card-body">
+              {% for comment in task.comments.all %}
+
+                <!-- Display existing comments -->
+                <div class="mb-3">
+                    <strong>{{ comment.user }} :</strong> "{{ comment.comment }}"  at {{ comment.commented_at }}
+                <hr>
+                  </div>
+                {%endfor%}
+                <!-- Add new comment form -->
+                <a href="{% url 'tasks:task_comment' pk=object.pk %}" class="btn btn-primary me-2">Add New Comment</a>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JavaScript -->
 
 
-<h3>Comments</h3>
-<ul>
-  {% for comment in task.comments.all %}
-    <li>{{ comment.user }} commented on {{ comment.commented_at }}: {{ comment.comment }}, <a href="{{object.attachments.url}}"> Attachments</a>  </li>
-  {% endfor %}
-</ul>
 
-<a href="{% url 'tasks:task_comment' pk=object.pk %}">Add Comment</a>
-</body>
-</html>
+{%endblock%}
