@@ -56,7 +56,7 @@
 
                 <!-- Display existing comments -->
                 <div class="mb-3">
-                    <strong>{{ comment.user }} :</strong> "{{ comment.comment }}"  at {{ comment.commented_at }}
+                    <strong>{{ comment.user }} :</strong> "{{ comment.comment }}" {%if comment.attachments%} <a href="{{comment.attachments.url}}">{{comment.attachment_title}} </a>{%endif%}  at {{ comment.commented_at }}
                 <hr>
                   </div>
                 {%endfor%}

@@ -13,7 +13,7 @@ from db_events.models import TaskLog
 class TaskCommentView(LoginRequiredMixin, CreateView):
     model = TaskComment
     template_name = "tasks/task_comment.html"
-    fields = ["comment", "attachments"]
+    fields = ["comment", "attachments","attachment_title"]
 
     def form_valid(self, form):
         task = get_object_or_404(Task, pk=self.kwargs["pk"])

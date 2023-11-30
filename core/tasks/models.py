@@ -90,6 +90,7 @@ class TaskComment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.TextField()
     commented_at = models.DateTimeField(auto_now_add=True)
+    attachment_title = models.CharField(max_length = 50, default = 'attachment', blank = True, null = True)
     attachments = models.FileField(upload_to="attachments", blank=True, null=True)
 
     def __str__(self):
