@@ -52,12 +52,15 @@ class MyCreatedTaskView(LoginRequiredMixin, ListView):
 class CreateTaskView(PermissionRequiredMixin, CreateView):
     template_name = "tasks/create_task.html"
     form_class = CreateTaskForm
-    success_url = reverse_lazy("index:home")
     permission_required = "tasks.add_task"
 
     def form_valid(self, form):
         form.instance.creator = self.request.user
         return super().form_valid(form)
+    
+    def get_success_url(self):
+        return reverse_lazy('tasks:detail', kwargs={'pk': self.object.pk})  
+    
 
 
 class TaskDetailView(PermissionRequiredMixin, DetailView):

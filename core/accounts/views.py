@@ -91,7 +91,9 @@ class CreateUser(LoginRequiredMixin, CreateView):
     model = User
     form_class = CustomUserCreationForm
     template_name = "registration/signup.html"
-    success_url = reverse_lazy("index:home")
+
+    def get_success_url(self):
+        return reverse_lazy('accounts:detail', kwargs={'pk': self.object.pk})      
 
 
 class UserUpdate(LoginRequiredMixin, UpdateView):
