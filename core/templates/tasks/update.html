@@ -32,7 +32,7 @@
 
               <div class="col-sm-6">
                 <label for="id_type">Task Type</label>
-                <select class="form-control" id="id_type" name="type">
+                <select class="form-select" id="id_type" name="type">
                     {% for task_type in form.fields.type.queryset %}
                         {% if object.type == task_type %}
                         <option value="{{ task_type.pk }}"  selected >
