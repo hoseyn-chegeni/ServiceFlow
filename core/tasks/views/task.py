@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, HttpResponseRedirect
 from django_filters.views import FilterView
 from django.views.generic import (
     ListView,
@@ -80,6 +80,14 @@ class TaskDelete(PermissionRequiredMixin, DeleteView):
     success_url = reverse_lazy("tasks:task_list")
     permission_required = "tasks.delete_task"
 
+    def get(self, request, *args, **kwargs):
+        # Get the object to be deleted
+        self.object = self.get_object()
+
+        # Perform the delete operation directly without displaying a confirmation template
+        success_url = self.get_success_url()
+        self.object.delete()
+        return HttpResponseRedirect(success_url)
 
 class MyTeamTasks(ListView):
     model = Task
