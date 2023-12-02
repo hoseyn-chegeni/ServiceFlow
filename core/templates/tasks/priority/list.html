@@ -1,4 +1,4 @@
-{% extends 'base_list.html'%}
+{% extends 'baseList.html'%}
 
 {%block title%} PRIORITY LIST {%endblock%}
 {%block list_title%}Priority{%endblock%}
@@ -21,8 +21,10 @@
     </form>
 
 {%endblock%}
-
-
+{% block buttons%}
+<a href="{% url 'tasks:create_priority' %}" class="btn btn-success me-2">Add Instance</a>
+<a href="#" class="btn btn-success me-2">Reports</a>
+{%endblock%}
 {%block list%}
 <table class="table text-white mb-0">
     <thead>
