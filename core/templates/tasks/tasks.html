@@ -79,6 +79,7 @@
                         <th scope="col">Assign To</th>
                         <th scope="col">Type</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Priority</th>
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
@@ -99,6 +100,9 @@
                           </td>
                           <td class="align-middle">
                             <span>{{i.status}}</span>
+                          </td>
+                          <td class="align-middle">
+                            <h6 class="mb-0"><span class="badge {{i.priority.badge}}">{{i.priority}}</span></h6>
                           </td>
                         <td class="align-middle">
                             <a href="{%url 'tasks:detail' i.id %}" data-mdb-toggle="tooltip" title="Detail"> <i class="fas fa-info-circle"></i></a>

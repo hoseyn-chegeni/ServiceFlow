@@ -74,6 +74,7 @@ class TaskStatus(models.Model):
 class TaskPriority(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
+    badge = models.CharField(max_length = 255, blank = True, null = True)
     created_by = models.ForeignKey(
         "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
     )
