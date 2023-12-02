@@ -13,6 +13,7 @@ from ..forms import CreateTaskForm
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from db_events.models import TaskLog
+from django.contrib import messages
 
 
 class TaskView(LoginRequiredMixin, FilterView):
@@ -90,6 +91,9 @@ class TaskDelete(PermissionRequiredMixin, DeleteView):
         # Perform the delete operation directly without displaying a confirmation template
         success_url = self.get_success_url()
         self.object.delete()
+        messages.success(
+                self.request, f"Task successfully Deleted!"
+            )
         return HttpResponseRedirect(success_url)
 
 class MyTeamTasks(ListView):

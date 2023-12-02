@@ -134,6 +134,9 @@ class UserDelete(LoginRequiredMixin, DeleteView):
         # Perform the delete operation directly without displaying a confirmation template
         success_url = self.get_success_url()
         self.object.delete()
+        messages.success(
+                self.request, f"User successfully Deleted!"
+            )
         return HttpResponseRedirect(success_url)
 
 
