@@ -32,4 +32,5 @@ class CreateTaskPriorityForm(forms.ModelForm):
         fields = (
             "name",
             "description",
+            "badge",
         )

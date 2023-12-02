@@ -48,7 +48,7 @@ class PriorityCreateView(LoginRequiredMixin, CreateView):
 
 class PriorityUpdateView(LoginRequiredMixin, UpdateView):
     model = TaskPriority
-    fields = ("name", "description", "is_active")
+    fields = ("name", "description", "is_active","badge",)
     template_name = "tasks/priority/update.html"
 
     def get_success_url(self):
