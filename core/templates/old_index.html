@@ -429,3 +429,15 @@ function w3_close() {
                       <a href="{%url 'tasks:delete_priority' i.id%}">Delete</a>/<br>
     {% endfor %}
 </body>
+
+
+<!-- PRIORITY --><!-- PRIORITY --><!-- PRIORITY --><!-- PRIORITY --><!-- PRIORITY -->
+<button><a href="{%url 'tasks:create_status'%}"> Create New Task Status</a></button><br>
+
+
+{% for i in status %}
+    {{ i.name }}/ <a href="{%url 'tasks:detail_status' i.id%}">Detail</a>/
+                  <a href="{%url 'tasks:update_status' i.id%}">Update</a>/
+                  <a href="{%url 'tasks:delete_status' i.id%}">Delete</a>/<br>
+{% endfor %}
+</body>

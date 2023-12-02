@@ -1,6 +1,5 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, HttpResponseRedirect
 from django.views.generic import (
-    ListView,
     CreateView,
     DetailView,
     UpdateView,
@@ -11,13 +10,27 @@ from django.urls import reverse_lazy
 from ..forms import CreateTaskStatusForm
 from db_events.models import TaskLog
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
+from django_filters.views import FilterView
+from ..filters import StatusFilter
 
 
-class StatusListView(LoginRequiredMixin, ListView):
+
+class StatusListView(LoginRequiredMixin, FilterView):
     model = TaskStatus
     context_object_name = "status"
     template_name = "tasks/status/list.html"
+    filterset_class = StatusFilter
+    
+    def get_paginate_by(self, queryset):
+        # Get the value for paginate_by dynamically (e.g., from a form input or session)
+        # Example: Set paginate_by to a user-selected value stored in session
+        user_selected_value = self.request.session.get(
+            "items_per_page", 10
+        )  # Default to 10
 
+        return user_selected_value
+    
 
 class StatusDetailView(LoginRequiredMixin, DetailView):
     model = TaskStatus
@@ -50,6 +63,18 @@ class StatusDeleteView(LoginRequiredMixin, DeleteView):
     model = TaskStatus
     template_name = "tasks/status/delete.html"
     success_url = reverse_lazy("tasks:list_status")
+
+    def get(self, request, *args, **kwargs):
+        # Get the object to be deleted
+        self.object = self.get_object()
+
+        # Perform the delete operation directly without displaying a confirmation template
+        success_url = self.get_success_url()
+        self.object.delete()
+        messages.success(
+                self.request, f"Status  successfully Deleted!"
+            )
+        return HttpResponseRedirect(success_url)
 
 
 class ChangeStatusView(LoginRequiredMixin, UpdateView):

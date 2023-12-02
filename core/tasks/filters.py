@@ -1,7 +1,6 @@
 import django_filters
 from django_filters import FilterSet
-from .models import Task
-
+from .models import Task, TaskPriority,TaskStatus
 
 class TaskFilter(FilterSet):
     title = django_filters.CharFilter(lookup_expr="icontains")
@@ -21,7 +20,16 @@ class TaskFilter(FilterSet):
 class PriorityFilter(FilterSet):
     name = django_filters.CharFilter(lookup_expr="icontains")
     class Meta:
-        model = Task
+        model = TaskPriority
+        fields = [
+            "id",
+            "name",
+        ]
+
+class StatusFilter(FilterSet):
+    name = django_filters.CharFilter(lookup_expr="icontains")
+    class Meta:
+        model = TaskStatus
         fields = [
             "id",
             "name",
