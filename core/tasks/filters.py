@@ -18,3 +18,11 @@ class TaskFilter(FilterSet):
             "status",
             "assign_to",
         ]
+class PriorityFilter(FilterSet):
+    name = django_filters.CharFilter(lookup_expr="icontains")
+    class Meta:
+        model = Task
+        fields = [
+            "id",
+            "name",
+        ]

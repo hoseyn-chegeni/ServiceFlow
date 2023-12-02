@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{%block title%}{%endblock%}
+
+{%block content%}
+<section class="vh-100 gradient-custom-2" style="margin-bottom: 35%;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-md-12 col-xl-10">
+          <div class="card mask-custom">
+            <div class="card-body p-4 text-white">
+              <div class="text-center pt-3 pb-2">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"
+                  alt="Check" width="60">
+                <h2 class="my-4">{%block list_title%}{%endblock%}</h2>
+              </div>
+              {% for message in messages %}
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+            {%block filter_form%}{%endblock%}
+            {%block list%}{%endblock%}
+
+  
+<div class="pagination">
+<span class="step-links">
+    {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+    {% endif %}
+
+    <span class="current">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+    </span>
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+    {% endif %}
+</span>
+</div>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </section>
+<!-- jQuery (needed for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+{%endblock%}
