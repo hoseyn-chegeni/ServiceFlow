@@ -1,5 +1,4 @@
 from django.views.generic import (
-    ListView,
     CreateView,
     DetailView,
     UpdateView,
@@ -9,13 +8,25 @@ from ..models import TaskType
 from django.urls import reverse_lazy
 from ..forms import CreateTaskTypeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
+from django.shortcuts import HttpResponseRedirect
+from django_filters.views import FilterView
+from ..filters import TypeFilter
 
 
-class TypeListView(LoginRequiredMixin, ListView):
+class TypeListView(LoginRequiredMixin, FilterView):
     model = TaskType
     context_object_name = "type"
     template_name = "tasks/type/list.html"
+    filterset_class = TypeFilter
+    def get_paginate_by(self, queryset):
+        # Get the value for paginate_by dynamically (e.g., from a form input or session)
+        # Example: Set paginate_by to a user-selected value stored in session
+        user_selected_value = self.request.session.get(
+            "items_per_page", 10
+        )  # Default to 10
 
+        return user_selected_value
 
 class TypeDetailView(LoginRequiredMixin, DetailView):
     model = TaskType
@@ -48,3 +59,15 @@ class TypeDeleteView(LoginRequiredMixin, DeleteView):
     model = TaskType
     template_name = "tasks/type/delete.html"
     success_url = reverse_lazy("tasks:list_type")
+
+    def get(self, request, *args, **kwargs):
+        # Get the object to be deleted
+        self.object = self.get_object()
+
+        # Perform the delete operation directly without displaying a confirmation template
+        success_url = self.get_success_url()
+        self.object.delete()
+        messages.success(
+                self.request, f"Task successfully Deleted!"
+            )
+        return HttpResponseRedirect(success_url)
