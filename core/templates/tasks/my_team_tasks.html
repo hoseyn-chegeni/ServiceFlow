@@ -1,18 +1,172 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{user.member_of}}</title>
-</head>
-<body>
-    {%for obj in tasks%}
-    {{ obj.task }}:{{ obj.title }}    
-        <a href="{%url 'tasks:detail' obj.id %}">Detail</a>
-        <a href="{%url 'tasks:update' obj.id %}">Update</a>,
-        <a href="{%url 'tasks:delete' obj.id %}">Delete</a>, 
-        <a href="{%url 'tasks:assign_to_me' obj.id%}">Assign to me</a>,
-        <a href="{%url 'tasks:assign_to' obj.id%}">Assign to</a><br/>
-    {%endfor%}
-</body>
-</html>
+{% extends 'base.html'%}
+
+{% block title%} Tasks Assigned to my Team {%endblock%}
+
+{%block content%}
+    <section class="vh-100 gradient-custom-2" style="margin-bottom: 35%;">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-12 col-xl-10">
+              <div class="card mask-custom">
+                <div class="card-body p-4 text-white">
+                  <div class="text-center pt-3 pb-2">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"
+                      alt="Check" width="60">
+                    <h2 class="my-4">Tasks Assigned to my Team</h2>
+                  </div>
+                  {% for message in messages %}
+                  <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              {% endfor %}
+                  <form class="table text-white mb-0" method="get">
+                    {%csrf_token%}
+                    <div class="row g-3">
+                      <div class="col-sm-6">
+                        <label for="id_id" class="form-label">Id</label>
+                        <input  class="form-control" type="number" name="id" step="any" id="id_id"value="{{ request.GET.id }}" >
+                      </div>
+          
+                      <div class="col-sm-6">
+                        <label for="email" class="form-label">Title</label>
+                        <input  class="form-control" type="text" name="title" step="any" id="email" value="{{ request.GET.title }}" >
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="type" class="form-label">Type</label>
+                        <select class="form-select" aria-label="Default select example" name="type">
+                            <option value="">----------</option>
+                            {% for task_type in filter.form.type.field.queryset %}
+                            
+                            <option value="{{ task_type.id }}">{{ task_type.name }}</option>
+                            {%endfor%}
+                          </select>
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="status" class="form-label">Status</label>
+                        <select class="form-select" aria-label="Default select example" name="status">
+                            <option value="">----------</option>
+                            {% for task_type in filter.form.status.field.queryset %}
+                            
+                            <option value="{{ task_type.id }}">{{ task_type.name }}</option>
+
+                            
+                            {%endfor%}
+                          </select>
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="assign_to" class="form-label">Assignee</label>
+                        <input  class="form-control" type="text" name="assign_to" step="any" id="assign_to" value="{{ request.GET.assign_to }}" >
+                      </div>
+
+
+                      <div class="col-sm-6">
+                        <label for="creator" class="form-label">Creator</label>
+                        <input  class="form-control" type="text" name="creator" step="any" id="creator" value="{{ request.GET.creator }}" >
+                      </div>
+
+                      <button class="w-10 btn btn-lg btn-outline-success" type="submit">Search</button>
+                    </form>
+                    <div class="mb-4">
+                            <a href="{% url 'tasks:create_task' %}" class="btn btn-success me-2">Add Instance</a>
+                          <a href="#" class="btn btn-success me-2">Reports</a>
+                    </div>
+                  <table class="table text-white mb-0">
+                    <thead>
+                      <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Assign To</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Priority</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {%for i in tasks%}
+                      <tr class="fw-normal">
+                        <td class="align-middle">
+                          <span>{{i.id}}</span>
+                        </td>
+                        <td class="align-middle">
+                            <span>{{i.title}}</span>
+                          </td>
+                          <td class="align-middle">
+                            <span>{{i.assign_to}}</span>
+                          </td>
+                          <td class="align-middle">
+                            <span>{{i.type}}</span>
+                          </td>
+                          <td class="align-middle">
+                            <span>{{i.status}}</span>
+                          </td>
+                          <td class="align-middle">
+                            <h6 class="mb-0"><span class="badge {{i.priority.badge}}">{{i.priority}}</span></h6>
+                          </td>
+                        <td class="align-middle">
+                            <a href="{%url 'tasks:detail' i.id %}" data-mdb-toggle="tooltip" title="Detail"> <i class="fas fa-info-circle"></i></a>
+                          <a href="{%url 'tasks:update' i.id %}" data-mdb-toggle="tooltip" title="Update"><i class="fas fa-edit" ></i></a>
+                          <a href="#" data-toggle="modal" data-target="#exampleModal"  title="Delete" ><i class="fas fa-trash-alt"></i></a>
+                        </td>
+                      </tr>
+                      <!-- DELETE MODALS -->
+                      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              Are you sure you want to delete this item?
+                            </div>
+                            <div class="modal-footer">
+                              <a class="btn btn-primary" href="{% url 'tasks:delete' pk=i.pk %}" class="btn">Delete</a>
+                          </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+                    
+                      {%endfor%}
+                      </tbody>
+                  </table>
+    
+      
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+                </div>
+              </div>
+      
+            </div>
+          </div>
+        </div>
+      </section>
+<!-- jQuery (needed for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+{%endblock%}
