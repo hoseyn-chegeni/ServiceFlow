@@ -2,6 +2,13 @@
     {%block title %} {{object.title}}{%endblock%}
 {%block content%}
 
+{% for message in messages %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  {{ message }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{%endfor%}
+
     <div class="container mt-4">
         <h2>{{object.title}}</h2>
         <br>
@@ -33,6 +40,7 @@
         <!-- Buttons to change status, priority, add comment, etc. -->
         <div class="mb-4">
           <a href="{% url 'tasks:log' object.id%}" class="btn btn-success me-2">Task Log</a>
+          <a href="#" data-toggle="modal" data-target="#exampleModal2"  class="btn btn-success me-2" title="assignee" >Assign to me</a>
           <a href="{% url 'tasks:change_status' object.id%}" class="btn btn-success me-2">Change Status</a>
           <a href="{% url 'tasks:change_priority' object.id%}" class="btn btn-success me-2">Change Priority</a>
           <a href="{% url 'tasks:update' object.id%}" class="btn btn-success me-2">Update</a>
@@ -89,6 +97,25 @@
         </div>
       </div>
 
+      <!-- ASSIGNEE MODALS -->
+      <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Assign Confirmation</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Are you sure you want to Assign this task to your self ?
+            </div>
+            <div class="modal-footer">
+              <a class="btn btn-primary" href="{% url 'tasks:assign_to_me' pk=object.pk %}" class="btn">Yes</a>
+          </div>
+          </div>
+        </div>
+      </div>
 
     <!-- jQuery (needed for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
