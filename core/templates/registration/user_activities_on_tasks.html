@@ -1,15 +1,14 @@
 {% extends 'base.html' %}
-   {%block head%}Document{%endblock%}
+   {%block title%}Activities on Tasks{%endblock%}
 {%block content%}
 <main style="margin: 10% 10%;">
-  <h3>Activities on Tasks</h3>
+  <h3>{{user}} Activities on Tasks</h3>
   <br>
 <table class="table table-bordered">
 
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">User</th>
       <th scope="col">Task</th>
       <th scope="col">Event Type</th>
       <th scope="col">Timestamp</th>
@@ -19,10 +18,13 @@
     {%for i in log%}
     <tr>
       <th scope="row">{{i.id}}</th>
-      <td>{{i.user}}</td>
+      {% if i.task == none%} 
+      <td>Deleted</td>
+      {%else%}
       <td>{{i.task}}</td>
-      <td>@{{i.event_type}}</td>
-      <td>@{{i.timestamp}}</td>
+      {%endif%}
+      <td>{{i.event_type}}</td>
+      <td>{{i.timestamp}}</td>
     </tr>
     {%endfor%}
   </tbody>
