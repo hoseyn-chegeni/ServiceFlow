@@ -12,6 +12,8 @@
       <th scope="col">Task</th>
       <th scope="col">Event Type</th>
       <th scope="col">Timestamp</th>
+      <th scope="col">Description</th>
+
     </tr>
   </thead>
   <tbody>
@@ -25,6 +27,7 @@
       {%endif%}
       <td>{{i.event_type}}</td>
       <td>{{i.timestamp}}</td>
+      <td>{{i}}</td>
     </tr>
     {%endfor%}
   </tbody>
