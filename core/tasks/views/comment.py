@@ -30,3 +30,8 @@ class TaskCommentView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy("tasks:detail", args=[self.kwargs["pk"]])
+
+    def get_initial(self):
+        initial = super().get_initial()
+        initial['attachment_title'] = self.model._meta.get_field('attachment_title').get_default()
+        return initial
