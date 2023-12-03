@@ -1,15 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="" method="post">
-        {%csrf_token%}
-        {{form.as_p}}
-        <input type="submit" value="Yes">
-    </form>
-</body>
-</html>
+{%extends 'base.html' %}
+{%block title %}Assign To{%endblock%}
+
+{%block content %} 
+   
+<div class="container">
+    <main>
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="" width="62" height="47">
+      </div>
+
+
+        <div class="col-md-7 col-lg-8">
+          <h4 class="mb-3">Assign To...</h4>
+          <form class="needs-validation" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+            <div class="row g-3">
+
+                <div class="">
+                    <select class="form-select" id="id_status" name="assign_to">
+                        <option value="">----------------</option>
+                        {% for i in form.fields.assign_to.queryset %}
+                            {% if object.assign_to == i %}
+                            <option value="{{ i.pk }}"  selected >
+                                {{ i }}
+                            </option>
+                            {% else %}
+                            <option value="{{ i.pk }}">
+                                {{ i }}
+                            </option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+  <br>
+            <button class="w-100 btn btn-lg btn-outline-success" type="submit">Update</button>
+          </form>
+        </div>
+      </div>
+    </main>
+</div>
+
+{%endblock%}

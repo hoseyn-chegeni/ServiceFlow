@@ -9,22 +9,8 @@ from django.views.generic import (
 from ..models import Task
 from db_events.models import TaskLog
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 
-
-# class (LoginRequiredMixin, UpdateView):
-#     template_name = "tasks/assign_to_me.html"
-#     success_url = reverse_lazy("tasks:my_team")
-#     model = Task
-#     fields = ("assign_to",)
-
-#     def form_valid(self, form):
-#         task = form.save(commit=False)
-#         task.save()
-#         form.instance.assign_to = self.request.user
-
-
-#         return super().form_valid(form)
-    
 
 class TaskAssignToMe(LoginRequiredMixin,View):
     def get(self, request, pk):
@@ -45,11 +31,11 @@ class TaskAssignToMe(LoginRequiredMixin,View):
 
 
 
-class TaskAssignTo(LoginRequiredMixin, UpdateView):
+class TaskAssignTo(LoginRequiredMixin,SuccessMessageMixin, UpdateView):
     template_name = "tasks/assign_to.html"
-    success_url = reverse_lazy("tasks:my_team")
     model = Task
     fields = ("assign_to",)
+    success_message = "Task successfully assigned."
 
     def form_valid(self, form):
         task = form.save(commit=False)
@@ -62,3 +48,9 @@ class TaskAssignTo(LoginRequiredMixin, UpdateView):
             additional_info=f"{self.request.user} Assigned Task to {task.assign_to}",
         )
         return super().form_valid(form)
+    
+    def get_success_url(self):
+        return reverse_lazy('tasks:detail',kwargs={"pk": self.object.pk})
+    
+    def get_success_message(self, cleaned_data):
+        return self.success_message
