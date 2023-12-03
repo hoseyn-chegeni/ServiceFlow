@@ -30,26 +30,59 @@ class TaskView(LoginRequiredMixin, FilterView):
         )  # Default to 10
 
         return user_selected_value
-class MyTaskView(LoginRequiredMixin, ListView):
+class MyTaskView(LoginRequiredMixin, FilterView):
     model = Task
     context_object_name = "tasks"
     template_name = "tasks/myTask.html"
+    filterset_class = TaskFilter
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(assign_to_id=self.request.user.id)
 
+    def get_paginate_by(self, queryset):
+        # Get the value for paginate_by dynamically (e.g., from a form input or session)
+        # Example: Set paginate_by to a user-selected value stored in session
+        user_selected_value = self.request.session.get(
+            "items_per_page", 10
+        )  # Default to 10
 
-class MyCreatedTaskView(LoginRequiredMixin, ListView):
+class MyCreatedTaskView(LoginRequiredMixin, FilterView):
     template_name = "tasks/myCreatedTask.html"
     model = Task
     context_object_name = "tasks"
+    filterset_class = TaskFilter
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(creator_id=self.request.user.id)
 
+    def get_paginate_by(self, queryset):
+        # Get the value for paginate_by dynamically (e.g., from a form input or session)
+        # Example: Set paginate_by to a user-selected value stored in session
+        user_selected_value = self.request.session.get(
+            "items_per_page", 10
+        )  # Default to 10
 
+
+class MyTeamTasks(LoginRequiredMixin, FilterView):
+    model = Task
+    template_name = "tasks/my_team_tasks.html"
+    context_object_name = "tasks"
+    filterset_class = TaskFilter
+
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        return qs.filter(type__assigned_to=self.request.user.member_of)
+    
+    def get_paginate_by(self, queryset):
+        # Get the value for paginate_by dynamically (e.g., from a form input or session)
+        # Example: Set paginate_by to a user-selected value stored in session
+        user_selected_value = self.request.session.get(
+            "items_per_page", 10
+        )  # Default to 10
+
+        
 class CreateTaskView(PermissionRequiredMixin, CreateView):
     template_name = "tasks/create_task.html"
     form_class = CreateTaskForm
@@ -96,14 +129,6 @@ class TaskDelete(PermissionRequiredMixin, DeleteView):
             )
         return HttpResponseRedirect(success_url)
 
-class MyTeamTasks(ListView):
-    model = Task
-    template_name = "tasks/my_team_tasks.html"
-    context_object_name = "tasks"
-
-    def get_queryset(self, **kwargs):
-        qs = super().get_queryset(**kwargs)
-        return qs.filter(type__assigned_to=self.request.user.member_of)
 
 
 class TaskDetailLogView(LoginRequiredMixin, ListView):
