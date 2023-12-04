@@ -11,12 +11,6 @@
                       alt="Check" width="60">
                     <h2 class="my-4">Users</h2>
                   </div>
-                  {% for message in messages %}
-                  <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-              {% endfor %}
                   <form class="table text-white mb-0" method="get">
                     {%csrf_token%}
                     <div class="row g-3">

@@ -27,6 +27,9 @@ from django_filters.views import FilterView
 from .filters import UserFilter
 from django.http import HttpResponseRedirect
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
+
+
 
 load_dotenv()
 
@@ -87,21 +90,30 @@ class UserLogout(LogoutView):
         return reverse("two_factor:login")
 
 
-class CreateUser(LoginRequiredMixin, CreateView):
+class CreateUser(LoginRequiredMixin,SuccessMessageMixin, CreateView):
     model = User
     form_class = CustomUserCreationForm
     template_name = "registration/signup.html"
-
+    success_message = 'User Successfully Created.'
     def get_success_url(self):
-        return reverse_lazy('accounts:detail', kwargs={'pk': self.object.pk})      
+        return reverse_lazy('accounts:detail', kwargs={'pk': self.object.pk})  
+        
+    def get_success_message(self, cleaned_data):
+        return self.success_message
 
 
-class UserUpdate(LoginRequiredMixin, UpdateView):
+
+class UserUpdate(LoginRequiredMixin,SuccessMessageMixin, UpdateView):
     model = User
     fields = ("first_name", "last_name", "image")
     template_name = "registration/update.html"
-    success_url = reverse_lazy("accounts:users")
+    success_message = 'User Successfully Updated.'
 
+    def get_success_url(self):
+        return reverse_lazy("accounts:detail", kwargs={'pk': self.object.pk})
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message
 
 class UserDetail(LoginRequiredMixin, DetailView):
     model = User
