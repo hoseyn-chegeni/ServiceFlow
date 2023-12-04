@@ -63,7 +63,7 @@
                         </table>
                         <a href="{% url 'tasks:update_type' type.id %}" class="btn btn-success me-2">Update</a>
                         <a href=""  class="btn btn-success me-2"data-toggle="modal" data-target="#exampleModal"  title="Delete" >Delete</a>
-                        <a href="#" class="btn btn-success me-2">{{ type.name }} Type Tasks</a>
+                        <a href="{% url 'tasks:task_type' type.id %}" class="btn btn-success me-2">{{ type.name }} Type Tasks</a>
                     </div>
                 </div>
             </div>

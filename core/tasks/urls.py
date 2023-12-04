@@ -31,6 +31,7 @@ from .views.type import (
     TypeDetailView,
     TypeListView,
     TypeUpdateView,
+    TaskWithThisType,
 )
 from .views.priority import (
     PriorityCreateView,
@@ -74,6 +75,7 @@ urlpatterns = [
     path("detail_type/<int:pk>/", TypeDetailView.as_view(), name="detail_type"),
     path("delete_type/<int:pk>/", TypeDeleteView.as_view(), name="delete_type"),
     path("update_type/<int:pk>/", TypeUpdateView.as_view(), name="update_type"),
+    path("task_type/<int:pk>/", TaskWithThisType.as_view(), name="task_type"),
     # PRIORITY
     path("list_priority/", PriorityListView.as_view(), name="list_priority"),
     path("create_priority/", PriorityCreateView.as_view(), name="create_priority"),

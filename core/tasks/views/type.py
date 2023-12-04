@@ -12,7 +12,7 @@ from django.contrib import messages
 from django.shortcuts import HttpResponseRedirect
 from django_filters.views import FilterView
 from ..filters import TypeFilter
-
+from .task import Task
 
 class TypeListView(LoginRequiredMixin, FilterView):
     model = TaskType
@@ -71,3 +71,16 @@ class TypeDeleteView(LoginRequiredMixin, DeleteView):
                 self.request, f"Task successfully Deleted!"
             )
         return HttpResponseRedirect(success_url)
+    
+
+
+class TaskWithThisType(LoginRequiredMixin, DetailView):
+    model = TaskType
+    template_name = "tasks/type/task_type.html"
+    context_object_name = "type"
+
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        context['task'] = Task.objects.filter(type_id = self.object.pk)
+
+        return context
