@@ -111,3 +111,17 @@ class ChangePriorityView(LoginRequiredMixin,SuccessMessageMixin, UpdateView):
     
     def get_success_message(self, cleaned_data):
         return self.success_message
+    
+
+
+
+class TaskWithThisPriority(LoginRequiredMixin, DetailView):
+    model = TaskPriority
+    template_name = "tasks/priority/task_priority.html"
+    context_object_name = "priority"
+
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        context['task'] = Task.objects.filter(priority_id = self.object.pk)
+
+        return context
