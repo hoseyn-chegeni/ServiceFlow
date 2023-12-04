@@ -13,7 +13,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django_filters.views import FilterView
 from ..filters import StatusFilter
-
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 class StatusListView(LoginRequiredMixin, FilterView):
@@ -38,9 +38,10 @@ class StatusDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "status"
 
 
-class StatusCreateView(LoginRequiredMixin, CreateView):
+class StatusCreateView(LoginRequiredMixin,SuccessMessageMixin, CreateView):
     template_name = "tasks/status/create.html"
     form_class = CreateTaskStatusForm
+    success_message = 'Status Successfully Created'
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -49,15 +50,20 @@ class StatusCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy("tasks:detail_status", kwargs={"pk": self.object.pk})
 
+    def get_success_message(self, cleaned_data):
+        return self.success_message
 
-class StatusUpdateView(LoginRequiredMixin, UpdateView):
+class StatusUpdateView(LoginRequiredMixin,SuccessMessageMixin, UpdateView):
     model = TaskStatus
     fields = ("name", "description", "is_active")
     template_name = "tasks/status/update.html"
+    success_message = 'Status Successfully Updated'
 
     def get_success_url(self):
         return reverse_lazy("tasks:detail_status", kwargs={"pk": self.object.pk})
-
+    
+    def get_success_message(self, cleaned_data):
+        return self.success_message
 
 class StatusDeleteView(LoginRequiredMixin, DeleteView):
     model = TaskStatus
@@ -77,11 +83,11 @@ class StatusDeleteView(LoginRequiredMixin, DeleteView):
         return HttpResponseRedirect(success_url)
 
 
-class ChangeStatusView(LoginRequiredMixin, UpdateView):
+class ChangeStatusView(LoginRequiredMixin,SuccessMessageMixin, UpdateView):
     template_name = "tasks/status/change_status.html"
     model = Task
     fields = ("status",)
-
+    success_message = 'Task Status Successfully Changed.'
     def form_valid(self, form):
         task = form.save(commit=False)
         task.save()
@@ -96,3 +102,6 @@ class ChangeStatusView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy("tasks:detail", kwargs={"pk": self.object.pk})
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message
