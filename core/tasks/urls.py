@@ -15,6 +15,7 @@ from .views.assignee import (
     TaskAssignToMe,
 )
 from .views.comment import TaskCommentView
+
 from .views.status import (
     StatusCreateView,
     StatusDeleteView,
@@ -22,6 +23,7 @@ from .views.status import (
     StatusListView,
     StatusUpdateView,
     ChangeStatusView,
+    TaskWithThisStatus
 )
 from .views.type import (
     TypeCreateView,
@@ -64,6 +66,7 @@ urlpatterns = [
     path("delete_status/<int:pk>/", StatusDeleteView.as_view(), name="delete_status"),
     path("update_status/<int:pk>/", StatusUpdateView.as_view(), name="update_status"),
     path("change-status/<int:pk>/", ChangeStatusView.as_view(), name="change_status"),
+    path("task_status/<int:pk>/", TaskWithThisStatus.as_view(), name="task_status"),
     # TYPE
     path("list_type/", TypeListView.as_view(), name="list_type"),
     path("create_type/", TypeCreateView.as_view(), name="create_type"),

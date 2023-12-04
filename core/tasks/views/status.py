@@ -1,3 +1,4 @@
+from typing import Any
 from django.shortcuts import get_object_or_404, HttpResponseRedirect
 from django.views.generic import (
     CreateView,
@@ -105,3 +106,16 @@ class ChangeStatusView(LoginRequiredMixin,SuccessMessageMixin, UpdateView):
 
     def get_success_message(self, cleaned_data):
         return self.success_message
+    
+
+
+class TaskWithThisStatus(LoginRequiredMixin, DetailView):
+    model = TaskStatus
+    template_name = "tasks/status/task_status.html"
+    context_object_name = "status"
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context =  super().get_context_data(**kwargs)
+        context['task'] = Task.objects.filter(status_id = self.object.pk)
+
+        return context
