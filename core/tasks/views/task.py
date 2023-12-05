@@ -15,6 +15,8 @@ from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMix
 from db_events.models import TaskLog
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from db_events.filters import TaskLogFilter
+
 
 class TaskView(LoginRequiredMixin, FilterView):
     model = Task
@@ -138,10 +140,11 @@ class TaskDelete(PermissionRequiredMixin, DeleteView):
 
 
 
-class TaskDetailLogView(LoginRequiredMixin, ListView):
+class TaskDetailLogView(LoginRequiredMixin, FilterView):
     model = TaskLog
     template_name = "tasks/change_log.html"
     context_object_name = "log"
+    filterset_class = TaskLogFilter
 
     def get_queryset(self):
         task = get_object_or_404(Task, pk=self.kwargs["pk"])
@@ -151,3 +154,12 @@ class TaskDetailLogView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context["task"] = get_object_or_404(Task, pk=self.kwargs["pk"])
         return context
+    
+
+    def get_paginate_by(self, queryset):
+        # Get the value for paginate_by dynamically (e.g., from a form input or session)
+        # Example: Set paginate_by to a user-selected value stored in session
+        user_selected_value = self.request.session.get(
+            "items_per_page", 10
+        )  # Default to 10
+        return user_selected_value

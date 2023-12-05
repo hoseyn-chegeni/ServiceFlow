@@ -1,32 +1,130 @@
-{% extends 'base.html' %}
-   {%block title%}Task Log{%endblock%}
+{% extends 'base.html'%}
+
+{% block title%} Tasks {%endblock%}
+
 {%block content%}
-<main style="margin: 10% 10%;">
-  <h3>Activities on {{task}}</h3>
-  <br>
-<table class="table table-bordered">
+    <section class="vh-100 gradient-custom-2" style="margin-bottom: 35%;">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-12 col-xl-10">
+              <div class="card mask-custom">
+                <div class="card-body p-4 text-white">
+                  <div class="text-center pt-3 pb-2">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"
+                      alt="Check" width="60">
+                    <h2 class="my-4">Tasks</h2>
+                  </div>
+                
+                  <form class="table text-white mb-0" method="get">
+                    {%csrf_token%}
+                    <div class="row g-3">
+                      <div class="col-sm-6">
+                        <label for="id_id" class="form-label">Id</label>
+                        <input  class="form-control" type="number" name="id" step="any" id="id_id"value="{{ request.GET.id }}" >
+                      </div>
+          
+                      <div class="col-sm-6">
+                        <label for="id_id" class="form-label">User</label>
+                        <input  class="form-control" type="text" name="user" step="any" id="id_id"value="{{ request.GET.user }}" >
+                      </div>
+          
 
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">User</th>
-      <th scope="col">Event Type</th>
-      <th scope="col">Timestamp</th>
-      <th scope="col">Description</th>
+                  
+                      <div class="col-sm-6">
+                        <label for="id_id" class="form-label">Event Type</label>
+                        <input  class="form-control" type="text" name="event_type" step="any" id="id_id"value="{{ request.GET.user }}" >
+                      </div>
+          
 
-    </tr>
-  </thead>
-  <tbody>
-    {%for i in log%}
-    <tr>
-      <th scope="row">{{i.id}}</th>
-      <td>{{i.user}}</td>
-      <td>{{i.event_type}}</td>
-      <td>{{i.timestamp}}</td>
-      <td>{{i}}</td>
-    </tr>
-    {%endfor%}
-  </tbody>
-</table>
-</main>
+                      <button class="w-10 btn btn-lg btn-outline-success" type="submit">Search</button>
+                    </form>
+                    <div class="mb-4">
+                            <a href="#" class="btn btn-success me-2">View Task</a>
+                          <a href="#" class="btn btn-success me-2">Reports</a>
+                    </div>
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Event Type</th>
+                        <th scope="col">Timestamp</th>
+                        <th scope="col">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {%for i in log%}
+                      <tr class="fw-normal">
+                        <td class="align-middle">
+                          <span>{{i.id}}</span>
+                        </td>
+                        <td class="align-middle">
+                            <span>{{i.user}}</span>
+                          </td>
+                          <td class="align-middle">
+                            <span>{{i.event_type}}</span>
+                          </td>
+                          <td class="align-middle">
+                            <span>{{i.timestamp}}</span>
+                          </td>
+                          <td class="align-middle">
+                            <span>{{i}}</span>
+                          </td>
+                      </tr>
+                      <!-- DELETE MODALS -->
+                      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              Are you sure you want to delete this item?
+                            </div>
+                            <div class="modal-footer">
+                              <a class="btn btn-primary" href="{% url 'tasks:delete' pk=i.pk %}" class="btn">Delete</a>
+                          </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+                    
+                      {%endfor%}
+                      </tbody>
+                  </table>
+    
+      
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+                </div>
+              </div>
+      
+            </div>
+          </div>
+        </div>
+      </section>
+<!-- jQuery (needed for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 {%endblock%}
