@@ -1,6 +1,6 @@
 {% extends 'base.html'%}
 
-{% block title%} Tasks {%endblock%}
+{% block title%} Activities on {{task}} {%endblock%}
 
 {%block content%}
     <section class="vh-100 gradient-custom-2" style="margin-bottom: 35%;">
@@ -12,7 +12,7 @@
                   <div class="text-center pt-3 pb-2">
                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"
                       alt="Check" width="60">
-                    <h2 class="my-4">Tasks</h2>
+                    <h2 class="my-4">Activities on {{task}}</h2>
                   </div>
                 
                   <form class="table text-white mb-0" method="get">
@@ -71,28 +71,6 @@
                             <span>{{i}}</span>
                           </td>
                       </tr>
-                      <!-- DELETE MODALS -->
-                      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              Are you sure you want to delete this item?
-                            </div>
-                            <div class="modal-footer">
-                              <a class="btn btn-primary" href="{% url 'tasks:delete' pk=i.pk %}" class="btn">Delete</a>
-                          </div>
-                          </div>
-                        </div>
-                      </div>
-
-
-                    
                       {%endfor%}
                       </tbody>
                   </table>

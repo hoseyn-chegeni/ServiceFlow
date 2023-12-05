@@ -28,7 +28,7 @@ from .filters import UserFilter
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-
+from db_events.filters import TaskLogFilter
 
 
 load_dotenv()
@@ -196,10 +196,11 @@ class SuspendUserListView(FilterView):
         return user_selected_value
 
 
-class UserActivitiesOnTasks(ListView):
+class UserActivitiesOnTasks(LoginRequiredMixin,FilterView):
     model = TaskLog
     template_name = "registration/user_activities_on_tasks.html"
     context_object_name = "log"
+    filterset_class = TaskLogFilter
 
     def get_queryset(self):
         task = get_object_or_404(User, pk=self.kwargs["pk"])
@@ -209,6 +210,10 @@ class UserActivitiesOnTasks(ListView):
         context = super().get_context_data(**kwargs)
         context["user"] = get_object_or_404(User, pk=self.kwargs["pk"])
         return context
+    
+    def get_paginate_by(self, queryset):
+        user_selected_value = self.request.session.get("items_per_page", 10)
+        return user_selected_value
 
 
 class BulkUserImportView(View):
