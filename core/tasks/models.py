@@ -37,7 +37,7 @@ class Task(models.Model):
     )
 
     def __str__(self):
-        return f"{self.task}, {self.title}"
+        return self.title
 
 
 class TaskType(models.Model):
