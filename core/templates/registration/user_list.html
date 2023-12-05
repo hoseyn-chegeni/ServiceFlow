@@ -56,12 +56,11 @@
                             <span>{{i.last_login}}</span>
                           </td>
                         <td class="align-middle">
-                            <a href="{%url 'accounts:detail' i.id %}" data-mdb-toggle="tooltip" title="Detail" style="color:#808080;"> <i class="fas fa-info-circle"></i></a>
-                          <a href="{%url 'accounts:update' i.id %}" data-mdb-toggle="tooltip" title="Update" style="color: #0000FF;"><i class="fas fa-edit" ></i></a>
-                          <a href="{%url 'rbac:assign_role_to_user' i.id %}" data-mdb-toggle="tooltip" title="Manage Roles" style="color:#556B2F"> <i class="fas fa-shield-alt"></i></a>
-                          <a href="{%url 'accounts:task_activity' i.id %}" data-mdb-toggle="tooltip" title="Task Activity Logs" style="color:#708090"><i class="fas fa-history"></i></a>
+                            <a href="{%url 'accounts:detail' i.id %}" data-mdb-toggle="tooltip" title="Detail"> <i class="fas fa-info-circle"></i></a>
+                          <a href="{%url 'accounts:update' i.id %}" data-mdb-toggle="tooltip" title="Update"><i class="fas fa-edit" ></i></a>
+                          <a href="{%url 'rbac:assign_role_to_user' i.id %}" data-mdb-toggle="tooltip" title="Manage Roles"> <i class="fas fa-shield-alt"></i></a>
+                          <a href="{%url 'accounts:task_activity' i.id %}" data-mdb-toggle="tooltip" title="Task Activity Logs"><i class="fas fa-history"></i></a>
                           <a href="#" data-toggle="modal" data-target="#exampleModal2"  title="Suspend User" ><i class="fas fa-ban"></i></a>
-                          <!-- <a href="{%url 'accounts:delete' i.id %}" data-mdb-toggle="tooltip" title="Delete" style="color:crimson"><i class="fas fa-trash-alt"></i></a> -->
                           <a href="#" data-toggle="modal" data-target="#exampleModal"  title="Delete" ><i class="fas fa-trash-alt"></i></a>
                         </td>
                       </tr>
@@ -79,7 +78,7 @@
                               Are you sure you want to delete this item?
                             </div>
                             <div class="modal-footer">
-                              <a class="btn btn-primary" href="{% url 'accounts:delete' pk=i.pk %}" class="btn">Suspend</a>
+                              <a class="btn btn-primary" href="{% url 'accounts:delete' i.id %}" class="btn">Delete</a>
                           </div>
                           </div>
                         </div>
@@ -87,7 +86,6 @@
 
 
                       <!-- SUSPEND MODALS -->
-
                       <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
@@ -101,7 +99,7 @@
                               Are you sure you want to Suspend this item?
                             </div>
                             <div class="modal-footer">
-                              <a class="btn btn-primary" href="{% url 'accounts:suspend' pk=i.pk %}" class="btn">Suspend</a>
+                              <a class="btn btn-primary" href="{% url 'accounts:suspend' i.id %}" class="btn">Suspend</a>
                           </div>
                           </div>
                         </div>

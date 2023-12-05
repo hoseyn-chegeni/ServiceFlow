@@ -159,13 +159,13 @@ class UserPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
 
 class SuspendUserView(View):
     def get(self, request, pk):
-        user = User.objects.filter(pk=pk).first()
+        user = User.objects.get(pk=pk)
         if user:
             user.is_active = False
             messages.success(
                 self.request, f"User Suspended '{user.email}' successfully!"
             )
-            user.save
+            user.save()
         return HttpResponseRedirect(reverse_lazy("accounts:users"))
 
 
