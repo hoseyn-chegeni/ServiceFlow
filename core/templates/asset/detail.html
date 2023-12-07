@@ -1,16 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    {{object.name}}<br>
-    {{object.type}}<br>
-    {{object.manufacturer}}<br>
-    {{object.model}}<br>
-    {{object.serial_number}}<br>
-    {{object.warranty_expiry_date}}<br>
-</body>
-</html>
+{% extends 'base.html' %}
+    {%block title %} {{object.title}}{%endblock%}
+{%block content%}
+
+
+
+    <div class="container mt-4">
+        <h2>{{object.title}}</h2>
+        <br>
+        <div class="card mb-4">
+          <div class="card-body">
+              <p class="card-text"><strong>ID:</strong>{{object.id}}</p>
+              <hr>
+              <p class="card-text"><strong>Name:</strong>{{object.name}}</p>
+              <hr>
+              <p class="card-text"><strong>Manufacturer:</strong>{{object.manufacturer}}</p>
+              <hr>
+              <p class="card-text"><strong>Model: </strong>{{object.model}}</p>
+              <hr>
+              <p class="card-text"><strong>Location: </strong>{{object.location}}</p>
+              <hr>
+              <p class="card-text"><strong>Type: </strong>{{object.type}}</p>
+              <hr>
+              <p class="card-text"><strong>Status: </strong>{{object.status}}</p>
+              <hr>
+              <p class="card-text"><strong>Maintenance schedule: </strong>{{object.maintenance_schedule}}</p>
+              <hr>
+              <p class="card-text"><strong>Purchase cost: </strong>{{object.purchase_cost}}</p>
+              <hr>
+              <p class="card-text"><strong>Current value: </strong>{{object.current_value}}</p>
+              <hr>
+              <p class="card-text"><strong>Current value: </strong>{{object.current_value}}</p>
+              <hr>
+              <p class="card-text"><strong>Depreciation rate: </strong>{{object.depreciation_rate}}</p>
+              <hr>
+              <p class="card-text"><strong>Assigned IP Address: </strong>{{object.assigned_ip_address}}</p>
+              <hr>
+              <p class="card-text"><strong>Software installed</strong>{{object.software_installed}}</p>
+              <hr>
+              <p class="card-text"><strong>notes: </strong>{{object.notes}}</p>
+              <!-- Add other task details as needed -->
+          </div>    
+</div>
+        <!-- Buttons to change status, priority, add comment, etc. -->
+        <div class="mb-4">
+          <a href="{% url 'asset:update' object.id%}" class="btn btn-success me-2">Update</a>
+          <a href="#" data-toggle="modal" data-target="#exampleModal"  class="btn btn-success me-2" title="Delete" >Delete</a>
+        </div>
+
+        <!-- Participant information -->
+      
+
+      
+      <!-- DELETE MODALS -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Are you sure you want to delete this item?
+            </div>
+            <div class="modal-footer">
+              <a class="btn btn-primary" href="{% url 'asset:delete' pk=object.pk %}" class="btn">Delete</a>
+          </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- jQuery (needed for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{%endblock%}
