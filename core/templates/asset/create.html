@@ -1,15 +1,113 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CREATE ASSET</title>
-</head>
-<body>
-    <form method="post">
-        {%csrf_token%}
-        {{form.as_p}}
-        <input type="submit" value="Create" id="">
-    </form>
-</body>
-</html>
+
+{%extends 'base.html' %}
+{%block title %} Add Asset  {%endblock%}
+
+{%block content %} 
+   
+<div class="container">
+    <main>
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="" width="62" height="47">
+        <h2>Add Asset</h2>
+      </div>
+
+
+          <h4 class="mb-3">Add Information</h4>
+          <form class="needs-validation" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" placeholder=""  name="name" >
+              </div>
+  
+              <div class="col-sm-6">
+                <label for="manufacturer" class="form-label">Manufacturer</label>
+                <input type="text" class="form-control" id="manufacturer" placeholder=""  name="manufacturer" >
+              </div>
+
+              <div class="col-sm-6">
+                <label for="model" class="form-label">Model</label>
+                <input type="text" class="form-control" id="model" placeholder=""  name="model" >
+              </div>
+
+
+              <div class="col-sm-6">
+                <label for="id_type">Type</label>
+                <select class="form-select" id="id_type" name="type">
+                    <option value="">----------</option>
+                    {% for type in form.fields.type.queryset %}
+                        <option value="{{ type.pk }}">
+                            {{ type.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+              <div class="col-sm-6">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" class="form-control" id="location" placeholder=""  name="location" >
+              </div>
+
+              <div class="col-sm-6">
+                <label for="id_status">Status</label>
+                <select class="form-select" id="id_status" name="status">
+                    <option value="">----------</option>
+                    {% for status in form.fields.status.queryset %}
+                        <option value="{{ status.pk }}">
+                            {{ status.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+
+            <div class="col-sm-6">
+                <label for="maintenance_schedule" class="form-label">Maintenance Schedule</label>
+                <input type="text" class="form-control" id="maintenance_schedule" placeholder=""  name="maintenance_schedule" >
+              </div>
+
+              <div class="col-sm-6">
+                <label for="purchase_cost" class="form-label">Purchase Cost</label>
+                <input type="number" class="form-control" id="purchase_cost" placeholder=""  name="purchase_cost" >
+              </div>
+
+
+              <div class="col-sm-6">
+                <label for="current_value" class="form-label">Current Value</label>
+                <input type="number" class="form-control" id="current_value" placeholder=""  name="current_value" >
+              </div>
+
+
+              <div class="col-sm-6">
+                <label for="depreciation_rate" class="form-label">Depreciation Rate</label>
+                <input type="number" class="form-control" id="depreciation_rate" placeholder=""  name="depreciation_rate" >
+              </div>
+
+
+              <div class="col-sm-6">
+                <label for="assigned_ip_address" class="form-label">Assigned ip address </label>
+                <input type="text" class="form-control" id="assigned_ip_address" placeholder=""  name="assigned_ip_address" >
+              </div>
+
+
+              <div class="col-sm-6">
+                <label for="software_installed" class="form-label">Software Installed </label>
+                <input type="text" class="form-control" id="software_installed" placeholder=""  name="software_installed" >
+              </div>
+
+              <div class="col-sm-6">
+                <label for="notes" class="form-label">Notes</label>
+                <input type="text" class="form-control" id="notes" placeholder=""  name="notes" >
+              </div>
+
+
+
+            <button class="w-100 btn btn-lg btn-outline-success" type="submit">Add Instance</button>
+          </form>
+        </div>
+      </div>
+    </main>
+</div>
+
+{%endblock%}
