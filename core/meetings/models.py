@@ -4,17 +4,10 @@ from accounts.models import User
 
 # Create your models here.
 def generate_pk():
-    if Meetings.objects.last() is not None:
-        number = (Meetings.objects.last().id) + 1
-        return f"MEETING-{number}"
-    else:
-        return f"MEETING-1"
+    pass
 
 
 class Meetings(models.Model):
-    meeting = models.CharField(
-        default=generate_pk, max_length=255, unique=True, editable=False
-    )
     title = models.CharField(max_length=255)
     description = models.TextField()
     date_time = models.DateTimeField()

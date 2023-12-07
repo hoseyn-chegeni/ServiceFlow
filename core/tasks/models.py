@@ -5,17 +5,10 @@ from accounts.models import User
 
 
 def generate_pk():
-    if Task.objects.last() is not None:
-        number = (Task.objects.last().id) + 1
-        return f"TASK-{number}"
-    else:
-        return f"TASK-1"
+    pass
 
 
 class Task(models.Model):
-    task = models.CharField(
-        default=generate_pk, max_length=255, unique=True, editable=False
-    )
     title = models.CharField(max_length=255)
     description = models.TextField()
     creator = models.ForeignKey(

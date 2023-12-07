@@ -3,17 +3,10 @@ from django.db import models
 
 # Create your models here.
 def generate_pk():
-    if Organization.objects.last() is not None:
-        number = (Organization.objects.last().id) + 1
-        return f"ORG-{number}"
-    else:
-        return f"ORG-1"
+    pass
 
 
 class Organization(models.Model):
-    org = models.CharField(
-        default=generate_pk, max_length=255, unique=True, editable=False
-    )
     name = models.CharField(
         max_length=255,
     )

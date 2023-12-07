@@ -5,21 +5,9 @@ from datetime import datetime, timedelta
 
 # Create your models here.
 def generate_pk():
-    if Reminder.objects.last() is not None:
-        number = (Reminder.objects.last().id) + 1
-        return f"REMINDER-{number}"
-    else:
-        return f"REMINDER-1"
-
+    pass
 
 class Reminder(models.Model):
-    reminder = models.CharField(
-        default=generate_pk,
-        max_length=255,
-        unique=True,
-        editable=False,
-        verbose_name="Reminder ID",
-    )
     title = models.CharField(max_length=255)
     description = models.TextField()
     date = models.DateField()

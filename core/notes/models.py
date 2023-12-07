@@ -5,21 +5,10 @@ from django.dispatch import receiver
 
 # Create your models here.
 def generate_pk():
-    if Note.objects.last() is not None:
-        number = (Note.objects.last().id) + 1
-        return f"NOTE-{number}"
-    else:
-        return f"NOTE-1"
+    pass
 
 
 class Note(models.Model):
-    note = models.CharField(
-        default=generate_pk,
-        max_length=255,
-        unique=True,
-        editable=False,
-        verbose_name="Note ID",
-    )
     title = models.CharField(max_length=255)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
