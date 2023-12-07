@@ -45,6 +45,7 @@ class AssetCreateView(LoginRequiredMixin, CreateView):
 class AssetUpdateView(LoginRequiredMixin, UpdateView):
     model = Asset
     template_name = "asset/update.html"
+    context_object_name = 'asset'
     fields = (
         "name",
         "type",
