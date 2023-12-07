@@ -45,10 +45,7 @@
                         <select class="form-select" aria-label="Default select example" name="status">
                             <option value="">----------</option>
                             {% for task_type in filter.form.status.field.queryset %}
-                            
                             <option value="{{ task_type.id }}">{{ task_type.name }}</option>
-
-                            
                             {%endfor%}
                           </select>
                       </div>
