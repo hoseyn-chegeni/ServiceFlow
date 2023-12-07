@@ -5,7 +5,8 @@ from django.urls import reverse_lazy
 from ..forms import CreateAssetForm
 from ..filters import AssetFilters
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.contrib import messages
+from django.shortcuts import HttpResponseRedirect
 
 class AssetListView(LoginRequiredMixin, FilterView):
     model = Asset
@@ -67,3 +68,15 @@ class AssetDeleteView(LoginRequiredMixin, DeleteView):
     model = Asset
     template_name = "asset/delete.html"
     success_url = reverse_lazy("asset:list")
+
+    def get(self, request, *args, **kwargs):
+        # Get the object to be deleted
+        self.object = self.get_object()
+
+        # Perform the delete operation directly without displaying a confirmation template
+        success_url = self.get_success_url()
+        self.object.delete()
+        messages.success(
+                self.request, f"Asset successfully Deleted!"
+            )
+        return HttpResponseRedirect(success_url)
