@@ -96,6 +96,7 @@ class ChangePriorityView(LoginRequiredMixin,SuccessMessageMixin, UpdateView):
 
     def form_valid(self, form):
         task = form.save(commit=False)
+        task.participants.add(self.request.user)
         task.save()
 
         TaskLog.objects.create(

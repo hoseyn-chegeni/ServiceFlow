@@ -35,10 +35,12 @@ class Task(models.Model):
     priority = models.ForeignKey(
         "TaskPriority", on_delete=models.SET_NULL, blank=True, null=True
     )
+    participants = models.ManyToManyField(User, related_name='tasks_participated', blank=True)
+
 
     def __str__(self):
         return self.title
-
+    
 
 class TaskType(models.Model):
     name = models.CharField(max_length=255)

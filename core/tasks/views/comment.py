@@ -21,6 +21,7 @@ class TaskCommentView(LoginRequiredMixin,SuccessMessageMixin, CreateView):
 
     def form_valid(self, form):
         task = get_object_or_404(Task, pk=self.kwargs["pk"])
+        task.participants.add(self.request.user)
         form.instance.task = task
         form.instance.user = self.request.user
 

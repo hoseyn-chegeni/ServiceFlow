@@ -1,5 +1,13 @@
-from django.dispatch import receiver
 from django.db.models.signals import post_save
-from django.core.mail import send_mail
-from django.conf import settings
-from db_events.models import TaskLog
+from django.dispatch import receiver
+from .models import Task  
+
+
+
+
+@receiver(post_save, sender=Task)
+def add_creator_as_participant(sender, instance, created, **kwargs):
+    if created:
+        # 'instance' represents the newly created Task
+        instance.participants.add(instance.creator)
+        instance.participants.add(instance.assign_to)

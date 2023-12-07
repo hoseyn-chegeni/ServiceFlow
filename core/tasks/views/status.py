@@ -91,6 +91,7 @@ class ChangeStatusView(LoginRequiredMixin,SuccessMessageMixin, UpdateView):
     success_message = 'Task Status Successfully Changed.'
     def form_valid(self, form):
         task = form.save(commit=False)
+        task.participants.add(self.request.user)
         task.save()
 
         TaskLog.objects.create(
@@ -99,6 +100,7 @@ class ChangeStatusView(LoginRequiredMixin,SuccessMessageMixin, UpdateView):
             event_type="Status Change",
             additional_info=f"{self.request.user} Set '{task.status}' Status for {task}",
         )
+        
         return super().form_valid(form)
 
     def get_success_url(self):

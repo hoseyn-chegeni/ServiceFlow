@@ -32,6 +32,7 @@ class TaskView(LoginRequiredMixin, FilterView):
         )  # Default to 10
 
         return user_selected_value
+    
 class MyTaskView(LoginRequiredMixin, FilterView):
     model = Task
     context_object_name = "tasks"

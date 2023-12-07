@@ -17,6 +17,7 @@ class TaskAssignToMe(LoginRequiredMixin,View):
         task = Task.objects.filter(pk=pk).first()
         if task:
             task.assign_to = self.request.user
+            task.participants.add(self.request.user)
             messages.success(
                 self.request, f"TSK-{task.id} Successfully assigned to you."
             )
@@ -39,6 +40,9 @@ class TaskAssignTo(LoginRequiredMixin,SuccessMessageMixin, UpdateView):
 
     def form_valid(self, form):
         task = form.save(commit=False)
+        task.save()
+        task.participants.add(task.assign_to)
+        task.participants.add(self.request.user)
         task.save()
 
         TaskLog.objects.create(
