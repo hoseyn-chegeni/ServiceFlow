@@ -30,6 +30,19 @@
               <p class="card-text"><strong>Last Change: </strong>{{object.last_change}}</p>
               <!-- Add other task details as needed -->
           </div>
+          <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Participants</h5>
+                {% for participant in object.participants.all %}
+                    {% if participant.image %}
+                         <a href="{%url 'accounts:detail' participant.id %}"><img src="{{ participant.image.url }}" alt="{{ participant.email }}" title="{{ participant }}" class="rounded-circle" width="50" height="50"></a>
+                    {% else %}
+                        <p>{{ participant }}</p>
+                    {% endif %}
+                {% empty %}
+                    <p>No participants</p>
+                {% endfor %}
+        </div>
       </div>    
 
         <!-- Buttons to change status, priority, add comment, etc. -->
