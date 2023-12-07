@@ -37,9 +37,11 @@
                 <select class="form-select" id="id_type" name="type">
                     <option value="">----------</option>
                     {% for type in form.fields.type.queryset %}
-                        <option value="{{ type.pk }}">
-                            {{ type.name }}
-                        </option>
+                    {% if asset.type == type%}
+                        <option value="{{ type.pk }}" selected>{{ type.name }}</option>
+                    {%else%}
+                    <option value="{{ type.pk }}">{{ type.name }}</option>
+                    {%endif%}
                     {% endfor %}
                 </select>
             </div>
@@ -54,9 +56,15 @@
                 <select class="form-select" id="id_status" name="status">
                     <option value="">----------</option>
                     {% for status in form.fields.status.queryset %}
-                        <option value="{{ status.pk }}">
+                    {% if status == asset.status%}
+                        <option value="{{ status.pk }}" selected>
                             {{ status.name }}
                         </option>
+                    {%else%}
+                    <option value="{{ status.pk }}">
+                        {{ status.name }}
+                    </option>
+                    {%endif%}
                     {% endfor %}
                 </select>
             </div>
