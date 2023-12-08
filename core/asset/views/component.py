@@ -137,3 +137,15 @@ class ComponentCategoryDeleteView(
     template_name = "asset/component_category/delete.html"
     success_url = reverse_lazy("asset:component_category_list")
     permission_required = "asset.delete_componentcategory"
+
+    def get(self, request, *args, **kwargs):
+        # Get the object to be deleted
+        self.object = self.get_object()
+
+        # Perform the delete operation directly without displaying a confirmation template
+        success_url = self.get_success_url()
+        self.object.delete()
+        messages.success(
+                self.request, f"Component successfully Deleted!"
+            )
+        return HttpResponseRedirect(success_url)
