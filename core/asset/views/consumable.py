@@ -11,10 +11,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from ..filters import ConsumableFilters
 from django.contrib import messages 
 from django.shortcuts import HttpResponseRedirect
-from base.views import BaseListView
+from base.views import BaseListView,BaseDeleteView
 
 # CONSUMABLE Views Here...
-class ConsumableListView(PermissionRequiredMixin, LoginRequiredMixin,BaseListView):
+class ConsumableListView(BaseListView):
     model = Consumable
     template_name = "asset/consumable/list.html"
     context_object_name = "consumable"
@@ -51,22 +51,11 @@ class ConsumableUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateVi
     success_url = reverse_lazy("asset:consumable_list")
 
 
-class ConsumableDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
+class ConsumableDeleteView(BaseDeleteView):
     model = Consumable
     template_name = "asset/consumable/delete.html"
     success_url = reverse_lazy("asset:consumable_list")
     permission_required = "asset.delete_consumable"
+    message = 'Consumable Successfully Deleted'
 
-
-    def get(self, request, *args, **kwargs):
-        # Get the object to be deleted
-        self.object = self.get_object()
-
-        # Perform the delete operation directly without displaying a confirmation template
-        success_url = self.get_success_url()
-        self.object.delete()
-        messages.success(
-                self.request, f"Asset successfully Deleted!"
-            )
-        return HttpResponseRedirect(success_url)
 
