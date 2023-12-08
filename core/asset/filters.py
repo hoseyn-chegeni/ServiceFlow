@@ -2,7 +2,7 @@ import django_filters
 from django_filters import FilterSet
 from .models.asset import Asset
 from .models.component import Component, ComponentCategory
-
+from .models.consumable import Consumable
 
 class AssetFilters(FilterSet):
     name = django_filters.CharFilter(lookup_expr="icontains")
@@ -44,4 +44,17 @@ class ComponentCategoryFilters(FilterSet):
         fields = [
             'id',
             'name',
+        ]
+
+class ConsumableFilters(FilterSet):
+    name = django_filters.CharFilter(lookup_expr="icontains")
+
+    class Meta:
+        model = Consumable
+        fields = [
+            'id',
+            'name',
+            'category',
+            'location',
+            'order_number',
         ]

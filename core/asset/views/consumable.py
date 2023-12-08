@@ -3,21 +3,29 @@ from django.views.generic import (
     CreateView,
     UpdateView,
     DetailView,
-    ListView,
 )
-
+from django_filters.views import FilterView
 from ..models.consumable import ConsumableCategory, Consumable
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-
+from ..filters import ConsumableFilters
 
 # CONSUMABLE Views Here...
-class ConsumableListView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
+class ConsumableListView(PermissionRequiredMixin, LoginRequiredMixin,FilterView):
     model = Consumable
     template_name = "asset/consumable/list.html"
     context_object_name = "consumable"
     permission_required = "asset.view_consumable"
+    filterset_class = ConsumableFilters
 
+    def get_paginate_by(self, queryset):
+        # Get the value for paginate_by dynamically (e.g., from a form input or session)
+        # Example: Set paginate_by to a user-selected value stored in session
+        user_selected_value = self.request.session.get(
+            "items_per_page", 10
+        )  # Default to 10
+        return user_selected_value
+    
 
 class ConsumableDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
     model = Consumable
