@@ -1,20 +1,11 @@
 from typing import Any
-from django.shortcuts import HttpResponseRedirect
-from django.views.generic import (
-    CreateView,
-    DetailView,
-    UpdateView,
-    DeleteView,
-)
+from django.views.generic import DetailView
 from ..models import TaskStatus, Task
 from django.urls import reverse_lazy
 from ..forms import CreateTaskStatusForm
 from db_events.models import TaskLog
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib import messages
-from django_filters.views import FilterView
 from ..filters import StatusFilter
-from django.contrib.messages.views import SuccessMessageMixin
 from base.views import BaseListView,BaseCreateView,BaseDeleteView,BaseUpdateView
 
 class StatusListView(BaseListView):
