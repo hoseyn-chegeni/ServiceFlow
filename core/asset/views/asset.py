@@ -1,11 +1,10 @@
-from django.views.generic import DeleteView, CreateView, UpdateView, DetailView
+from django.views.generic import  CreateView, UpdateView, DetailView
 from ..models.asset import Asset
 from django.urls import reverse_lazy
 from ..forms import CreateAssetForm
 from ..filters import AssetFilters
 from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
-from django.contrib import messages
-from django.shortcuts import HttpResponseRedirect
+
 from base.views import BaseDeleteView, BaseListView
 
 

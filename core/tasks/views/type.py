@@ -13,22 +13,16 @@ from django.shortcuts import HttpResponseRedirect
 from django_filters.views import FilterView
 from ..filters import TypeFilter
 from .task import Task
+from base.views import BaseDeleteView, BaseListView
 
-
-class TypeListView(LoginRequiredMixin, FilterView):
+class TypeListView(BaseListView):
     model = TaskType
     context_object_name = "type"
     template_name = "tasks/type/list.html"
     filterset_class = TypeFilter
+    permission_required = 'tasks.view_tasktype'
 
-    def get_paginate_by(self, queryset):
-        # Get the value for paginate_by dynamically (e.g., from a form input or session)
-        # Example: Set paginate_by to a user-selected value stored in session
-        user_selected_value = self.request.session.get(
-            "items_per_page", 10
-        )  # Default to 10
 
-        return user_selected_value
 
 
 class TypeDetailView(LoginRequiredMixin, DetailView):
@@ -58,20 +52,12 @@ class TypeUpdateView(LoginRequiredMixin, UpdateView):
         return reverse_lazy("tasks:detail_type", kwargs={"pk": self.object.pk})
 
 
-class TypeDeleteView(LoginRequiredMixin, DeleteView):
+class TypeDeleteView(BaseDeleteView):
     model = TaskType
     template_name = "tasks/type/delete.html"
     success_url = reverse_lazy("tasks:list_type")
-
-    def get(self, request, *args, **kwargs):
-        # Get the object to be deleted
-        self.object = self.get_object()
-
-        # Perform the delete operation directly without displaying a confirmation template
-        success_url = self.get_success_url()
-        self.object.delete()
-        messages.success(self.request, f"Task successfully Deleted!")
-        return HttpResponseRedirect(success_url)
+    message = 'Task successfully Deleted!'
+    permission_required = 'task.delete_tasktype'
 
 
 class TaskWithThisType(LoginRequiredMixin, DetailView):
@@ -82,5 +68,4 @@ class TaskWithThisType(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["task"] = Task.objects.filter(type_id=self.object.pk)
-
         return context
