@@ -1,16 +1,13 @@
-from django.views.generic import (
-    CreateView,
-    DetailView,
-    UpdateView,
-    DeleteView,
-)
+from django.views.generic import  DetailView
 from ..models import TaskType
 from django.urls import reverse_lazy
 from ..forms import CreateTaskTypeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ..filters import TypeFilter
 from .task import Task
-from base.views import BaseDeleteView, BaseListView
+from base.views import BaseDeleteView, BaseListView, BaseCreateView,BaseUpdateView
+
+
 
 class TypeListView(BaseListView):
     model = TaskType
@@ -20,7 +17,7 @@ class TypeListView(BaseListView):
     permission_required = 'tasks.view_tasktype'
 
 
-
+    
 
 class TypeDetailView(LoginRequiredMixin, DetailView):
     model = TaskType
@@ -28,23 +25,22 @@ class TypeDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "type"
 
 
-class TypeCreateView(LoginRequiredMixin, CreateView):
+class TypeCreateView(BaseCreateView):
     template_name = "tasks/type/create.html"
     form_class = CreateTaskTypeForm
-
-    def form_valid(self, form):
-        form.instance.created_by = self.request.user
-        return super().form_valid(form)
+    permission_required = 'tasks.add_tasktype'
+    success_message = 'Task Type Successfully Created!'
 
     def get_success_url(self):
         return reverse_lazy("tasks:detail_type", kwargs={"pk": self.object.pk})
 
 
-class TypeUpdateView(LoginRequiredMixin, UpdateView):
+class TypeUpdateView(BaseUpdateView):
     model = TaskType
     fields = ("name", "description", "is_active")
     template_name = "tasks/type/update.html"
-
+    permission_required = 'tasks.change_tasktype'
+    success_message = 'Task Type successfully updated!'
     def get_success_url(self):
         return reverse_lazy("tasks:detail_type", kwargs={"pk": self.object.pk})
 
