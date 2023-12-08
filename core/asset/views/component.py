@@ -10,7 +10,8 @@ from ..models.component import Component, ComponentCategory
 from django.urls import reverse_lazy
 from ..filters import ComponentFilters
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-
+from django.contrib import messages 
+from django.shortcuts import HttpResponseRedirect
 
 # Component Views Here...
 class ComponentListView(PermissionRequiredMixin, LoginRequiredMixin, FilterView):
@@ -62,6 +63,19 @@ class ComponentDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteVie
     template_name = "asset/component/delete.html"
     success_url = reverse_lazy("asset:component_list")
     permission_required = "asset.delete_component"
+
+    def get(self, request, *args, **kwargs):
+        # Get the object to be deleted
+        self.object = self.get_object()
+
+        # Perform the delete operation directly without displaying a confirmation template
+        success_url = self.get_success_url()
+        self.object.delete()
+        messages.success(
+                self.request, f"Component successfully Deleted!"
+            )
+        return HttpResponseRedirect(success_url)
+
 
 
 # Component Category Views Here...
