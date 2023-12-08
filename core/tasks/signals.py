@@ -7,5 +7,5 @@ from .models import Task
 def add_creator_as_participant(sender, instance, created, **kwargs):
     if created:
         # 'instance' represents the newly created Task
-        instance.participants.add(instance.creator)
+        instance.participants.add(instance.created_by)
         instance.participants.add(instance.assign_to)
