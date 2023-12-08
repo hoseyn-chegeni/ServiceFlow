@@ -8,12 +8,14 @@ from django.urls import reverse_lazy
 from db_events.models import TaskLog
 from base.views import BaseCreateView
 
+
 class TaskCommentView(BaseCreateView):
     model = TaskComment
     template_name = "tasks/task_comment.html"
     fields = ["comment", "attachments", "attachment_title"]
     success_message = "New Comment Successfully Added to Task."
-    permission_required = 'tasks.add_taskcomment'
+    permission_required = "tasks.add_taskcomment"
+
     def form_valid(self, form):
         task = get_object_or_404(Task, pk=self.kwargs["pk"])
         task.participants.add(self.request.user)

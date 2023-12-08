@@ -12,6 +12,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from base.views import BaseUpdateView
 
+
 class TaskAssignToMe(LoginRequiredMixin, View):
     def get(self, request, pk):
         task = Task.objects.filter(pk=pk).first()
@@ -38,7 +39,8 @@ class TaskAssignTo(BaseUpdateView):
     model = Task
     fields = ("assign_to",)
     success_message = "Task successfully assigned."
-    permission_required = 'tasks.change_task'
+    permission_required = "tasks.change_task"
+
     def form_valid(self, form):
         task = form.save(commit=False)
         task.save()
@@ -56,4 +58,3 @@ class TaskAssignTo(BaseUpdateView):
 
     def get_success_url(self):
         return reverse_lazy("tasks:detail", kwargs={"pk": self.object.pk})
-

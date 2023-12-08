@@ -5,7 +5,7 @@ from ..forms import CreateTaskPriorityForm
 from db_events.models import TaskLog
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ..filters import PriorityFilter
-from base.views import BaseCreateView,BaseDeleteView,BaseListView,BaseUpdateView
+from base.views import BaseCreateView, BaseDeleteView, BaseListView, BaseUpdateView
 
 
 class PriorityListView(BaseListView):
@@ -14,7 +14,8 @@ class PriorityListView(BaseListView):
     template_name = "tasks/priority/list.html"
     filterset_class = PriorityFilter
     success_message = "New Priority Successfully Added"
-    permission_required = 'tasks.view_taskpriority'
+    permission_required = "tasks.view_taskpriority"
+
 
 class PriorityDetailView(LoginRequiredMixin, DetailView):
     model = TaskPriority
@@ -26,11 +27,10 @@ class PriorityCreateView(BaseCreateView):
     template_name = "tasks/priority/create.html"
     form_class = CreateTaskPriorityForm
     success_message = "Priority successfully Created."
-    permission_required = 'tasks.add_taskpriority'
+    permission_required = "tasks.add_taskpriority"
 
     def get_success_url(self):
         return reverse_lazy("tasks:detail_priority", kwargs={"pk": self.object.pk})
-
 
 
 class PriorityUpdateView(BaseUpdateView):
@@ -43,27 +43,26 @@ class PriorityUpdateView(BaseUpdateView):
     )
     template_name = "tasks/priority/update.html"
     success_message = "Priority Successfully Updated"
-    permission_required = 'tasks.change_taskpriority'
+    permission_required = "tasks.change_taskpriority"
 
     def get_success_url(self):
         return reverse_lazy("tasks:detail_priority", kwargs={"pk": self.object.pk})
-
 
 
 class PriorityDeleteView(BaseDeleteView):
     model = TaskPriority
     template_name = "tasks/priority/delete.html"
     success_url = reverse_lazy("tasks:list_priority")
-    permission_required = 'tasks.delete_taskpriority'
-    message = 'Priority Successfully deleted'
+    permission_required = "tasks.delete_taskpriority"
+    message = "Priority Successfully deleted"
+
 
 class ChangePriorityView(BaseUpdateView):
     template_name = "tasks/priority/change.html"
     model = Task
     fields = ("priority",)
     success_message = "Task Priority successfully Changed"
-    permission_required = 'tasks.change_taskpriority'
-
+    permission_required = "tasks.change_taskpriority"
 
     def form_valid(self, form):
         task = form.save(commit=False)
@@ -80,8 +79,6 @@ class ChangePriorityView(BaseUpdateView):
 
     def get_success_url(self):
         return reverse_lazy("tasks:detail", kwargs={"pk": self.object.pk})
-
-
 
 
 class TaskWithThisPriority(LoginRequiredMixin, DetailView):

@@ -9,7 +9,6 @@ from django.contrib.messages.views import SuccessMessageMixin
 
 
 class BaseListView(LoginRequiredMixin, PermissionRequiredMixin, FilterView):
-    
     def get_paginate_by(self, queryset):
         # Get the value for paginate_by dynamically (e.g., from a form input or session)
         # Example: Set paginate_by to a user-selected value stored in session
@@ -17,10 +16,13 @@ class BaseListView(LoginRequiredMixin, PermissionRequiredMixin, FilterView):
             "items_per_page", 10
         )  # Default to 10
         return user_selected_value
-    
 
-class BaseCreateView(LoginRequiredMixin, PermissionRequiredMixin,SuccessMessageMixin, CreateView):
-    success_message = ''
+
+class BaseCreateView(
+    LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, CreateView
+):
+    success_message = ""
+
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         return super().form_valid(form)
@@ -29,11 +31,14 @@ class BaseCreateView(LoginRequiredMixin, PermissionRequiredMixin,SuccessMessageM
         return self.success_message
 
 
-class BaseUpdateView(LoginRequiredMixin, PermissionRequiredMixin,SuccessMessageMixin, UpdateView):
-    success_message = ''
+class BaseUpdateView(
+    LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, UpdateView
+):
+    success_message = ""
+
     def get_success_message(self, cleaned_data):
         return self.success_message
-        
+
 
 class BaseDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     message = ""

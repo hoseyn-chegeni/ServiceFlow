@@ -3,12 +3,12 @@ from django.db.models.base import Model as Model
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
-from django.views.generic import ListView, UpdateView, DetailView, DeleteView
+from django.views.generic import DetailView
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from .models import User
 from .forms import CustomUserCreationForm
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from tasks.models import Task
 from db_events.models import TaskLog
 from db_events.models import UserAuthenticationLog
@@ -23,13 +23,12 @@ from django.contrib.auth.views import (
     PasswordResetConfirmView,
     PasswordResetCompleteView,
 )
-from django_filters.views import FilterView
 from .filters import UserFilter
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from db_events.filters import TaskLogFilter
-from base.views import BaseCreateView,BaseDeleteView,BaseListView,BaseUpdateView
+from base.views import BaseDeleteView, BaseListView, BaseUpdateView
 
 load_dotenv()
 
@@ -100,7 +99,7 @@ class UserUpdate(BaseUpdateView):
     fields = ("first_name", "last_name", "image")
     template_name = "registration/update.html"
     success_message = "User Successfully Updated."
-    permission_required = 'accounts.change_user'
+    permission_required = "accounts.change_user"
 
     def get_success_url(self):
         return reverse_lazy("accounts:detail", kwargs={"pk": self.object.pk})
@@ -118,7 +117,9 @@ class UserDetail(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         user = self.get_object()
         context["user_permissions"] = user.user_permissions.all()
-        context["user_created_task"] = Task.objects.filter(created_by_id=user.id).count()
+        context["user_created_task"] = Task.objects.filter(
+            created_by_id=user.id
+        ).count()
         context["user_assigned_task"] = Task.objects.filter(
             assign_to_id=user.id
         ).count()
@@ -129,8 +130,8 @@ class UserDelete(BaseDeleteView):
     model = User
     template_name = "registration/delete.html"
     success_url = reverse_lazy("accounts:users")
-    message = 'User Successfully Deleted!'
-    permission_required = 'accounts.delete_user'
+    message = "User Successfully Deleted!"
+    permission_required = "accounts.delete_user"
 
 
 class UserPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
@@ -167,11 +168,11 @@ class SuspendUserListView(BaseListView):
     template_name = "registration/suspend_list.html"
     filterset_class = UserFilter
     context_object_name = "users"
-    permission_required = 'accounts.view_user'
+    permission_required = "accounts.view_user"
+
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(is_active=False)
-
 
 
 class UserActivitiesOnTasks(BaseListView):
@@ -179,7 +180,7 @@ class UserActivitiesOnTasks(BaseListView):
     template_name = "registration/user_activities_on_tasks.html"
     context_object_name = "log"
     filterset_class = TaskLogFilter
-    permission_required = 'accounts.view_user'
+    permission_required = "accounts.view_user"
 
     def get_queryset(self):
         task = get_object_or_404(User, pk=self.kwargs["pk"])
@@ -189,8 +190,6 @@ class UserActivitiesOnTasks(BaseListView):
         context = super().get_context_data(**kwargs)
         context["user"] = get_object_or_404(User, pk=self.kwargs["pk"])
         return context
-
-
 
 
 class BulkUserImportView(View):

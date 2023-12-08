@@ -6,14 +6,15 @@ from ..forms import CreateTaskStatusForm
 from db_events.models import TaskLog
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ..filters import StatusFilter
-from base.views import BaseListView,BaseCreateView,BaseDeleteView,BaseUpdateView
+from base.views import BaseListView, BaseCreateView, BaseDeleteView, BaseUpdateView
+
 
 class StatusListView(BaseListView):
     model = TaskStatus
     context_object_name = "status"
     template_name = "tasks/status/list.html"
     filterset_class = StatusFilter
-    permission_required = 'tasks.view_taskstatus'
+    permission_required = "tasks.view_taskstatus"
 
 
 class StatusDetailView(LoginRequiredMixin, DetailView):
@@ -26,7 +27,7 @@ class StatusCreateView(BaseCreateView):
     template_name = "tasks/status/create.html"
     form_class = CreateTaskStatusForm
     success_message = "Status Successfully Created"
-    permission_required = 'tasks.add_taskstatus'
+    permission_required = "tasks.add_taskstatus"
 
     def get_success_url(self):
         return reverse_lazy("tasks:detail_status", kwargs={"pk": self.object.pk})
@@ -37,26 +38,26 @@ class StatusUpdateView(BaseUpdateView):
     fields = ("name", "description", "is_active")
     template_name = "tasks/status/update.html"
     success_message = "Status Successfully Updated"
-    permission_required  = 'tasks.change_taskstatus'
+    permission_required = "tasks.change_taskstatus"
 
     def get_success_url(self):
         return reverse_lazy("tasks:detail_status", kwargs={"pk": self.object.pk})
-
 
 
 class StatusDeleteView(BaseDeleteView):
     model = TaskStatus
     template_name = "tasks/status/delete.html"
     success_url = reverse_lazy("tasks:list_status")
-    message = 'Status Successfully Deleted!'
-    permission_required  = 'tasks.delete_taskstatus'
+    message = "Status Successfully Deleted!"
+    permission_required = "tasks.delete_taskstatus"
+
 
 class ChangeStatusView(BaseUpdateView):
     template_name = "tasks/status/change_status.html"
     model = Task
     fields = ("status",)
     success_message = "Task Status Successfully Changed."
-    permission_required  = 'tasks.change_taskstatus'
+    permission_required = "tasks.change_taskstatus"
 
     def form_valid(self, form):
         task = form.save(commit=False)
@@ -74,7 +75,6 @@ class ChangeStatusView(BaseUpdateView):
 
     def get_success_url(self):
         return reverse_lazy("tasks:detail", kwargs={"pk": self.object.pk})
-
 
 
 class TaskWithThisStatus(LoginRequiredMixin, DetailView):
