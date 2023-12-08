@@ -29,7 +29,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from db_events.filters import TaskLogFilter
-
+from base.views import BaseCreateView,BaseDeleteView,BaseListView,BaseUpdateView
 
 load_dotenv()
 
@@ -37,7 +37,7 @@ load_dotenv()
 # Create your views here.
 
 
-class UserView(LoginRequiredMixin, PermissionRequiredMixin, FilterView):
+class UserView(BaseListView):
     model = User
     template_name = "registration/user_list.html"
     permission_required = "accounts.view_user"
@@ -47,14 +47,6 @@ class UserView(LoginRequiredMixin, PermissionRequiredMixin, FilterView):
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(is_active=True)
-
-    def get_paginate_by(self, queryset):
-        # Get the value for paginate_by dynamically (e.g., from a form input or session)
-        # Example: Set paginate_by to a user-selected value stored in session
-        user_selected_value = self.request.session.get(
-            "items_per_page", 10
-        )  # Default to 10
-        return user_selected_value
 
 
 class UserLogin(LoginView):
@@ -103,17 +95,15 @@ class CreateUser(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         return self.success_message
 
 
-class UserUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class UserUpdate(BaseUpdateView):
     model = User
     fields = ("first_name", "last_name", "image")
     template_name = "registration/update.html"
     success_message = "User Successfully Updated."
+    permission_required = 'accounts.change_user'
 
     def get_success_url(self):
         return reverse_lazy("accounts:detail", kwargs={"pk": self.object.pk})
-
-    def get_success_message(self, cleaned_data):
-        return self.success_message
 
 
 class UserDetail(LoginRequiredMixin, DetailView):
@@ -128,27 +118,19 @@ class UserDetail(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         user = self.get_object()
         context["user_permissions"] = user.user_permissions.all()
-        context["user_created_task"] = Task.objects.filter(creator_id=user.id).count()
+        context["user_created_task"] = Task.objects.filter(created_by_id=user.id).count()
         context["user_assigned_task"] = Task.objects.filter(
             assign_to_id=user.id
         ).count()
         return context
 
 
-class UserDelete(LoginRequiredMixin, DeleteView):
+class UserDelete(BaseDeleteView):
     model = User
     template_name = "registration/delete.html"
     success_url = reverse_lazy("accounts:users")
-
-    def get(self, request, *args, **kwargs):
-        # Get the object to be deleted
-        self.object = self.get_object()
-
-        # Perform the delete operation directly without displaying a confirmation template
-        success_url = self.get_success_url()
-        self.object.delete()
-        messages.success(self.request, f"User successfully Deleted!")
-        return HttpResponseRedirect(success_url)
+    message = 'User Successfully Deleted!'
+    permission_required = 'accounts.delete_user'
 
 
 class UserPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
@@ -180,26 +162,24 @@ class ReactiveUserView(View):
         return HttpResponseRedirect(reverse_lazy("accounts:suspended_list"))
 
 
-class SuspendUserListView(FilterView):
+class SuspendUserListView(BaseListView):
     model = User
     template_name = "registration/suspend_list.html"
     filterset_class = UserFilter
     context_object_name = "users"
-
+    permission_required = 'accounts.view_user'
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(is_active=False)
 
-    def get_paginate_by(self, queryset):
-        user_selected_value = self.request.session.get("items_per_page", 10)
-        return user_selected_value
 
 
-class UserActivitiesOnTasks(LoginRequiredMixin, FilterView):
+class UserActivitiesOnTasks(BaseListView):
     model = TaskLog
     template_name = "registration/user_activities_on_tasks.html"
     context_object_name = "log"
     filterset_class = TaskLogFilter
+    permission_required = 'accounts.view_user'
 
     def get_queryset(self):
         task = get_object_or_404(User, pk=self.kwargs["pk"])
@@ -210,9 +190,7 @@ class UserActivitiesOnTasks(LoginRequiredMixin, FilterView):
         context["user"] = get_object_or_404(User, pk=self.kwargs["pk"])
         return context
 
-    def get_paginate_by(self, queryset):
-        user_selected_value = self.request.session.get("items_per_page", 10)
-        return user_selected_value
+
 
 
 class BulkUserImportView(View):
