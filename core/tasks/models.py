@@ -11,7 +11,7 @@ def generate_pk():
 class Task(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
-    creator = models.ForeignKey(
+    created_by = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="reaporter"
     )
     type = models.ForeignKey(

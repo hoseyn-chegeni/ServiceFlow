@@ -12,7 +12,7 @@ from .models import (
 class TaskAdmin(admin.ModelAdmin):
     list_display = (
         "title",
-        "creator",
+        "created_by",
         "type",
         "created_date",
         "last_change",
@@ -29,13 +29,13 @@ class TaskAdmin(admin.ModelAdmin):
         "last_change",
     )
     autocomplete_fields = [
-        "creator",
+        "created_by",
         "assign_to",
         "type",
         "status",
         "priority",
     ]
-    search_fields = ("title", "creator__email", "assign_to__email")
+    search_fields = ("title", "created_by", "assign_to__email")
     readonly_fields = ("created_date", "last_change")
 
     fieldsets = (
@@ -45,7 +45,7 @@ class TaskAdmin(admin.ModelAdmin):
                 "fields": (
                     "title",
                     "description",
-                    "creator",
+                    "created_by",
                     "created_date",
                     "last_change",
                     "participants",
