@@ -23,13 +23,14 @@ class AssetFilters(FilterSet):
 class ComponentFilters(FilterSet):
     company = django_filters.CharFilter(lookup_expr="icontains")
     name = django_filters.CharFilter(lookup_expr="icontains")
-
-    fields = [
-        "company",
-        "name",
-        "serial",
-        "category",
-        "supplier",
-        "location",
-        "order_number",
-    ]
+    class Meta:
+        model = Component
+        fields = [
+            "company",
+            "name",
+            "serial",
+            "category",
+            "supplier",
+            "location",
+            "order_number",
+        ]
