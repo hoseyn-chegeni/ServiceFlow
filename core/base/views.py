@@ -18,8 +18,9 @@ class BaseListView(LoginRequiredMixin, PermissionRequiredMixin, FilterView):
     
 
 class BaseCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    success_message = ''
     def form_valid(self, form):
-        form.instance.creator = self.request.user
+        form.instance.created_by = self.request.user
         return super().form_valid(form)
 
     def get_success_message(self, cleaned_data):
@@ -27,9 +28,10 @@ class BaseCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
 
 class BaseUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
-    
+    success_message = ''
     def get_success_message(self, cleaned_data):
         return self.success_message
+        
 
 class BaseDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     message = ""
