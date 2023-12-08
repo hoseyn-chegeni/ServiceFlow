@@ -1,6 +1,6 @@
 from django.shortcuts import HttpResponseRedirect
 from django_filters.views import FilterView
-from django.views.generic import DeleteView
+from django.views.generic import DeleteView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib import messages
 
@@ -15,7 +15,21 @@ class BaseListView(LoginRequiredMixin, PermissionRequiredMixin, FilterView):
             "items_per_page", 10
         )  # Default to 10
         return user_selected_value
+    
 
+class BaseCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    def form_valid(self, form):
+        form.instance.creator = self.request.user
+        return super().form_valid(form)
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message
+
+
+class BaseUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    
+    def get_success_message(self, cleaned_data):
+        return self.success_message
 
 class BaseDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     message = ""

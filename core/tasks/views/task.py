@@ -121,8 +121,7 @@ class TaskUpdate(PermissionRequiredMixin, SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy("tasks:detail", kwargs={"pk": self.object.pk})
 
-    def get_success_message(self, cleaned_data):
-        return self.success_message
+
 
 
 class TaskDelete(PermissionRequiredMixin, DeleteView):

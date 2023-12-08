@@ -8,9 +8,6 @@ from ..models import TaskType
 from django.urls import reverse_lazy
 from ..forms import CreateTaskTypeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib import messages
-from django.shortcuts import HttpResponseRedirect
-from django_filters.views import FilterView
 from ..filters import TypeFilter
 from .task import Task
 from base.views import BaseDeleteView, BaseListView
