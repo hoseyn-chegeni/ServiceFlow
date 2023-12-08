@@ -1,5 +1,5 @@
 from typing import Any
-from django.shortcuts import get_object_or_404, HttpResponseRedirect
+from django.shortcuts import HttpResponseRedirect
 from django.views.generic import (
     CreateView,
     DetailView,
@@ -15,22 +15,14 @@ from django.contrib import messages
 from django_filters.views import FilterView
 from ..filters import StatusFilter
 from django.contrib.messages.views import SuccessMessageMixin
+from base.views import BaseListView,BaseCreateView,BaseDeleteView,BaseUpdateView
 
-
-class StatusListView(LoginRequiredMixin, FilterView):
+class StatusListView(BaseListView):
     model = TaskStatus
     context_object_name = "status"
     template_name = "tasks/status/list.html"
     filterset_class = StatusFilter
-
-    def get_paginate_by(self, queryset):
-        # Get the value for paginate_by dynamically (e.g., from a form input or session)
-        # Example: Set paginate_by to a user-selected value stored in session
-        user_selected_value = self.request.session.get(
-            "items_per_page", 10
-        )  # Default to 10
-
-        return user_selected_value
+    permission_required = 'tasks.view_taskstatus'
 
 
 class StatusDetailView(LoginRequiredMixin, DetailView):
@@ -39,56 +31,41 @@ class StatusDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "status"
 
 
-class StatusCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+class StatusCreateView(BaseCreateView):
     template_name = "tasks/status/create.html"
     form_class = CreateTaskStatusForm
     success_message = "Status Successfully Created"
-
-    def form_valid(self, form):
-        form.instance.created_by = self.request.user
-        return super().form_valid(form)
+    permission_required = 'tasks.add_taskstatus'
 
     def get_success_url(self):
         return reverse_lazy("tasks:detail_status", kwargs={"pk": self.object.pk})
 
-    def get_success_message(self, cleaned_data):
-        return self.success_message
 
-
-class StatusUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class StatusUpdateView(BaseUpdateView):
     model = TaskStatus
     fields = ("name", "description", "is_active")
     template_name = "tasks/status/update.html"
     success_message = "Status Successfully Updated"
+    permission_required  = 'tasks.change_taskstatus'
 
     def get_success_url(self):
         return reverse_lazy("tasks:detail_status", kwargs={"pk": self.object.pk})
 
-    def get_success_message(self, cleaned_data):
-        return self.success_message
 
 
-class StatusDeleteView(LoginRequiredMixin, DeleteView):
+class StatusDeleteView(BaseDeleteView):
     model = TaskStatus
     template_name = "tasks/status/delete.html"
     success_url = reverse_lazy("tasks:list_status")
+    message = 'Status Successfully Deleted!'
+    permission_required  = 'tasks.delete_taskstatus'
 
-    def get(self, request, *args, **kwargs):
-        # Get the object to be deleted
-        self.object = self.get_object()
-
-        # Perform the delete operation directly without displaying a confirmation template
-        success_url = self.get_success_url()
-        self.object.delete()
-        messages.success(self.request, f"Status  successfully Deleted!")
-        return HttpResponseRedirect(success_url)
-
-
-class ChangeStatusView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class ChangeStatusView(BaseUpdateView):
     template_name = "tasks/status/change_status.html"
     model = Task
     fields = ("status",)
     success_message = "Task Status Successfully Changed."
+    permission_required  = 'tasks.change_taskstatus'
 
     def form_valid(self, form):
         task = form.save(commit=False)
@@ -107,8 +84,6 @@ class ChangeStatusView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy("tasks:detail", kwargs={"pk": self.object.pk})
 
-    def get_success_message(self, cleaned_data):
-        return self.success_message
 
 
 class TaskWithThisStatus(LoginRequiredMixin, DetailView):
