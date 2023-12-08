@@ -8,7 +8,7 @@ from django.views.generic import (
 from django_filters.views import FilterView
 from ..models.component import Component, ComponentCategory
 from django.urls import reverse_lazy
-from ..filters import ComponentFilters
+from ..filters import ComponentFilters, ComponentCategoryFilters
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib import messages 
 from django.shortcuts import HttpResponseRedirect
@@ -81,12 +81,20 @@ class ComponentDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteVie
 # Component Category Views Here...
 
 
-class ComponentCategoryListView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
+class ComponentCategoryListView(PermissionRequiredMixin, LoginRequiredMixin, FilterView):
     model = ComponentCategory
     template_name = "asset/component_category/list.html"
     context_object_name = "component"
     permission_required = "asset.view_componentcategory"
+    filterset_class = ComponentCategoryFilters
 
+    def get_paginate_by(self, queryset):
+        # Get the value for paginate_by dynamically (e.g., from a form input or session)
+        # Example: Set paginate_by to a user-selected value stored in session
+        user_selected_value = self.request.session.get(
+            "items_per_page", 10
+        )  # Default to 10
+        return user_selected_value
 
 class ComponentCategoryDetailView(
     PermissionRequiredMixin, LoginRequiredMixin, DetailView

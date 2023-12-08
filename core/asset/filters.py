@@ -1,7 +1,7 @@
 import django_filters
 from django_filters import FilterSet
 from .models.asset import Asset
-from .models.component import Component
+from .models.component import Component, ComponentCategory
 
 
 class AssetFilters(FilterSet):
@@ -33,4 +33,15 @@ class ComponentFilters(FilterSet):
             "supplier",
             "location",
             "order_number",
+        ]
+
+
+class ComponentCategoryFilters(FilterSet):
+    name = django_filters.CharFilter(lookup_expr="icontains")
+
+    class Meta:
+        model = ComponentCategory
+        fields = [
+            'id',
+            'name',
         ]
