@@ -46,10 +46,10 @@ INSTALLED_APPS = [
     "drf_yasg",
     "djoser",
     "axes",
-    # 2fa
     "django_otp",
     "django_otp.plugins.otp_static",
     "django_otp.plugins.otp_totp",
+    "base",
     "two_factor",
     "accounts",
     "index",
