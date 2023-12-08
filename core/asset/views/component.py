@@ -12,9 +12,10 @@ from ..filters import ComponentFilters, ComponentCategoryFilters
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib import messages 
 from django.shortcuts import HttpResponseRedirect
+from base.views import BaseDeleteView,BaseListView
 
 # Component Views Here...
-class ComponentListView(PermissionRequiredMixin, LoginRequiredMixin, FilterView):
+class ComponentListView(BaseListView):
     model = Component
     template_name = "asset/component/list.html"
     filterset_class = ComponentFilters
@@ -58,43 +59,25 @@ class ComponentUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateVie
     success_url = reverse_lazy("asset:component_list")
 
 
-class ComponentDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
+class ComponentDeleteView(BaseDeleteView):
     model = Component
     template_name = "asset/component/delete.html"
     success_url = reverse_lazy("asset:component_list")
     permission_required = "asset.delete_component"
-
-    def get(self, request, *args, **kwargs):
-        # Get the object to be deleted
-        self.object = self.get_object()
-
-        # Perform the delete operation directly without displaying a confirmation template
-        success_url = self.get_success_url()
-        self.object.delete()
-        messages.success(
-                self.request, f"Component successfully Deleted!"
-            )
-        return HttpResponseRedirect(success_url)
+    message = 'Component successfully Deleted!'
 
 
 
 # Component Category Views Here...
 
 
-class ComponentCategoryListView(PermissionRequiredMixin, LoginRequiredMixin, FilterView):
+class ComponentCategoryListView(BaseListView):
     model = ComponentCategory
     template_name = "asset/component_category/list.html"
     context_object_name = "component"
     permission_required = "asset.view_componentcategory"
     filterset_class = ComponentCategoryFilters
 
-    def get_paginate_by(self, queryset):
-        # Get the value for paginate_by dynamically (e.g., from a form input or session)
-        # Example: Set paginate_by to a user-selected value stored in session
-        user_selected_value = self.request.session.get(
-            "items_per_page", 10
-        )  # Default to 10
-        return user_selected_value
 
 class ComponentCategoryDetailView(
     PermissionRequiredMixin, LoginRequiredMixin, DetailView
@@ -130,22 +113,9 @@ class ComponentCategoryUpdateView(
     success_url = reverse_lazy("asset:component_category_list")
 
 
-class ComponentCategoryDeleteView(
-    PermissionRequiredMixin, LoginRequiredMixin, DeleteView
-):
+class ComponentCategoryDeleteView(BaseDeleteView):
     model = ComponentCategory
     template_name = "asset/component_category/delete.html"
     success_url = reverse_lazy("asset:component_category_list")
     permission_required = "asset.delete_componentcategory"
-
-    def get(self, request, *args, **kwargs):
-        # Get the object to be deleted
-        self.object = self.get_object()
-
-        # Perform the delete operation directly without displaying a confirmation template
-        success_url = self.get_success_url()
-        self.object.delete()
-        messages.success(
-                self.request, f"Component successfully Deleted!"
-            )
-        return HttpResponseRedirect(success_url)
+    message = 'Component Category Successfully Deleted!'
