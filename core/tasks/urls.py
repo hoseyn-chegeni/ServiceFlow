@@ -23,7 +23,7 @@ from .views.status import (
     StatusListView,
     StatusUpdateView,
     ChangeStatusView,
-    TaskWithThisStatus
+    TaskWithThisStatus,
 )
 from .views.type import (
     TypeCreateView,
@@ -99,6 +99,7 @@ urlpatterns = [
         ChangePriorityView.as_view(),
         name="change_priority",
     ),
-    path("task_priority/<int:pk>/", TaskWithThisPriority.as_view(), name="task_priority"),
-
+    path(
+        "task_priority/<int:pk>/", TaskWithThisPriority.as_view(), name="task_priority"
+    ),
 ]

@@ -90,30 +90,31 @@ class UserLogout(LogoutView):
         return reverse("two_factor:login")
 
 
-class CreateUser(LoginRequiredMixin,SuccessMessageMixin, CreateView):
+class CreateUser(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = User
     form_class = CustomUserCreationForm
     template_name = "registration/signup.html"
-    success_message = 'User Successfully Created.'
+    success_message = "User Successfully Created."
+
     def get_success_url(self):
-        return reverse_lazy('accounts:detail', kwargs={'pk': self.object.pk})  
-        
+        return reverse_lazy("accounts:detail", kwargs={"pk": self.object.pk})
+
     def get_success_message(self, cleaned_data):
         return self.success_message
 
 
-
-class UserUpdate(LoginRequiredMixin,SuccessMessageMixin, UpdateView):
+class UserUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = User
     fields = ("first_name", "last_name", "image")
     template_name = "registration/update.html"
-    success_message = 'User Successfully Updated.'
+    success_message = "User Successfully Updated."
 
     def get_success_url(self):
-        return reverse_lazy("accounts:detail", kwargs={'pk': self.object.pk})
+        return reverse_lazy("accounts:detail", kwargs={"pk": self.object.pk})
 
     def get_success_message(self, cleaned_data):
         return self.success_message
+
 
 class UserDetail(LoginRequiredMixin, DetailView):
     model = User
@@ -146,9 +147,7 @@ class UserDelete(LoginRequiredMixin, DeleteView):
         # Perform the delete operation directly without displaying a confirmation template
         success_url = self.get_success_url()
         self.object.delete()
-        messages.success(
-                self.request, f"User successfully Deleted!"
-            )
+        messages.success(self.request, f"User successfully Deleted!")
         return HttpResponseRedirect(success_url)
 
 
@@ -196,7 +195,7 @@ class SuspendUserListView(FilterView):
         return user_selected_value
 
 
-class UserActivitiesOnTasks(LoginRequiredMixin,FilterView):
+class UserActivitiesOnTasks(LoginRequiredMixin, FilterView):
     model = TaskLog
     template_name = "registration/user_activities_on_tasks.html"
     context_object_name = "log"
@@ -210,7 +209,7 @@ class UserActivitiesOnTasks(LoginRequiredMixin,FilterView):
         context = super().get_context_data(**kwargs)
         context["user"] = get_object_or_404(User, pk=self.kwargs["pk"])
         return context
-    
+
     def get_paginate_by(self, queryset):
         user_selected_value = self.request.session.get("items_per_page", 10)
         return user_selected_value
@@ -246,7 +245,10 @@ class BulkUserImportView(View):
                 messages.success(self.request, f"{users_added} User Successfully added")
                 return HttpResponseRedirect(reverse_lazy("accounts:user_bulk_upload"))
             else:
-                messages.error(self.request, f"There was an error importing the file. Please make sure the file format is correct.")
+                messages.error(
+                    self.request,
+                    f"There was an error importing the file. Please make sure the file format is correct.",
+                )
         return render(request, self.template_name)
 
 

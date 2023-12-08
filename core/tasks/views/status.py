@@ -22,7 +22,7 @@ class StatusListView(LoginRequiredMixin, FilterView):
     context_object_name = "status"
     template_name = "tasks/status/list.html"
     filterset_class = StatusFilter
-    
+
     def get_paginate_by(self, queryset):
         # Get the value for paginate_by dynamically (e.g., from a form input or session)
         # Example: Set paginate_by to a user-selected value stored in session
@@ -31,7 +31,7 @@ class StatusListView(LoginRequiredMixin, FilterView):
         )  # Default to 10
 
         return user_selected_value
-    
+
 
 class StatusDetailView(LoginRequiredMixin, DetailView):
     model = TaskStatus
@@ -39,10 +39,10 @@ class StatusDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "status"
 
 
-class StatusCreateView(LoginRequiredMixin,SuccessMessageMixin, CreateView):
+class StatusCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = "tasks/status/create.html"
     form_class = CreateTaskStatusForm
-    success_message = 'Status Successfully Created'
+    success_message = "Status Successfully Created"
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -54,17 +54,19 @@ class StatusCreateView(LoginRequiredMixin,SuccessMessageMixin, CreateView):
     def get_success_message(self, cleaned_data):
         return self.success_message
 
-class StatusUpdateView(LoginRequiredMixin,SuccessMessageMixin, UpdateView):
+
+class StatusUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = TaskStatus
     fields = ("name", "description", "is_active")
     template_name = "tasks/status/update.html"
-    success_message = 'Status Successfully Updated'
+    success_message = "Status Successfully Updated"
 
     def get_success_url(self):
         return reverse_lazy("tasks:detail_status", kwargs={"pk": self.object.pk})
-    
+
     def get_success_message(self, cleaned_data):
         return self.success_message
+
 
 class StatusDeleteView(LoginRequiredMixin, DeleteView):
     model = TaskStatus
@@ -78,17 +80,16 @@ class StatusDeleteView(LoginRequiredMixin, DeleteView):
         # Perform the delete operation directly without displaying a confirmation template
         success_url = self.get_success_url()
         self.object.delete()
-        messages.success(
-                self.request, f"Status  successfully Deleted!"
-            )
+        messages.success(self.request, f"Status  successfully Deleted!")
         return HttpResponseRedirect(success_url)
 
 
-class ChangeStatusView(LoginRequiredMixin,SuccessMessageMixin, UpdateView):
+class ChangeStatusView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = "tasks/status/change_status.html"
     model = Task
     fields = ("status",)
-    success_message = 'Task Status Successfully Changed.'
+    success_message = "Task Status Successfully Changed."
+
     def form_valid(self, form):
         task = form.save(commit=False)
         task.participants.add(self.request.user)
@@ -100,7 +101,7 @@ class ChangeStatusView(LoginRequiredMixin,SuccessMessageMixin, UpdateView):
             event_type="Status Change",
             additional_info=f"{self.request.user} Set '{task.status}' Status for {task}",
         )
-        
+
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -108,7 +109,6 @@ class ChangeStatusView(LoginRequiredMixin,SuccessMessageMixin, UpdateView):
 
     def get_success_message(self, cleaned_data):
         return self.success_message
-    
 
 
 class TaskWithThisStatus(LoginRequiredMixin, DetailView):
@@ -117,7 +117,7 @@ class TaskWithThisStatus(LoginRequiredMixin, DetailView):
     context_object_name = "status"
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        context =  super().get_context_data(**kwargs)
-        context['task'] = Task.objects.filter(status_id = self.object.pk)
+        context = super().get_context_data(**kwargs)
+        context["task"] = Task.objects.filter(status_id=self.object.pk)
 
         return context

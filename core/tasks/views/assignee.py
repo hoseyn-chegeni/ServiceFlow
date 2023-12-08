@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, HttpResponseRedirect
 from django.views import View
-from django.contrib import messages 
+from django.contrib import messages
 from django.views.generic import (
     ListView,
     UpdateView,
@@ -12,7 +12,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 
 
-class TaskAssignToMe(LoginRequiredMixin,View):
+class TaskAssignToMe(LoginRequiredMixin, View):
     def get(self, request, pk):
         task = Task.objects.filter(pk=pk).first()
         if task:
@@ -23,16 +23,17 @@ class TaskAssignToMe(LoginRequiredMixin,View):
             )
             task.save()
             TaskLog.objects.create(
-            user=self.request.user,
-            task=task,
-            event_type="Assignment",
-            additional_info=f"{self.request.user} Assigned Task to {task.assign_to}",
+                user=self.request.user,
+                task=task,
+                event_type="Assignment",
+                additional_info=f"{self.request.user} Assigned Task to {task.assign_to}",
+            )
+        return HttpResponseRedirect(
+            reverse_lazy("tasks:detail", kwargs={"pk": task.pk})
         )
-        return HttpResponseRedirect(reverse_lazy("tasks:detail", kwargs={'pk': task.pk}))
 
 
-
-class TaskAssignTo(LoginRequiredMixin,SuccessMessageMixin, UpdateView):
+class TaskAssignTo(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = "tasks/assign_to.html"
     model = Task
     fields = ("assign_to",)
@@ -52,9 +53,9 @@ class TaskAssignTo(LoginRequiredMixin,SuccessMessageMixin, UpdateView):
             additional_info=f"{self.request.user} Assigned Task to {task.assign_to}",
         )
         return super().form_valid(form)
-    
+
     def get_success_url(self):
-        return reverse_lazy('tasks:detail',kwargs={"pk": self.object.pk})
-    
+        return reverse_lazy("tasks:detail", kwargs={"pk": self.object.pk})
+
     def get_success_message(self, cleaned_data):
         return self.success_message

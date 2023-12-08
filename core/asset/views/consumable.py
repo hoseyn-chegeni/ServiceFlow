@@ -4,14 +4,12 @@ from django.views.generic import (
     UpdateView,
     DetailView,
 )
-from django_filters.views import FilterView
 from ..models.consumable import ConsumableCategory, Consumable
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from ..filters import ConsumableFilters
-from django.contrib import messages 
-from django.shortcuts import HttpResponseRedirect
-from base.views import BaseListView,BaseDeleteView
+from base.views import BaseListView, BaseDeleteView
+
 
 # CONSUMABLE Views Here...
 class ConsumableListView(BaseListView):
@@ -21,7 +19,6 @@ class ConsumableListView(BaseListView):
     permission_required = "asset.view_consumable"
     filterset_class = ConsumableFilters
 
-    
 
 class ConsumableDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
     model = Consumable
@@ -56,6 +53,4 @@ class ConsumableDeleteView(BaseDeleteView):
     template_name = "asset/consumable/delete.html"
     success_url = reverse_lazy("asset:consumable_list")
     permission_required = "asset.delete_consumable"
-    message = 'Consumable Successfully Deleted'
-
-
+    message = "Consumable Successfully Deleted"

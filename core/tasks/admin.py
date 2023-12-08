@@ -28,7 +28,13 @@ class TaskAdmin(admin.ModelAdmin):
         "created_date",
         "last_change",
     )
-    autocomplete_fields = ['creator','assign_to','type','status','priority',]
+    autocomplete_fields = [
+        "creator",
+        "assign_to",
+        "type",
+        "status",
+        "priority",
+    ]
     search_fields = ("title", "creator__email", "assign_to__email")
     readonly_fields = ("created_date", "last_change")
 
@@ -99,8 +105,6 @@ class TaskStatusAdmin(admin.ModelAdmin):
     toggle_is_active.short_description = "Toggle is_active status"
 
 
-
-
 class TaskPriorityAdmin(admin.ModelAdmin):
     list_display = (
         "name",
@@ -142,8 +146,6 @@ class TaskPriorityAdmin(admin.ModelAdmin):
         self.message_user(request, f"Selected task types toggled for is_active status.")
 
     toggle_is_active.short_description = "Toggle is_active status"
-
-
 
 
 class TaskCommentAdmin(admin.ModelAdmin):

@@ -11,13 +11,11 @@ from db_events.models import TaskLog
 from django.contrib.messages.views import SuccessMessageMixin
 
 
-
-class TaskCommentView(LoginRequiredMixin,SuccessMessageMixin, CreateView):
+class TaskCommentView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = TaskComment
     template_name = "tasks/task_comment.html"
-    fields = ["comment", "attachments","attachment_title"]
-    success_message = 'New Comment Successfully Added to Task.'
-
+    fields = ["comment", "attachments", "attachment_title"]
+    success_message = "New Comment Successfully Added to Task."
 
     def form_valid(self, form):
         task = get_object_or_404(Task, pk=self.kwargs["pk"])
@@ -38,8 +36,10 @@ class TaskCommentView(LoginRequiredMixin,SuccessMessageMixin, CreateView):
 
     def get_initial(self):
         initial = super().get_initial()
-        initial['attachment_title'] = self.model._meta.get_field('attachment_title').get_default()
+        initial["attachment_title"] = self.model._meta.get_field(
+            "attachment_title"
+        ).get_default()
         return initial
-    
+
     def get_success_message(self, cleaned_data):
         return self.success_message

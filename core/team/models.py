@@ -6,8 +6,9 @@ from django.contrib.auth.models import Group
 # Create your models here.
 def generate_pk():
     pass
+
+
 class Team(models.Model):
-    
     name = models.CharField(max_length=255)
     access_group = models.OneToOneField(
         Group, on_delete=models.SET_NULL, blank=True, null=True

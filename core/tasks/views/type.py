@@ -14,11 +14,13 @@ from django_filters.views import FilterView
 from ..filters import TypeFilter
 from .task import Task
 
+
 class TypeListView(LoginRequiredMixin, FilterView):
     model = TaskType
     context_object_name = "type"
     template_name = "tasks/type/list.html"
     filterset_class = TypeFilter
+
     def get_paginate_by(self, queryset):
         # Get the value for paginate_by dynamically (e.g., from a form input or session)
         # Example: Set paginate_by to a user-selected value stored in session
@@ -27,6 +29,7 @@ class TypeListView(LoginRequiredMixin, FilterView):
         )  # Default to 10
 
         return user_selected_value
+
 
 class TypeDetailView(LoginRequiredMixin, DetailView):
     model = TaskType
@@ -67,11 +70,8 @@ class TypeDeleteView(LoginRequiredMixin, DeleteView):
         # Perform the delete operation directly without displaying a confirmation template
         success_url = self.get_success_url()
         self.object.delete()
-        messages.success(
-                self.request, f"Task successfully Deleted!"
-            )
+        messages.success(self.request, f"Task successfully Deleted!")
         return HttpResponseRedirect(success_url)
-    
 
 
 class TaskWithThisType(LoginRequiredMixin, DetailView):
@@ -80,7 +80,7 @@ class TaskWithThisType(LoginRequiredMixin, DetailView):
     context_object_name = "type"
 
     def get_context_data(self, **kwargs):
-        context =  super().get_context_data(**kwargs)
-        context['task'] = Task.objects.filter(type_id = self.object.pk)
+        context = super().get_context_data(**kwargs)
+        context["task"] = Task.objects.filter(type_id=self.object.pk)
 
         return context

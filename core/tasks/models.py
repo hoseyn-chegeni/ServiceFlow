@@ -28,12 +28,13 @@ class Task(models.Model):
     priority = models.ForeignKey(
         "TaskPriority", on_delete=models.SET_NULL, blank=True, null=True
     )
-    participants = models.ManyToManyField(User, related_name='tasks_participated', blank=True)
-
+    participants = models.ManyToManyField(
+        User, related_name="tasks_participated", blank=True
+    )
 
     def __str__(self):
         return self.title
-    
+
 
 class TaskType(models.Model):
     name = models.CharField(max_length=255)
@@ -69,7 +70,7 @@ class TaskStatus(models.Model):
 class TaskPriority(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
-    badge = models.CharField(max_length = 255, blank = True, null = True)
+    badge = models.CharField(max_length=255, blank=True, null=True)
     created_by = models.ForeignKey(
         "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
     )
@@ -86,7 +87,9 @@ class TaskComment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.TextField()
     commented_at = models.DateTimeField(auto_now_add=True)
-    attachment_title = models.CharField(max_length = 50, default = 'attachment', blank = True, null = True)
+    attachment_title = models.CharField(
+        max_length=50, default="attachment", blank=True, null=True
+    )
     attachments = models.FileField(upload_to="attachments", blank=True, null=True)
 
     def __str__(self):

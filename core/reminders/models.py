@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 def generate_pk():
     pass
 
+
 class Reminder(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()

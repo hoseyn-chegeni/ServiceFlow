@@ -1,38 +1,34 @@
 from django.views.generic import DeleteView, CreateView, UpdateView, DetailView
-from django_filters.views import FilterView
 from ..models.asset import Asset
 from django.urls import reverse_lazy
 from ..forms import CreateAssetForm
 from ..filters import AssetFilters
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
 from django.contrib import messages
 from django.shortcuts import HttpResponseRedirect
+from base.views import BaseDeleteView, BaseListView
 
-class AssetListView(LoginRequiredMixin, FilterView):
+
+class AssetListView(BaseListView):
     model = Asset
     template_name = "asset/list.html"
     filterset_class = AssetFilters
     context_object_name = "asset"
-
-    def get_paginate_by(self, queryset):
-        # Get the value for paginate_by dynamically (e.g., from a form input or session)
-        # Example: Set paginate_by to a user-selected value stored in session
-        user_selected_value = self.request.session.get(
-            "items_per_page", 10
-        )  # Default to 10
-        return user_selected_value
+    permission_required ="asset.view_asset"
 
 
 
-class AssetDetailView(LoginRequiredMixin, DetailView):
+class AssetDetailView(PermissionRequiredMixin,LoginRequiredMixin, DetailView):
     model = Asset
     template_name = "asset/detail.html"
+    permission_required ="asset.view_asset"
 
 
-class AssetCreateView(LoginRequiredMixin, CreateView):
+class AssetCreateView(PermissionRequiredMixin,LoginRequiredMixin, CreateView):
     model = Asset
     template_name = "asset/create.html"
     form_class = CreateAssetForm
+    permission_required ="asset.add_asset"
 
     def get_success_url(self):
         return reverse_lazy("asset:list")
@@ -42,10 +38,12 @@ class AssetCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class AssetUpdateView(LoginRequiredMixin, UpdateView):
+class AssetUpdateView(PermissionRequiredMixin,LoginRequiredMixin, UpdateView):
     model = Asset
     template_name = "asset/update.html"
-    context_object_name = 'asset'
+    context_object_name = "asset"
+    permission_required ="asset.change_asset"
+
     fields = (
         "name",
         "type",
@@ -65,19 +63,9 @@ class AssetUpdateView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy("asset:list")
 
 
-class AssetDeleteView(LoginRequiredMixin, DeleteView):
+class AssetDeleteView(BaseDeleteView):
     model = Asset
     template_name = "asset/delete.html"
     success_url = reverse_lazy("asset:list")
-
-    def get(self, request, *args, **kwargs):
-        # Get the object to be deleted
-        self.object = self.get_object()
-
-        # Perform the delete operation directly without displaying a confirmation template
-        success_url = self.get_success_url()
-        self.object.delete()
-        messages.success(
-                self.request, f"Asset successfully Deleted!"
-            )
-        return HttpResponseRedirect(success_url)
+    permission_required = 'asset.delete_asset'
+    message = 'Asset Successfully Deleted!'

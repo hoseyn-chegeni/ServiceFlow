@@ -1,18 +1,14 @@
 from django.views.generic import (
-    DeleteView,
     CreateView,
     UpdateView,
     DetailView,
-    ListView,
 )
-from django_filters.views import FilterView
 from ..models.component import Component, ComponentCategory
 from django.urls import reverse_lazy
 from ..filters import ComponentFilters, ComponentCategoryFilters
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.contrib import messages 
-from django.shortcuts import HttpResponseRedirect
-from base.views import BaseDeleteView,BaseListView
+from base.views import BaseDeleteView, BaseListView
+
 
 # Component Views Here...
 class ComponentListView(BaseListView):
@@ -64,8 +60,7 @@ class ComponentDeleteView(BaseDeleteView):
     template_name = "asset/component/delete.html"
     success_url = reverse_lazy("asset:component_list")
     permission_required = "asset.delete_component"
-    message = 'Component successfully Deleted!'
-
+    message = "Component successfully Deleted!"
 
 
 # Component Category Views Here...
@@ -118,4 +113,4 @@ class ComponentCategoryDeleteView(BaseDeleteView):
     template_name = "asset/component_category/delete.html"
     success_url = reverse_lazy("asset:component_category_list")
     permission_required = "asset.delete_componentcategory"
-    message = 'Component Category Successfully Deleted!'
+    message = "Component Category Successfully Deleted!"

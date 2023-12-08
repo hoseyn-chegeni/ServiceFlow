@@ -4,9 +4,12 @@ from .models.asset import Asset
 from .models.component import Component, ComponentCategory
 from .models.consumable import Consumable
 
+
 class AssetFilters(FilterSet):
     name = django_filters.CharFilter(lookup_expr="icontains")
-    assigned_user = django_filters.CharFilter(field_name='assigned_user__email', )
+    assigned_user = django_filters.CharFilter(
+        field_name="assigned_user__email",
+    )
 
     class Meta:
         model = Asset
@@ -23,6 +26,7 @@ class AssetFilters(FilterSet):
 class ComponentFilters(FilterSet):
     company = django_filters.CharFilter(lookup_expr="icontains")
     name = django_filters.CharFilter(lookup_expr="icontains")
+
     class Meta:
         model = Component
         fields = [
@@ -42,9 +46,10 @@ class ComponentCategoryFilters(FilterSet):
     class Meta:
         model = ComponentCategory
         fields = [
-            'id',
-            'name',
+            "id",
+            "name",
         ]
+
 
 class ConsumableFilters(FilterSet):
     name = django_filters.CharFilter(lookup_expr="icontains")
@@ -52,9 +57,9 @@ class ConsumableFilters(FilterSet):
     class Meta:
         model = Consumable
         fields = [
-            'id',
-            'name',
-            'category',
-            'location',
-            'order_number',
+            "id",
+            "name",
+            "category",
+            "location",
+            "order_number",
         ]
