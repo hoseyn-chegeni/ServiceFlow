@@ -1,4 +1,3 @@
-from typing import Any
 from django.shortcuts import get_object_or_404
 from django.views.generic import (
     CreateView,
@@ -6,17 +5,15 @@ from django.views.generic import (
 
 from ..models import Task, TaskComment
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
 from db_events.models import TaskLog
-from django.contrib.messages.views import SuccessMessageMixin
+from base.views import BaseCreateView
 
-
-class TaskCommentView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+class TaskCommentView(BaseCreateView):
     model = TaskComment
     template_name = "tasks/task_comment.html"
     fields = ["comment", "attachments", "attachment_title"]
     success_message = "New Comment Successfully Added to Task."
-
+    permission_required = 'tasks.add_taskcomment'
     def form_valid(self, form):
         task = get_object_or_404(Task, pk=self.kwargs["pk"])
         task.participants.add(self.request.user)
@@ -40,6 +37,3 @@ class TaskCommentView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
             "attachment_title"
         ).get_default()
         return initial
-
-    def get_success_message(self, cleaned_data):
-        return self.success_message
