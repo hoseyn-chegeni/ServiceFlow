@@ -1,4 +1,4 @@
-from django.views.generic import CreateView, UpdateView, DetailView
+from django.views.generic import DetailView
 from ..models.asset import Asset
 from django.urls import reverse_lazy
 from ..forms import CreateAssetForm
@@ -35,7 +35,7 @@ class AssetCreateView(BaseCreateView):
 
 
 
-class AssetUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+class AssetUpdateView(BaseUpdateView):
     model = Asset
     template_name = "asset/update.html"
     context_object_name = "asset"
@@ -57,7 +57,8 @@ class AssetUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
         "notes",
     )
 
-    success_url = reverse_lazy("asset:list")
+    def get_success_url(self):
+        return reverse_lazy("asset:detail", kwargs={"pk": self.object.pk})
 
 
 class AssetDeleteView(BaseDeleteView):
