@@ -4,7 +4,8 @@ from .models.asset import Asset
 from .models.component import Component, ComponentCategory
 from .models.consumable import Consumable
 from .models.license import License, LicenseCategory
-
+from .models.asset_status import AssetStatus
+from .models.asset_type import AssetType
 
 class AssetFilters(FilterSet):
     name = django_filters.CharFilter(lookup_expr="icontains")
@@ -81,6 +82,23 @@ class LicenseFilters(FilterSet):
 class LicenseCategoryFilters(FilterSet):
         class Meta:
             model = LicenseCategory
+            fields = [
+                "id",
+                "name",
+            ]
+
+
+class AssetStatusFilters(FilterSet):
+        class Meta:
+            model = AssetStatus
+            fields = [
+                "id",
+                "name",
+            ]
+
+class AssetTypeFilters(FilterSet):
+        class Meta:
+            model = AssetType
             fields = [
                 "id",
                 "name",
