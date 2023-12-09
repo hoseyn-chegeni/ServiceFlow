@@ -441,3 +441,32 @@ function w3_close() {
                   <a href="{%url 'tasks:delete_status' i.id%}">Delete</a>/<br>
 {% endfor %}
 </body>
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button><a href="{%url 'asset:status_create'%}"> add New status</a></button>
+    <ul>
+        {% for id, status_name, asset_count in status_counts %}
+            <li>All {{ status_name }}({{ asset_count }}), <a href="{%url 'asset:status_detail' id%}"> Detail</a>,<a href="{%url 'asset:status_update' id %}">Update</a>,<a href="{%url 'asset:status_delete' id %}">Delete</a></li>
+        {% endfor %}
+            <li>All B.Y.O.D({{BYOD}}),<a href="{%url 'asset:BYOD'%}"> Detail</a></li>
+      </ul>
+</body>
+</html>
+
+
+
+
+

@@ -12,7 +12,7 @@ from ..filters import AssetStatusFilters
 class AssetStatusListView(BaseListView):
     model = AssetStatus
     template_name = "asset/status/list.html"
-    context_object_name = "asset"
+    context_object_name = "status_counts"
     filterset_class = AssetStatusFilters
     queryset = AssetStatus.objects.annotate(asset_count=Count("asset"))
     permission_required = 'asset.view_assetstatus'
@@ -20,7 +20,7 @@ class AssetStatusListView(BaseListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["status_counts"] = self.queryset.values_list(
-            "id", "name", "asset_count"
+            "id", "name", "asset_count","is_active",
         )
         context["BYOD"] = Asset.objects.filter(byod=True).count()
         return context
