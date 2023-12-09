@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <button><a href="{%url 'asset:status_create'%}"> add New type</a></button>
+    <button><a href="{%url 'asset:type_create'%}"> add New type</a></button>
     {%for i in asset%}
     {{i.id}}:{{i.name}},<a href="{%url 'asset:type_detail' i.id%}"> Detail</a>,<a href="{%url 'asset:type_update' i.id %}">Update</a>,<a href="{%url 'asset:type_delete' i.id %}">Delete</a><br>
     {%endfor%}
