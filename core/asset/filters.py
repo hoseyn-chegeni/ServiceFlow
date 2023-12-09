@@ -3,6 +3,7 @@ from django_filters import FilterSet
 from .models.asset import Asset
 from .models.component import Component, ComponentCategory
 from .models.consumable import Consumable
+from .models.license import License, LicenseCategory
 
 
 class AssetFilters(FilterSet):
@@ -63,3 +64,24 @@ class ConsumableFilters(FilterSet):
             "location",
             "order_number",
         ]
+
+
+class LicenseFilters(FilterSet):
+    class Meta:
+        model = License
+        fields = [
+            'license_key',
+            'software_name',
+            'category',
+            'product_key',
+            'order_number',
+        ]
+
+
+class LicenseCategoryFilters(FilterSet):
+        class Meta:
+            model = LicenseCategory
+            fields = [
+                "id",
+                "name",
+            ]

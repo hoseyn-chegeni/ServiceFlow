@@ -4,7 +4,7 @@ from django.db import models
 class License(models.Model):
     license_key = models.CharField(max_length=100)
     software_name = models.CharField(max_length=100)
-    category_name = models.ForeignKey(
+    category = models.ForeignKey(
         "LicenseCategory", on_delete=models.SET_NULL, blank=True, null=True
     )
     product_key = models.CharField(max_length=100)
