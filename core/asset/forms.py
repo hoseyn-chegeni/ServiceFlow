@@ -12,6 +12,7 @@ class CreateAssetForm(forms.ModelForm):
             "type",
             "manufacturer",
             "model",
+            "serial_number",
             "location",
             "assigned_user",
             "status",
@@ -22,6 +23,9 @@ class CreateAssetForm(forms.ModelForm):
             "assigned_ip_address",
             "software_installed",
             "notes",
+            "imei",
+            "image",
+            "supplier",
         )
 
 
