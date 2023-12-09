@@ -26,6 +26,7 @@ class CreateAssetForm(forms.ModelForm):
             "imei",
             "image",
             "supplier",
+            "warranty"
         )
 
 
