@@ -10,7 +10,7 @@ from ..filters import AssetTypeFilters
 class AssetTypeListView(BaseListView):
     model = AssetType
     template_name = "asset/type/list.html"
-    context_object_name = "asset"
+    context_object_name = "type"
     filterset_class = AssetTypeFilters
     permission_required = 'asset.view_assettype'
 
@@ -43,6 +43,7 @@ class AssetTypeUpdateView(BaseUpdateView):
     fields = (
         "name",
         "description",
+        "is_active",
     )
 
     def get_success_url(self):
