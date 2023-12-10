@@ -3,7 +3,7 @@ from django.views.generic import DetailView
 from ..models.license import License, LicenseCategory
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from base.views import BaseCreateView, BaseDeleteView, BaseListView, BaseUpdateView
+from base.views import BaseCreateView, BaseDeleteView, BaseListView, BaseUpdateView, BaseDetailView
 from ..filters import LicenseFilters, LicenseCategoryFilters
 
 
@@ -16,7 +16,7 @@ class LicenseListView(BaseListView):
     filterset_class = LicenseFilters
 
 
-class LicenseDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
+class LicenseDetailView(BaseDetailView):
     model = License
     template_name = "asset/license/detail.html"
     permission_required = "asset.view_license"
@@ -28,9 +28,7 @@ class LicenseCreateView(BaseCreateView):
     fields = "__all__"
     permission_required = "asset.add_license"
     success_message = "License Successfully Created."
-
-    def get_success_url(self):
-        return reverse_lazy("asset:license_detail", kwargs={"pk": self.object.pk})
+    url = "asset:license_detail"
 
 
 class LicenseUpdateView(BaseUpdateView):
@@ -39,9 +37,7 @@ class LicenseUpdateView(BaseUpdateView):
     fields = "__all__"
     permission_required = "asset.change_license"
     success_message = "License Successfully Updated"
-
-    def get_success_url(self):
-        return reverse_lazy("asset:license_detail", kwargs={"pk": self.object.pk})
+    url = "asset:license_detail"
 
 
 class LicenseDeleteView(BaseDeleteView):
@@ -61,9 +57,7 @@ class LicenseCategoryListView(BaseListView):
     filterset_class = LicenseCategoryFilters
 
 
-class LicenseCategoryDetailView(
-    PermissionRequiredMixin, LoginRequiredMixin, DetailView
-):
+class LicenseCategoryDetailView(BaseDeleteView):
     model = LicenseCategory
     template_name = "asset/license_category/detail.html"
     permission_required = "asset.view_licensecategory"
@@ -75,11 +69,7 @@ class LicenseCategoryCreateView(BaseCreateView):
     fields = "__all__"
     permission_required = "asset.add_licensecategory"
     success_message = "License Category Successfully Created."
-
-    def get_success_url(self):
-        return reverse_lazy(
-            "asset:license_category_detail", kwargs={"pk": self.object.pk}
-        )
+    url = "asset:license_category_detail"
 
 
 class LicenseCategoryUpdateView(BaseUpdateView):
@@ -88,11 +78,7 @@ class LicenseCategoryUpdateView(BaseUpdateView):
     fields = "__all__"
     permission_required = "asset.change_licensecategory"
     success_message = "License Category Successfully Updated."
-
-    def get_success_url(self):
-        return reverse_lazy(
-            "asset:license_category_detail", kwargs={"pk": self.object.pk}
-        )
+    url = "asset:license_category_detail"
 
 
 class LicenseCategoryDeleteView(BaseDeleteView):
