@@ -40,9 +40,7 @@ class AssetStatusCreateView(BaseCreateView):
     form_class = CreateAssetStatusForm
     permission_required = "asset.add_assetstatus"
     success_message = "Status Successfully Added."
-
-    def get_success_url(self):
-        return reverse_lazy("asset:status_detail", kwargs={"pk": self.object.pk})
+    url = "asset:status_detail"
 
 
 class AssetStatusUpdateView(BaseUpdateView):
@@ -54,9 +52,7 @@ class AssetStatusUpdateView(BaseUpdateView):
         "name",
         "description",
     )
-
-    def get_success_url(self):
-        return reverse_lazy("asset:status_detail", kwargs={"pk": self.object.pk})
+    url = "asset:status_detail"
 
 
 class AssetStatusDeleteView(BaseDeleteView):
