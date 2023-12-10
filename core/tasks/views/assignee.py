@@ -1,15 +1,10 @@
 from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404, HttpResponseRedirect
+from django.shortcuts import  HttpResponseRedirect
 from django.views import View
 from django.contrib import messages
-from django.views.generic import (
-    ListView,
-    UpdateView,
-)
 from ..models import Task
 from db_events.models import TaskLog
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.messages.views import SuccessMessageMixin
 from base.views import BaseUpdateView
 
 
@@ -40,6 +35,7 @@ class TaskAssignTo(BaseUpdateView):
     fields = ("assign_to",)
     success_message = "Task successfully assigned."
     permission_required = "tasks.change_task"
+    url = "tasks:detail"
 
     def form_valid(self, form):
         task = form.save(commit=False)
@@ -56,5 +52,3 @@ class TaskAssignTo(BaseUpdateView):
         )
         return super().form_valid(form)
 
-    def get_success_url(self):
-        return reverse_lazy("tasks:detail", kwargs={"pk": self.object.pk})

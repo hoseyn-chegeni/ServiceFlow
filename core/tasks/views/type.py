@@ -5,7 +5,7 @@ from ..forms import CreateTaskTypeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ..filters import TypeFilter
 from .task import Task
-from base.views import BaseDeleteView, BaseListView, BaseCreateView, BaseUpdateView
+from base.views import BaseDeleteView, BaseListView, BaseCreateView, BaseUpdateView, BaseDetailView
 
 
 class TypeListView(BaseListView):
@@ -16,10 +16,11 @@ class TypeListView(BaseListView):
     permission_required = "tasks.view_tasktype"
 
 
-class TypeDetailView(LoginRequiredMixin, DetailView):
+class TypeDetailView(BaseDetailView):
     model = TaskType
     template_name = "tasks/type/detail.html"
     context_object_name = "type"
+    permission_required = "tasks.view_tasktype"
 
 
 class TypeCreateView(BaseCreateView):
@@ -27,9 +28,7 @@ class TypeCreateView(BaseCreateView):
     form_class = CreateTaskTypeForm
     permission_required = "tasks.add_tasktype"
     success_message = "Task Type Successfully Created!"
-
-    def get_success_url(self):
-        return reverse_lazy("tasks:detail_type", kwargs={"pk": self.object.pk})
+    url = "tasks:detail_type"
 
 
 class TypeUpdateView(BaseUpdateView):
@@ -38,9 +37,7 @@ class TypeUpdateView(BaseUpdateView):
     template_name = "tasks/type/update.html"
     permission_required = "tasks.change_tasktype"
     success_message = "Task Type successfully updated!"
-
-    def get_success_url(self):
-        return reverse_lazy("tasks:detail_type", kwargs={"pk": self.object.pk})
+    url = "tasks:detail_type"
 
 
 class TypeDeleteView(BaseDeleteView):
@@ -51,10 +48,11 @@ class TypeDeleteView(BaseDeleteView):
     permission_required = "task.delete_tasktype"
 
 
-class TaskWithThisType(LoginRequiredMixin, DetailView):
+class TaskWithThisType(BaseDetailView):
     model = TaskType
     template_name = "tasks/type/task_type.html"
     context_object_name = "type"
+    permission_required = "tasks.view_tasktype"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

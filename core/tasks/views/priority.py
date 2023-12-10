@@ -1,11 +1,9 @@
-from django.views.generic import DetailView
 from ..models import TaskPriority, Task
 from django.urls import reverse_lazy
 from ..forms import CreateTaskPriorityForm
 from db_events.models import TaskLog
-from django.contrib.auth.mixins import LoginRequiredMixin
 from ..filters import PriorityFilter
-from base.views import BaseCreateView, BaseDeleteView, BaseListView, BaseUpdateView
+from base.views import BaseCreateView, BaseDeleteView, BaseListView, BaseUpdateView, BaseDetailView
 
 
 class PriorityListView(BaseListView):
@@ -17,10 +15,11 @@ class PriorityListView(BaseListView):
     permission_required = "tasks.view_taskpriority"
 
 
-class PriorityDetailView(LoginRequiredMixin, DetailView):
+class PriorityDetailView(BaseDetailView):
     model = TaskPriority
     template_name = "tasks/priority/detail.html"
     context_object_name = "priority"
+    permission_required = "tasks.view_taskpriority"
 
 
 class PriorityCreateView(BaseCreateView):
@@ -28,13 +27,12 @@ class PriorityCreateView(BaseCreateView):
     form_class = CreateTaskPriorityForm
     success_message = "Priority successfully Created."
     permission_required = "tasks.add_taskpriority"
-
-    def get_success_url(self):
-        return reverse_lazy("tasks:detail_priority", kwargs={"pk": self.object.pk})
+    url = "tasks:detail_priority"
 
 
 class PriorityUpdateView(BaseUpdateView):
     model = TaskPriority
+    url = "tasks:detail_priority"
     fields = (
         "name",
         "description",
@@ -45,8 +43,6 @@ class PriorityUpdateView(BaseUpdateView):
     success_message = "Priority Successfully Updated"
     permission_required = "tasks.change_taskpriority"
 
-    def get_success_url(self):
-        return reverse_lazy("tasks:detail_priority", kwargs={"pk": self.object.pk})
 
 
 class PriorityDeleteView(BaseDeleteView):
@@ -81,13 +77,12 @@ class ChangePriorityView(BaseUpdateView):
         return reverse_lazy("tasks:detail", kwargs={"pk": self.object.pk})
 
 
-class TaskWithThisPriority(LoginRequiredMixin, DetailView):
+class TaskWithThisPriority(BaseDetailView):
     model = TaskPriority
     template_name = "tasks/priority/task_priority.html"
     context_object_name = "priority"
-
+    permission_required = "tasks.view_taskpriority"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["task"] = Task.objects.filter(priority_id=self.object.pk)
-
         return context

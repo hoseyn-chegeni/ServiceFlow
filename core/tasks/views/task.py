@@ -1,22 +1,11 @@
-from django.shortcuts import get_object_or_404, HttpResponseRedirect
-from django_filters.views import FilterView
-from django.views.generic import (
-    ListView,
-    CreateView,
-    DetailView,
-    UpdateView,
-    DeleteView,
-)
+from django.shortcuts import get_object_or_404
 from ..filters import TaskFilter
 from ..models import Task
 from ..forms import CreateTaskForm
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from db_events.models import TaskLog
-from django.contrib import messages
-from django.contrib.messages.views import SuccessMessageMixin
 from db_events.filters import TaskLogFilter
-from base.views import BaseCreateView, BaseDeleteView, BaseListView, BaseUpdateView
+from base.views import BaseCreateView, BaseDeleteView, BaseListView, BaseUpdateView, BaseDetailView
 
 
 class TaskView(BaseListView):
@@ -68,12 +57,10 @@ class CreateTaskView(BaseCreateView):
     form_class = CreateTaskForm
     permission_required = "tasks.add_task"
     success_message = "Task Successfully Created"
-
-    def get_success_url(self):
-        return reverse_lazy("tasks:detail", kwargs={"pk": self.object.pk})
+    url = "tasks:detail"
 
 
-class TaskDetailView(PermissionRequiredMixin, DetailView):
+class TaskDetailView(BaseDetailView):
     model = Task
     template_name = "tasks/detail.html"
     permission_required = "tasks.view_task"
@@ -85,9 +72,7 @@ class TaskUpdate(BaseUpdateView):
     template_name = "tasks/update.html"
     permission_required = "tasks.change_task"
     success_message = "Task Successfully Updated"
-
-    def get_success_url(self):
-        return reverse_lazy("tasks:detail", kwargs={"pk": self.object.pk})
+    url = "tasks:detail"
 
 
 class TaskDelete(BaseDeleteView):

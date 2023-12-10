@@ -1,12 +1,10 @@
 from typing import Any
-from django.views.generic import DetailView
 from ..models import TaskStatus, Task
 from django.urls import reverse_lazy
 from ..forms import CreateTaskStatusForm
 from db_events.models import TaskLog
-from django.contrib.auth.mixins import LoginRequiredMixin
 from ..filters import StatusFilter
-from base.views import BaseListView, BaseCreateView, BaseDeleteView, BaseUpdateView
+from base.views import BaseListView, BaseCreateView, BaseDeleteView, BaseUpdateView, BaseDetailView
 
 
 class StatusListView(BaseListView):
@@ -17,20 +15,18 @@ class StatusListView(BaseListView):
     permission_required = "tasks.view_taskstatus"
 
 
-class StatusDetailView(LoginRequiredMixin, DetailView):
+class StatusDetailView(BaseDetailView):
     model = TaskStatus
     template_name = "tasks/status/detail.html"
     context_object_name = "status"
-
+    permission_required = "tasks.view_taskstatus"
 
 class StatusCreateView(BaseCreateView):
     template_name = "tasks/status/create.html"
     form_class = CreateTaskStatusForm
     success_message = "Status Successfully Created"
     permission_required = "tasks.add_taskstatus"
-
-    def get_success_url(self):
-        return reverse_lazy("tasks:detail_status", kwargs={"pk": self.object.pk})
+    url = "tasks:detail_status"
 
 
 class StatusUpdateView(BaseUpdateView):
@@ -39,9 +35,7 @@ class StatusUpdateView(BaseUpdateView):
     template_name = "tasks/status/update.html"
     success_message = "Status Successfully Updated"
     permission_required = "tasks.change_taskstatus"
-
-    def get_success_url(self):
-        return reverse_lazy("tasks:detail_status", kwargs={"pk": self.object.pk})
+    url ="tasks:detail_status"
 
 
 class StatusDeleteView(BaseDeleteView):
@@ -58,6 +52,7 @@ class ChangeStatusView(BaseUpdateView):
     fields = ("status",)
     success_message = "Task Status Successfully Changed."
     permission_required = "tasks.change_taskstatus"
+    url = "tasks:detail"
 
     def form_valid(self, form):
         task = form.save(commit=False)
@@ -73,14 +68,13 @@ class ChangeStatusView(BaseUpdateView):
 
         return super().form_valid(form)
 
-    def get_success_url(self):
-        return reverse_lazy("tasks:detail", kwargs={"pk": self.object.pk})
 
 
-class TaskWithThisStatus(LoginRequiredMixin, DetailView):
+class TaskWithThisStatus(BaseDetailView):
     model = TaskStatus
     template_name = "tasks/status/task_status.html"
     context_object_name = "status"
+    permission_required = "tasks.view_taskstatus"
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
