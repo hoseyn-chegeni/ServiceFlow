@@ -3,7 +3,13 @@ from django.views.generic import DetailView
 from ..models.license import License, LicenseCategory
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from base.views import BaseCreateView, BaseDeleteView, BaseListView, BaseUpdateView, BaseDetailView
+from base.views import (
+    BaseCreateView,
+    BaseDeleteView,
+    BaseListView,
+    BaseUpdateView,
+    BaseDetailView,
+)
 from ..filters import LicenseFilters, LicenseCategoryFilters
 
 

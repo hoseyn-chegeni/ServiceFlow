@@ -86,13 +86,14 @@ class AccessoryCategoryCreateView(BaseCreateView):
     success_message = "Category Successfully Created."
     url = "asset:accessory_category_detail"
 
+
 class AccessoryCategoryUpdateView(BaseUpdateView):
     model = AccessoryCategory
     template_name = "asset/accessory_category/update.html"
     permission_required = "asset.change_accessorycategory"
     success_message = "Category Successfully Updated."
     fields = ("name",)
-    url= "asset:accessory_category_detail"
+    url = "asset:accessory_category_detail"
 
 
 class AccessoryCategoryDeleteView(BaseDeleteView):

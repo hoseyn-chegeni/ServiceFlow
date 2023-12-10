@@ -4,7 +4,13 @@ from django.urls import reverse_lazy
 from ..forms import CreateTaskStatusForm
 from db_events.models import TaskLog
 from ..filters import StatusFilter
-from base.views import BaseListView, BaseCreateView, BaseDeleteView, BaseUpdateView, BaseDetailView
+from base.views import (
+    BaseListView,
+    BaseCreateView,
+    BaseDeleteView,
+    BaseUpdateView,
+    BaseDetailView,
+)
 
 
 class StatusListView(BaseListView):
@@ -21,6 +27,7 @@ class StatusDetailView(BaseDetailView):
     context_object_name = "status"
     permission_required = "tasks.view_taskstatus"
 
+
 class StatusCreateView(BaseCreateView):
     template_name = "tasks/status/create.html"
     form_class = CreateTaskStatusForm
@@ -35,7 +42,7 @@ class StatusUpdateView(BaseUpdateView):
     template_name = "tasks/status/update.html"
     success_message = "Status Successfully Updated"
     permission_required = "tasks.change_taskstatus"
-    url ="tasks:detail_status"
+    url = "tasks:detail_status"
 
 
 class StatusDeleteView(BaseDeleteView):
@@ -67,7 +74,6 @@ class ChangeStatusView(BaseUpdateView):
         )
 
         return super().form_valid(form)
-
 
 
 class TaskWithThisStatus(BaseDetailView):

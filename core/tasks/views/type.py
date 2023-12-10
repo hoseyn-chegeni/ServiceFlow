@@ -1,11 +1,15 @@
-from django.views.generic import DetailView
 from ..models import TaskType
 from django.urls import reverse_lazy
 from ..forms import CreateTaskTypeForm
-from django.contrib.auth.mixins import LoginRequiredMixin
 from ..filters import TypeFilter
 from .task import Task
-from base.views import BaseDeleteView, BaseListView, BaseCreateView, BaseUpdateView, BaseDetailView
+from base.views import (
+    BaseDeleteView,
+    BaseListView,
+    BaseCreateView,
+    BaseUpdateView,
+    BaseDetailView,
+)
 
 
 class TypeListView(BaseListView):

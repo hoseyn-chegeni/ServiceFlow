@@ -5,7 +5,13 @@ from ..forms import CreateTaskForm
 from django.urls import reverse_lazy
 from db_events.models import TaskLog
 from db_events.filters import TaskLogFilter
-from base.views import BaseCreateView, BaseDeleteView, BaseListView, BaseUpdateView, BaseDetailView
+from base.views import (
+    BaseCreateView,
+    BaseDeleteView,
+    BaseListView,
+    BaseUpdateView,
+    BaseDetailView,
+)
 
 
 class TaskView(BaseListView):

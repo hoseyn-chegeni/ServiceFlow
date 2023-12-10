@@ -54,8 +54,6 @@ class AssetUpdateView(BaseUpdateView):
     )
 
 
-
-
 class AssetDeleteView(BaseDeleteView):
     model = Asset
     template_name = "asset/delete.html"

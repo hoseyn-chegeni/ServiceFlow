@@ -1,5 +1,5 @@
 from django.urls import reverse_lazy
-from django.shortcuts import  HttpResponseRedirect
+from django.shortcuts import HttpResponseRedirect
 from django.views import View
 from django.contrib import messages
 from ..models import Task
@@ -51,4 +51,3 @@ class TaskAssignTo(BaseUpdateView):
             additional_info=f"{self.request.user} Assigned Task to {task.assign_to}",
         )
         return super().form_valid(form)
-

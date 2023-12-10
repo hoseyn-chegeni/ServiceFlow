@@ -7,7 +7,13 @@ from ..models.component import Component, ComponentCategory
 from django.urls import reverse_lazy
 from ..filters import ComponentFilters, ComponentCategoryFilters
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from base.views import BaseDeleteView, BaseListView, BaseCreateView,BaseDetailView,BaseUpdateView
+from base.views import (
+    BaseDeleteView,
+    BaseListView,
+    BaseCreateView,
+    BaseDetailView,
+    BaseUpdateView,
+)
 
 
 # Component Views Here...
@@ -31,7 +37,7 @@ class ComponentCreateView(BaseCreateView):
     fields = "__all__"
     permission_required = "asset.add_component"
     url = "asset:component_detail"
-    success_message = 'Component Successfully Created.'
+    success_message = "Component Successfully Created."
 
 
 class ComponentUpdateView(BaseUpdateView):
@@ -40,8 +46,7 @@ class ComponentUpdateView(BaseUpdateView):
     fields = "__all__"
     permission_required = "asset.change_component"
     url = "asset:component_detail"
-    success_message = 'Component Successfully Updated.'
-
+    success_message = "Component Successfully Updated."
 
 
 class ComponentDeleteView(BaseDeleteView):
@@ -63,7 +68,7 @@ class ComponentCategoryListView(BaseListView):
     filterset_class = ComponentCategoryFilters
 
 
-class ComponentCategoryDetailView (BaseDetailView):
+class ComponentCategoryDetailView(BaseDetailView):
     model = ComponentCategory
     template_name = "asset/component_category/detail.html"
     permission_required = "asset.view_componentcategory"
@@ -74,9 +79,8 @@ class ComponentCategoryCreateView(BaseCreateView):
     template_name = "asset/component_category/create.html"
     fields = "__all__"
     permission_required = "asset.add_componentcategory"
-    success_message = 'Component Successfully Created.'
+    success_message = "Component Successfully Created."
     url = "asset:component_category_detail"
-
 
 
 class ComponentCategoryUpdateView(BaseUpdateView):
@@ -85,7 +89,7 @@ class ComponentCategoryUpdateView(BaseUpdateView):
     fields = "__all__"
     permission_required = "asset.change_componentcategory"
     url = "asset:component_category_detail"
-    success_message = 'Component Category Successfully updated.'
+    success_message = "Component Category Successfully updated."
 
 
 class ComponentCategoryDeleteView(BaseDeleteView):

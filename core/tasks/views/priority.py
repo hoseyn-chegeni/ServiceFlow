@@ -3,7 +3,13 @@ from django.urls import reverse_lazy
 from ..forms import CreateTaskPriorityForm
 from db_events.models import TaskLog
 from ..filters import PriorityFilter
-from base.views import BaseCreateView, BaseDeleteView, BaseListView, BaseUpdateView, BaseDetailView
+from base.views import (
+    BaseCreateView,
+    BaseDeleteView,
+    BaseListView,
+    BaseUpdateView,
+    BaseDetailView,
+)
 
 
 class PriorityListView(BaseListView):
@@ -44,7 +50,6 @@ class PriorityUpdateView(BaseUpdateView):
     permission_required = "tasks.change_taskpriority"
 
 
-
 class PriorityDeleteView(BaseDeleteView):
     model = TaskPriority
     template_name = "tasks/priority/delete.html"
@@ -82,6 +87,7 @@ class TaskWithThisPriority(BaseDetailView):
     template_name = "tasks/priority/task_priority.html"
     context_object_name = "priority"
     permission_required = "tasks.view_taskpriority"
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["task"] = Task.objects.filter(priority_id=self.object.pk)

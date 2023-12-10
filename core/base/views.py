@@ -19,9 +19,11 @@ class BaseListView(LoginRequiredMixin, PermissionRequiredMixin, FilterView):
         return user_selected_value
 
 
-class BaseCreateView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, CreateView):
+class BaseCreateView(
+    LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, CreateView
+):
     success_message = ""
-    url = ''
+    url = ""
 
     def get_success_url(self):
         return reverse_lazy(self.url, kwargs={"pk": self.object.pk})
@@ -34,9 +36,11 @@ class BaseCreateView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessage
         return self.success_message
 
 
-class BaseUpdateView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, UpdateView):
+class BaseUpdateView(
+    LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, UpdateView
+):
     success_message = ""
-    url = ''
+    url = ""
 
     def get_success_url(self):
         return reverse_lazy(self.url, kwargs={"pk": self.object.pk})
