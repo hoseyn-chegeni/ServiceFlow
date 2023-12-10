@@ -1,13 +1,13 @@
-from django.views.generic import (
-    DeleteView,
-    CreateView,
-    UpdateView,
-    DetailView,
-)
 from ..models.consumable import ConsumableCategory, Consumable
 from django.urls import reverse_lazy
-from ..filters import ConsumableFilters
-from base.views import BaseListView, BaseDeleteView, BaseCreateView,BaseDetailView,BaseUpdateView
+from ..filters import ConsumableFilters, ConsumableCategoryFilters
+from base.views import (
+    BaseListView,
+    BaseDeleteView,
+    BaseCreateView,
+    BaseDetailView,
+    BaseUpdateView,
+)
 
 
 # CONSUMABLE Views Here...
@@ -30,11 +30,10 @@ class ConsumableCreateView(BaseCreateView):
     template_name = "asset/consumable/create.html"
     fields = "__all__"
     permission_required = "asset.add_consumable"
-    success_message = 'Consumable Successfully Created.'
+    success_message = "Consumable Successfully Created."
 
     def get_success_url(self):
         return reverse_lazy("asset:consumable_list")
-
 
 
 class ConsumableUpdateView(BaseUpdateView):
@@ -43,7 +42,7 @@ class ConsumableUpdateView(BaseUpdateView):
     fields = "__all__"
     permission_required = "asset.change_consumable"
     success_url = reverse_lazy("asset:consumable_list")
-    success_message = 'Consumable Successfully Created.'
+    success_message = "Consumable Successfully Created."
 
 
 class ConsumableDeleteView(BaseDeleteView):
@@ -52,3 +51,52 @@ class ConsumableDeleteView(BaseDeleteView):
     success_url = reverse_lazy("asset:consumable_list")
     permission_required = "asset.delete_consumable"
     message = "Consumable Successfully Deleted"
+
+
+# CONSUMABLE CATEGORY
+# CONSUMABLE CATEGORY
+# CONSUMABLE CATEGORY
+# CONSUMABLE CATEGORY
+# CONSUMABLE CATEGORY
+
+
+class ConsumableCategoryListView(BaseListView):
+    model = ConsumableCategory
+    template_name = "asset/consumable_category/list.html"
+    context_object_name = "consumable"
+    permission_required = "asset.view_consumablecategory"
+    filterset_class = ConsumableCategoryFilters
+
+
+class ConsumableCategoryDetailView(BaseDetailView):
+    model = ConsumableCategory
+    template_name = "asset/consumable_category/detail.html"
+    permission_required = "asset.view_consumablecategory"
+
+
+class ConsumableCategoryCreateView(BaseCreateView):
+    model = ConsumableCategory
+    template_name = "asset/consumable_category/create.html"
+    fields = "__all__"
+    permission_required = "asset.add_consumablecategory"
+    success_message = "Category Successfully Created."
+
+    def get_success_url(self):
+        return reverse_lazy("asset:consumable_category_list")
+
+
+class ConsumableCategoryUpdateView(BaseUpdateView):
+    model = ConsumableCategory
+    template_name = "asset/consumable_category/update.html"
+    fields = "__all__"
+    permission_required = "asset.change_consumablecategory"
+    success_url = reverse_lazy("asset:consumable_category_list")
+    success_message = "Category Successfully Created."
+
+
+class ConsumableCategoryDeleteView(BaseDeleteView):
+    model = ConsumableCategory
+    template_name = "asset/consumable_category/delete.html"
+    success_url = reverse_lazy("asset:consumable_category_list")
+    permission_required = "asset.delete_consumablecategory"
+    message = "Category Successfully Deleted"

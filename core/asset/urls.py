@@ -55,6 +55,11 @@ from .views.consumable import (
     ConsumableDetailView,
     ConsumableListView,
     ConsumableUpdateView,
+    ConsumableCategoryCreateView,
+    ConsumableCategoryDeleteView,
+    ConsumableCategoryDetailView,
+    ConsumableCategoryListView,
+    ConsumableCategoryUpdateView,
 )
 
 from .views.accessory import (
@@ -205,6 +210,32 @@ urlpatterns = [
         "consumable_delete/<int:pk>",
         ConsumableDeleteView.as_view(),
         name="consumable_delete",
+    ),
+    # CONSUMABLE CATEGORY
+    path(
+        "consumable_category_list/",
+        ConsumableCategoryListView.as_view(),
+        name="consumable_category_list",
+    ),
+    path(
+        "consumable_category_create/",
+        ConsumableCategoryCreateView.as_view(),
+        name="consumable_category_create",
+    ),
+    path(
+        "consumable_category_detail/<int:pk>",
+        ConsumableCategoryDetailView.as_view(),
+        name="consumable_category_detail",
+    ),
+    path(
+        "consumable_category_update/<int:pk>",
+        ConsumableCategoryUpdateView.as_view(),
+        name="consumable_category_update",
+    ),
+    path(
+        "consumable_category_delete/<int:pk>",
+        ConsumableCategoryDeleteView.as_view(),
+        name="consumable_category_delete",
     ),
     # ACCESSORY
     path("accessory_list/", AccessoryListView.as_view(), name="accessory_list"),

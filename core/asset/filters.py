@@ -2,7 +2,7 @@ import django_filters
 from django_filters import FilterSet
 from .models.asset import Asset
 from .models.component import Component, ComponentCategory
-from .models.consumable import Consumable
+from .models.consumable import Consumable, ConsumableCategory
 from .models.license import License, LicenseCategory
 from .models.asset_status import AssetStatus
 from .models.asset_type import AssetType
@@ -125,6 +125,17 @@ class AccessoryCategoryFilters(FilterSet):
 
     class Meta:
         model = AccessoryCategory
+        fields = [
+            "id",
+            "name",
+        ]
+
+
+class ConsumableCategoryFilters(FilterSet):
+    name = django_filters.CharFilter(lookup_expr="icontains")
+
+    class Meta:
+        model = ConsumableCategory
         fields = [
             "id",
             "name",
