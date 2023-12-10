@@ -1,6 +1,6 @@
 from django.shortcuts import HttpResponseRedirect
 from django_filters.views import FilterView
-from django.views.generic import DeleteView, CreateView, UpdateView
+from django.views.generic import DeleteView, CreateView, UpdateView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
@@ -52,3 +52,7 @@ class BaseDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
         self.object.delete()
         messages.success(self.request, self.message)
         return HttpResponseRedirect(success_url)
+
+
+class BaseDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+    pass
