@@ -31,9 +31,7 @@ class AccessoryCreateView(BaseCreateView):
     form_class = CreateAccessoryForm
     permission_required = "asset.add_accessory"
     success_message = "Accessory Successfully Created."
-
-    def get_success_url(self):
-        return reverse_lazy("asset:accessory_detail", kwargs={"pk": self.object.pk})
+    url = "asset:accessory_detail"
 
 
 class AccessoryUpdateView(BaseUpdateView):
@@ -42,9 +40,7 @@ class AccessoryUpdateView(BaseUpdateView):
     permission_required = "asset.change_accessory"
     success_message = "Accessory Successfully Updated."
     fields = ("name",)
-
-    def get_success_url(self):
-        return reverse_lazy("asset:accessory_detail", kwargs={"pk": self.object.pk})
+    url = "asset:accessory_detail"
 
 
 class AccessoryDeleteView(BaseDeleteView):
@@ -88,12 +84,7 @@ class AccessoryCategoryCreateView(BaseCreateView):
     form_class = CreateAccessoryCategoryForm
     permission_required = "asset.add_accessorycategory"
     success_message = "Category Successfully Created."
-
-    def get_success_url(self):
-        return reverse_lazy(
-            "asset:accessory_category_detail", kwargs={"pk": self.object.pk}
-        )
-
+    url = "asset:accessory_category_detail"
 
 class AccessoryCategoryUpdateView(BaseUpdateView):
     model = AccessoryCategory
@@ -101,11 +92,7 @@ class AccessoryCategoryUpdateView(BaseUpdateView):
     permission_required = "asset.change_accessorycategory"
     success_message = "Category Successfully Updated."
     fields = ("name",)
-
-    def get_success_url(self):
-        return reverse_lazy(
-            "asset:accessory_category_detail", kwargs={"pk": self.object.pk}
-        )
+    url= "asset:accessory_category_detail"
 
 
 class AccessoryCategoryDeleteView(BaseDeleteView):
