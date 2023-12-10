@@ -4,6 +4,7 @@ from django.views.generic import DeleteView, CreateView, UpdateView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse_lazy
 
 # Create your views here.
 
@@ -18,10 +19,12 @@ class BaseListView(LoginRequiredMixin, PermissionRequiredMixin, FilterView):
         return user_selected_value
 
 
-class BaseCreateView(
-    LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, CreateView
-):
+class BaseCreateView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, CreateView):
     success_message = ""
+    url = ''
+
+    def get_success_url(self):
+        return reverse_lazy(self.url, kwargs={"pk": self.object.pk})
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -31,10 +34,12 @@ class BaseCreateView(
         return self.success_message
 
 
-class BaseUpdateView(
-    LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, UpdateView
-):
+class BaseUpdateView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, UpdateView):
     success_message = ""
+    url = ''
+
+    def get_success_url(self):
+        return reverse_lazy(self.url, kwargs={"pk": self.object.pk})
 
     def get_success_message(self, cleaned_data):
         return self.success_message
