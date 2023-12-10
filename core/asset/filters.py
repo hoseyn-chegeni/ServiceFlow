@@ -6,7 +6,7 @@ from .models.consumable import Consumable
 from .models.license import License, LicenseCategory
 from .models.asset_status import AssetStatus
 from .models.asset_type import AssetType
-from .models.accessory import Accessory
+from .models.accessory import Accessory, AccessoryCategory
 
 
 class AssetFilters(FilterSet):
@@ -117,4 +117,15 @@ class AccessoryFilters(FilterSet):
             "category",
             "order_number",
             "location",
+        ]
+
+
+class AccessoryCategoryFilters(FilterSet):
+    name = django_filters.CharFilter(lookup_expr="icontains")
+
+    class Meta:
+        model = AccessoryCategory
+        fields = [
+            "id",
+            "name",
         ]

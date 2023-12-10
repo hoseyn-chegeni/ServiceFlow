@@ -63,6 +63,11 @@ from .views.accessory import (
     AccessoryDetailView,
     AccessoryListView,
     AccessoryUpdateView,
+    AccessoryCategoryCreateView,
+    AccessoryCategoryDeleteView,
+    AccessoryCategoryDetailView,
+    AccessoryCategoryListView,
+    AccessoryCategoryUpdateView,
 )
 
 app_name = "asset"
@@ -218,5 +223,31 @@ urlpatterns = [
         "accessory_delete/<int:pk>",
         AccessoryDeleteView.as_view(),
         name="accessory_delete",
+    ),
+    # ACCESSORY-CATEGORY
+    path(
+        "accessory_category_list/",
+        AccessoryCategoryListView.as_view(),
+        name="accessory_category_list",
+    ),
+    path(
+        "accessory_category_create/",
+        AccessoryCategoryCreateView.as_view(),
+        name="accessory_category_create",
+    ),
+    path(
+        "accessory_category_detail/<int:pk>",
+        AccessoryCategoryDetailView.as_view(),
+        name="accessory_category_detail",
+    ),
+    path(
+        "accessory_category_update/<int:pk>",
+        AccessoryCategoryUpdateView.as_view(),
+        name="accessory_category_update",
+    ),
+    path(
+        "accessory_category_delete/<int:pk>",
+        AccessoryCategoryDeleteView.as_view(),
+        name="accessory_category_delete",
     ),
 ]

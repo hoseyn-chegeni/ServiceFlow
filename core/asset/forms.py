@@ -2,7 +2,7 @@ from django import forms
 from .models.asset import Asset
 from .models.asset_status import AssetStatus
 from .models.asset_type import AssetType
-from .models.accessory import Accessory
+from .models.accessory import Accessory, AccessoryCategory
 
 
 class CreateAssetForm(forms.ModelForm):
@@ -70,4 +70,13 @@ class CreateAccessoryForm(forms.ModelForm):
             "order_number",
             "notes",
             "in_out",
+        )
+
+
+class CreateAccessoryCategoryForm(forms.ModelForm):
+    class Meta:
+        model = AccessoryCategory
+        fields = (
+            "name",
+            "description",
         )

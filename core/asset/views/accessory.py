@@ -6,9 +6,9 @@ from base.views import (
     BaseListView,
     BaseDetailView,
 )
-from ..models.accessory import Accessory
-from ..filters import AccessoryFilters
-from ..forms import CreateAccessoryForm
+from ..models.accessory import Accessory, AccessoryCategory
+from ..filters import AccessoryFilters, AccessoryCategoryFilters
+from ..forms import CreateAccessoryForm, CreateAccessoryCategoryForm
 
 
 class AccessoryListView(BaseListView):
@@ -41,9 +41,7 @@ class AccessoryUpdateView(BaseUpdateView):
     template_name = "asset/accessory/update.html"
     permission_required = "asset.change_accessory"
     success_message = "Accessory Successfully Updated."
-    fields = (
-        "name",
-    )
+    fields = ("name",)
 
     def get_success_url(self):
         return reverse_lazy("asset:accessory_detail", kwargs={"pk": self.object.pk})
@@ -55,3 +53,64 @@ class AccessoryDeleteView(BaseDeleteView):
     success_url = reverse_lazy("asset:accessory_list")
     permission_required = "asset.delete_accessory"
     message = "Accessory Successfully Deleted"
+
+
+# CATEGORY
+# CATEGORY
+# CATEGORY
+# CATEGORY
+# CATEGORY
+# CATEGORY
+# CATEGORY
+# CATEGORY
+# CATEGORY
+# CATEGORY
+# CATEGORY
+
+
+class AccessoryCategoryListView(BaseListView):
+    model = AccessoryCategory
+    template_name = "asset/accessory_category/list.html"
+    context_object_name = "accessory"
+    filterset_class = AccessoryCategoryFilters
+    permission_required = "asset.view_accessorycategory"
+
+
+class AccessoryCategoryDetailView(BaseDetailView):
+    model = AccessoryCategory
+    template_name = "asset/accessory_category/detail.html"
+    permission_required = "asset.view_accessorycategory"
+
+
+class AccessoryCategoryCreateView(BaseCreateView):
+    model = AccessoryCategory
+    template_name = "asset/accessory_category/create.html"
+    form_class = CreateAccessoryCategoryForm
+    permission_required = "asset.add_accessorycategory"
+    success_message = "Category Successfully Created."
+
+    def get_success_url(self):
+        return reverse_lazy(
+            "asset:accessory_category_detail", kwargs={"pk": self.object.pk}
+        )
+
+
+class AccessoryCategoryUpdateView(BaseUpdateView):
+    model = AccessoryCategory
+    template_name = "asset/accessory_category/update.html"
+    permission_required = "asset.change_accessorycategory"
+    success_message = "Category Successfully Updated."
+    fields = ("name",)
+
+    def get_success_url(self):
+        return reverse_lazy(
+            "asset:accessory_category_detail", kwargs={"pk": self.object.pk}
+        )
+
+
+class AccessoryCategoryDeleteView(BaseDeleteView):
+    model = AccessoryCategory
+    template_name = "asset/accessory_category/delete.html"
+    success_url = reverse_lazy("asset:accessory_category_list")
+    permission_required = "asset.delete_accessorycategory"
+    message = "Category Successfully Deleted"
