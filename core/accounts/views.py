@@ -1,4 +1,3 @@
-from typing import Any
 from django.db.models.base import Model as Model
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, render
@@ -28,7 +27,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from db_events.filters import TaskLogFilter
-from base.views import BaseDeleteView, BaseListView, BaseUpdateView
+from base.views import BaseDeleteView, BaseListView, BaseUpdateView, BaseCreateView, BaseDetailView
 
 load_dotenv()
 
@@ -100,15 +99,14 @@ class UserUpdate(BaseUpdateView):
     template_name = "registration/update.html"
     success_message = "User Successfully Updated."
     permission_required = "accounts.change_user"
-
-    def get_success_url(self):
-        return reverse_lazy("accounts:detail", kwargs={"pk": self.object.pk})
+    url = "accounts:detail"
 
 
-class UserDetail(LoginRequiredMixin, DetailView):
+class UserDetail(BaseDetailView):
     model = User
     template_name = "registration/detail.html"
     context_object_name = "user"
+    permission_required = "accounts.view_user"
 
     def get_object(self, queryset=None):
         return get_object_or_404(User, pk=self.kwargs.get("pk"))
