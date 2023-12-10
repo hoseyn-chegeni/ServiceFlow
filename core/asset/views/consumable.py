@@ -31,9 +31,7 @@ class ConsumableCreateView(BaseCreateView):
     fields = "__all__"
     permission_required = "asset.add_consumable"
     success_message = "Consumable Successfully Created."
-
-    def get_success_url(self):
-        return reverse_lazy("asset:consumable_list")
+    url = "asset:consumable_detail"
 
 
 class ConsumableUpdateView(BaseUpdateView):
@@ -41,7 +39,7 @@ class ConsumableUpdateView(BaseUpdateView):
     template_name = "asset/consumable/update.html"
     fields = "__all__"
     permission_required = "asset.change_consumable"
-    success_url = reverse_lazy("asset:consumable_list")
+    url = "asset:consumable_detail"
     success_message = "Consumable Successfully Created."
 
 
@@ -80,9 +78,7 @@ class ConsumableCategoryCreateView(BaseCreateView):
     fields = "__all__"
     permission_required = "asset.add_consumablecategory"
     success_message = "Category Successfully Created."
-
-    def get_success_url(self):
-        return reverse_lazy("asset:consumable_category_list")
+    url = "asset:consumable_category_detail"
 
 
 class ConsumableCategoryUpdateView(BaseUpdateView):
@@ -90,7 +86,7 @@ class ConsumableCategoryUpdateView(BaseUpdateView):
     template_name = "asset/consumable_category/update.html"
     fields = "__all__"
     permission_required = "asset.change_consumablecategory"
-    success_url = reverse_lazy("asset:consumable_category_list")
+    url = "asset:consumable_category_detail"
     success_message = "Category Successfully Created."
 
 

@@ -26,9 +26,7 @@ class AssetTypeCreateView(BaseCreateView):
     form_class = CreateAssetTypeForm
     permission_required = "asset.add_assettype"
     success_message = "Type Successfully Created."
-
-    def get_success_url(self):
-        return reverse_lazy("asset:type_detail", kwargs={"pk": self.object.pk})
+    url = "asset:type_detail"
 
 
 class AssetTypeUpdateView(BaseUpdateView):
@@ -41,9 +39,7 @@ class AssetTypeUpdateView(BaseUpdateView):
         "description",
         "is_active",
     )
-
-    def get_success_url(self):
-        return reverse_lazy("asset:type_detail", kwargs={"pk": self.object.pk})
+    url = "asset:type_detail"
 
 
 class AssetTypeDeleteView(BaseDeleteView):

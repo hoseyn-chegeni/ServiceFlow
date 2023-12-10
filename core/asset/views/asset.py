@@ -28,9 +28,7 @@ class AssetCreateView(BaseCreateView):
     form_class = CreateAssetForm
     permission_required = "asset.add_asset"
     success_message = "Asset Successfully Added"
-
-    def get_success_url(self):
-        return reverse_lazy("asset:detail", kwargs={"pk": self.object.pk})
+    url = "asset:detail"
 
 
 class AssetUpdateView(BaseUpdateView):
@@ -38,7 +36,7 @@ class AssetUpdateView(BaseUpdateView):
     template_name = "asset/update.html"
     context_object_name = "asset"
     permission_required = "asset.change_asset"
-
+    url = "asset:detail"
     fields = (
         "name",
         "type",
@@ -55,8 +53,7 @@ class AssetUpdateView(BaseUpdateView):
         "notes",
     )
 
-    def get_success_url(self):
-        return reverse_lazy("asset:detail", kwargs={"pk": self.object.pk})
+
 
 
 class AssetDeleteView(BaseDeleteView):
