@@ -6,6 +6,8 @@ from .models.consumable import Consumable
 from .models.license import License, LicenseCategory
 from .models.asset_status import AssetStatus
 from .models.asset_type import AssetType
+from .models.accessory import Accessory
+
 
 class AssetFilters(FilterSet):
     name = django_filters.CharFilter(lookup_expr="icontains")
@@ -71,35 +73,48 @@ class LicenseFilters(FilterSet):
     class Meta:
         model = License
         fields = [
-            'license_key',
-            'software_name',
-            'category',
-            'product_key',
-            'order_number',
+            "license_key",
+            "software_name",
+            "category",
+            "product_key",
+            "order_number",
         ]
 
 
 class LicenseCategoryFilters(FilterSet):
-        class Meta:
-            model = LicenseCategory
-            fields = [
-                "id",
-                "name",
-            ]
+    class Meta:
+        model = LicenseCategory
+        fields = [
+            "id",
+            "name",
+        ]
 
 
 class AssetStatusFilters(FilterSet):
-        class Meta:
-            model = AssetStatus
-            fields = [
-                "id",
-                "name",
-            ]
+    class Meta:
+        model = AssetStatus
+        fields = [
+            "id",
+            "name",
+        ]
+
 
 class AssetTypeFilters(FilterSet):
-        class Meta:
-            model = AssetType
-            fields = [
-                "id",
-                "name",
-            ]
+    class Meta:
+        model = AssetType
+        fields = [
+            "id",
+            "name",
+        ]
+
+
+class AccessoryFilters(FilterSet):
+    class Meta:
+        model = Accessory
+        fields = [
+            "id",
+            "name",
+            "category",
+            "order_number",
+            "location",
+        ]

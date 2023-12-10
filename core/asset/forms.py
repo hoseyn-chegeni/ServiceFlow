@@ -2,6 +2,7 @@ from django import forms
 from .models.asset import Asset
 from .models.asset_status import AssetStatus
 from .models.asset_type import AssetType
+from .models.accessory import Accessory
 
 
 class CreateAssetForm(forms.ModelForm):
@@ -26,7 +27,7 @@ class CreateAssetForm(forms.ModelForm):
             "imei",
             "image",
             "supplier",
-            "warranty"
+            "warranty",
         )
 
 
@@ -45,4 +46,28 @@ class CreateAssetTypeForm(forms.ModelForm):
         fields = (
             "name",
             "description",
+        )
+
+
+class CreateAccessoryForm(forms.ModelForm):
+    class Meta:
+        model = Accessory
+        fields = (
+            "image",
+            "company",
+            "name",
+            "category",
+            "model_number",
+            "manufacturer",
+            "supplier",
+            "location",
+            "total",
+            "available",
+            "checked_out",
+            "min_quantity",
+            "purchase_date",
+            "purchase_cost",
+            "order_number",
+            "notes",
+            "in_out",
         )

@@ -5,7 +5,7 @@ from ..forms import CreateAssetForm
 from ..filters import AssetFilters
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
-from base.views import BaseDeleteView, BaseListView, BaseCreateView,BaseUpdateView
+from base.views import BaseDeleteView, BaseListView, BaseCreateView, BaseUpdateView
 
 
 class AssetListView(BaseListView):
@@ -22,17 +22,15 @@ class AssetDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
     permission_required = "asset.view_asset"
 
 
-
 class AssetCreateView(BaseCreateView):
     model = Asset
     template_name = "asset/create.html"
     form_class = CreateAssetForm
     permission_required = "asset.add_asset"
-    success_message = 'Asset Successfully Added'
+    success_message = "Asset Successfully Added"
 
     def get_success_url(self):
         return reverse_lazy("asset:detail", kwargs={"pk": self.object.pk})
-
 
 
 class AssetUpdateView(BaseUpdateView):

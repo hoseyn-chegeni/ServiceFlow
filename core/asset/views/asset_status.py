@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from ..forms import CreateAssetStatusForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
-from base.views import BaseCreateView,BaseDeleteView,BaseListView,BaseUpdateView
+from base.views import BaseCreateView, BaseDeleteView, BaseListView, BaseUpdateView
 from ..filters import AssetStatusFilters
 
 
@@ -15,12 +15,15 @@ class AssetStatusListView(BaseListView):
     context_object_name = "status_counts"
     filterset_class = AssetStatusFilters
     queryset = AssetStatus.objects.annotate(asset_count=Count("asset"))
-    permission_required = 'asset.view_assetstatus'
+    permission_required = "asset.view_assetstatus"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["status_counts"] = self.queryset.values_list(
-            "id", "name", "asset_count","is_active",
+            "id",
+            "name",
+            "asset_count",
+            "is_active",
         )
         context["BYOD"] = Asset.objects.filter(byod=True).count()
         return context
@@ -35,20 +38,18 @@ class AssetStatusCreateView(BaseCreateView):
     model = AssetStatus
     template_name = "asset/status/create.html"
     form_class = CreateAssetStatusForm
-    permission_required = 'asset.add_assetstatus'
-    success_message = 'Status Successfully Added.'
-
+    permission_required = "asset.add_assetstatus"
+    success_message = "Status Successfully Added."
 
     def get_success_url(self):
         return reverse_lazy("asset:status_detail", kwargs={"pk": self.object.pk})
 
 
-
 class AssetStatusUpdateView(BaseUpdateView):
     model = AssetStatus
     template_name = "asset/status/update.html"
-    permission_required = 'asset.change_assetstatus'
-    success_message = 'Status Successfully Updated.'
+    permission_required = "asset.change_assetstatus"
+    success_message = "Status Successfully Updated."
     fields = (
         "name",
         "description",
@@ -62,9 +63,8 @@ class AssetStatusDeleteView(BaseDeleteView):
     model = AssetStatus
     template_name = "asset/status/delete.html"
     success_url = reverse_lazy("asset:status_list")
-    message = 'Status Successfully Deleted.'
-    permission_required = 'asset.delete_assetstatus'
-
+    message = "Status Successfully Deleted."
+    permission_required = "asset.delete_assetstatus"
 
 
 class AllBYODListView(LoginRequiredMixin, ListView):

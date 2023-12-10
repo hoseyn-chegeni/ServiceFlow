@@ -57,6 +57,14 @@ from .views.consumable import (
     ConsumableUpdateView,
 )
 
+from .views.accessory import (
+    AccessoryCreateView,
+    AccessoryDeleteView,
+    AccessoryDetailView,
+    AccessoryListView,
+    AccessoryUpdateView,
+)
+
 app_name = "asset"
 
 urlpatterns = [
@@ -192,5 +200,23 @@ urlpatterns = [
         "consumable_delete/<int:pk>",
         ConsumableDeleteView.as_view(),
         name="consumable_delete",
+    ),
+    # ACCESSORY
+    path("accessory_list/", AccessoryListView.as_view(), name="accessory_list"),
+    path("accessory_create/", AccessoryCreateView.as_view(), name="accessory_create"),
+    path(
+        "accessory_detail/<int:pk>",
+        AccessoryDetailView.as_view(),
+        name="accessory_detail",
+    ),
+    path(
+        "accessory_update/<int:pk>",
+        AccessoryUpdateView.as_view(),
+        name="accessory_update",
+    ),
+    path(
+        "accessory_delete/<int:pk>",
+        AccessoryDeleteView.as_view(),
+        name="accessory_delete",
     ),
 ]
