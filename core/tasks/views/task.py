@@ -81,6 +81,20 @@ class TaskUpdate(BaseUpdateView):
     url = "tasks:detail"
 
 
+    def form_valid(self, form):
+        task = form.save(commit=False)
+        task.participants.add(self.request.user)
+        task.save()
+
+        TaskLog.objects.create(
+            task=task,
+            user=self.request.user,
+            event_type="Update Information",
+            additional_info=f"{self.request.user} Updated Task Information at {task.last_change}",
+        )
+        return super().form_valid(form)
+    
+
 class TaskDelete(BaseDeleteView):
     model = Task
     template_name = "tasks/delete.html"
