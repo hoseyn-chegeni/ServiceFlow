@@ -43,7 +43,7 @@ class MyCreatedTaskView(BaseListView):
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
-        return qs.filter(creator_id=self.request.user.id)
+        return qs.filter(created_by_id=self.request.user.id)
 
 
 class MyTeamTasks(BaseListView):

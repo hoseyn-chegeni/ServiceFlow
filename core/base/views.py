@@ -61,6 +61,14 @@ class BaseDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
         self.object.delete()
         messages.success(self.request, self.message)
         return HttpResponseRedirect(success_url)
+    
+
+    def get_success_url(self):
+        # Check if 'next' parameter exists in the request GET data
+        if 'next' in self.request.GET:
+            return self.request.GET['next']  # Redirect to the URL specified in 'next'
+        else:
+            return self.success_url
 
 
 class BaseDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):

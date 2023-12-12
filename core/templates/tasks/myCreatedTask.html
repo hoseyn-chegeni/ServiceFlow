@@ -14,12 +14,6 @@
             <div class="col-md-12 col-xl-10">
               <div class="card mask-custom">
                 <div class="card-body p-4 text-white">
-                  {% for message in messages %}
-                  <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-              {% endfor %}
                   <form class="table text-white mb-0" method="get">
                     {%csrf_token%}
                     <div class="row g-3">
@@ -38,7 +32,6 @@
                         <select class="form-select" aria-label="Default select example" name="type">
                             <option value="">----------</option>
                             {% for task_type in filter.form.type.field.queryset %}
-                            
                             <option value="{{ task_type.id }}">{{ task_type.name }}</option>
                             {%endfor%}
                           </select>
@@ -49,10 +42,7 @@
                         <select class="form-select" aria-label="Default select example" name="status">
                             <option value="">----------</option>
                             {% for task_type in filter.form.status.field.queryset %}
-                            
                             <option value="{{ task_type.id }}">{{ task_type.name }}</option>
-
-                            
                             {%endfor%}
                           </select>
                       </div>
@@ -64,8 +54,8 @@
 
 
                       <div class="col-sm-6">
-                        <label for="creator" class="form-label">Creator</label>
-                        <input  class="form-control" type="text" name="creator" step="any" id="creator" value="{{ request.GET.creator }}" >
+                        <label for="created_by" class="form-label">Creator</label>
+                        <input  class="form-control" type="text" name="created_by" step="any" id="created_by" value="{{ request.GET.created_by }}" >
                       </div>
 
                       <button class="w-10 btn btn-lg btn-outline-success" type="submit">Search</button>
@@ -127,7 +117,7 @@
                               Are you sure you want to delete this item?
                             </div>
                             <div class="modal-footer">
-                              <a class="btn btn-primary" href="{% url 'tasks:delete' pk=i.pk %}" class="btn">Delete</a>
+                              <a class="btn btn-primary" href="{% url 'tasks:delete' pk=i.pk %}?next={{ request.path }}" class="btn">Delete</a>
                           </div>
                           </div>
                         </div>
