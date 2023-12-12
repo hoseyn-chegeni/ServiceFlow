@@ -81,7 +81,7 @@
                               Are you sure you want to delete this item?
                             </div>
                             <div class="modal-footer">
-                              <a class="btn btn-primary" href="{% url 'accounts:delete' pk=i.pk %}" class="btn">Yes, Delete</a>
+                              <a class="btn btn-primary" href="{% url 'accounts:delete' pk=i.pk %}?next={{ request.path }}" class="btn">Yes, Delete</a>
                           </div>
                           </div>
                         </div>
