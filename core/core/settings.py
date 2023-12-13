@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     "db_events",
     "asset",
     "rbac",
+    "flow",
 ]
 
 AUTHENTICATION_BACKENDS = [
