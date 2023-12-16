@@ -46,19 +46,6 @@
             </div>
 
 
-
-            <div class="col-sm-6">
-                <label for="id_status">Status</label>
-                <select class="form-select" id="id_status" name="status">
-                    <option value="">----------</option>
-                    {% for status in form.fields.status.queryset %}
-                        <option value="{{ status.pk }}">
-                            {{ status.name }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </div>
-
             
             <div class="col-sm-6">
                 <label for="id_priority">Priority</label>
@@ -71,22 +58,6 @@
                     {% endfor %}
                 </select>
             </div>
-
-
-
-            <div class="col-sm-6">
-                <label for="id_assign_to">Assign To</label>
-                <select class="form-select" id="id_assign_to" name="assign_to">
-                    <option value="">----------</option>
-                    {% for assign_to in form.fields.assign_to.queryset %}
-                        <option value="{{ assign_to.pk }}">
-                            {{ assign_to }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </div>
-
-
 
             <button class="w-100 btn btn-lg btn-outline-success" type="submit">Create</button>
           </form>

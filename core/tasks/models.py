@@ -25,6 +25,7 @@ class Task(models.Model):
     assign_to = models.ForeignKey(
         User, on_delete=models.SET_NULL, blank=True, null=True, related_name="Assigner"
     )
+    team  = models.ForeignKey('team.Team', on_delete=models.SET_NULL, blank = True, null = True,)
     priority = models.ForeignKey(
         "TaskPriority", on_delete=models.SET_NULL, blank=True, null=True
     )

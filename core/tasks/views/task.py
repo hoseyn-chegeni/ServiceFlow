@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from ..filters import TaskFilter
-from ..models import Task, TaskLogFlow
+from ..models import Task, TaskLogFlow, TaskStatus
 from ..forms import CreateTaskForm
 from django.urls import reverse_lazy
 from db_events.models import TaskLog
@@ -69,6 +69,7 @@ class CreateTaskView(BaseCreateView):
         form.instance.created_by = self.request.user
         task = form.save(commit=False)
         task.team = task.type.work_flow.root.team
+        task.status = TaskStatus.objects.get(name = 'Open')
         task.save()
         TaskLogFlow.objects.create(
             task = task, 
