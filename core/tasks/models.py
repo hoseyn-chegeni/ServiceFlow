@@ -38,10 +38,8 @@ class Task(models.Model):
 
 class TaskType(models.Model):
     name = models.CharField(max_length=255)
-    assigned_to = models.ForeignKey(
-        "team.Team", on_delete=models.SET_NULL, blank=True, null=True
-    )
     description = models.TextField(blank=True, null=True)
+    work_flow = models.OneToOneField('flow.WorkFlow', on_delete = models.SET_NULL, blank = True, null = True)
     created_by = models.ForeignKey(
         "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
     )
