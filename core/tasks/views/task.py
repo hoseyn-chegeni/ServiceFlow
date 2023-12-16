@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from ..filters import TaskFilter
 from ..models import Task, TaskLogFlow, TaskStatus
-from ..forms import CreateTaskForm
+from ..forms import CreateTaskForm, TaskLogFlowForm
 from django.urls import reverse_lazy
 from db_events.models import TaskLog
 from db_events.filters import TaskLogFilter
@@ -12,7 +12,7 @@ from base.views import (
     BaseUpdateView,
     BaseDetailView,
 )
-
+from django.views.generic import CreateView
 
 class TaskView(BaseListView):
     model = Task
@@ -135,3 +135,31 @@ class TaskDetailLogView(BaseListView):
         context = super().get_context_data(**kwargs)
         context["task"] = get_object_or_404(Task, pk=self.kwargs["pk"])
         return context
+
+
+class TaskLogFlowCreateView(CreateView):
+    model = TaskLogFlow
+    form_class = TaskLogFlowForm
+    template_name = 'tasks/c.html'
+
+    def get_success_url(self):
+        return reverse_lazy('tasks:detail', kwargs={"pk": self.task.pk})# Replace 'task_detail' with your task detail URL name
+    
+    def dispatch(self, request, *args, **kwargs):
+        self.task = get_object_or_404(Task, pk=self.kwargs['pk'])
+        return super().dispatch(request, *args, **kwargs)
+    
+    def get_form_kwargs(self):
+        kwargs = super(TaskLogFlowCreateView, self).get_form_kwargs()
+        kwargs['initial']['task'] = self.task
+        return kwargs
+    
+
+
+    def form_valid(self, form):
+        action = form.save(commit=False)
+        form.instance.created_by = self.request.user
+        form.instance.flow = self.task.type.work_flow
+        form.instance.state = form.instance.action.next_state
+        action.save()
+        return super().form_valid(form)

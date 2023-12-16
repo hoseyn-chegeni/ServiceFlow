@@ -9,6 +9,7 @@ from .views.task import (
     TaskUpdate,
     MyTeamTasks,
     TaskDetailLogView,
+    TaskLogFlowCreateView,
 )
 from .views.assignee import (
     TaskAssignTo,
@@ -55,6 +56,8 @@ urlpatterns = [
     path("delete/<int:pk>", TaskDelete.as_view(), name="delete"),
     path("update/<int:pk>", TaskUpdate.as_view(), name="update"),
     path("task_log/<int:pk>/", TaskDetailLogView.as_view(), name="log"),
+    path('tasklogflow/create/<int:pk>/', TaskLogFlowCreateView.as_view(), name='tasklogflow-create'),
+
     # ASSIGNEE
     path("tasks_assigned_to_my_team/", MyTeamTasks.as_view(), name="my_team"),
     path("assign_to_me/<int:pk>/", TaskAssignToMe.as_view(), name="assign_to_me"),

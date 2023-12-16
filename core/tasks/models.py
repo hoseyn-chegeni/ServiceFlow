@@ -99,8 +99,8 @@ class TaskComment(models.Model):
 
 class TaskLogFlow(models.Model):
     task = models.ForeignKey('Task', on_delete = models.CASCADE, related_name = 'flow_task')
-    flow = models.ForeignKey('flow.WorkFlow', on_delete = models.CASCADE, related_name = 'flow_flow')
-    state = models.ForeignKey('flow.State', on_delete = models.CASCADE, related_name = 'flow_state')
+    flow = models.ForeignKey('flow.WorkFlow', on_delete = models.CASCADE, related_name = 'flow_flow', blank=True, null=True)
+    state = models.ForeignKey('flow.State', on_delete = models.CASCADE, related_name = 'flow_state', blank=True, null=True)
     comment = models.CharField(max_length = 255, blank = True, null = True)
     attachments_1 = models.FileField(upload_to="attachments", blank=True, null=True)
     attachments_2 = models.FileField(upload_to="attachments", blank=True, null=True)
