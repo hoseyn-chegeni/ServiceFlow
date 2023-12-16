@@ -105,6 +105,51 @@ class TaskStatusAdmin(admin.ModelAdmin):
     toggle_is_active.short_description = "Toggle is_active status"
 
 
+
+
+class TaskTypeAdmin(admin.ModelAdmin):
+    list_display = (
+        "name",
+        "description",
+        "work_flow",
+        "created_by",
+        "created_at",
+        "updated_at",
+        "is_active",
+    )
+    search_fields = ("name", "description", "created_by__email")
+    list_filter = ("is_active", "created_at", "updated_at")
+    readonly_fields = ("created_at", "updated_at")
+
+    fieldsets = (
+        (
+            "Task Type Information",
+            {
+                "fields": (
+                    "name",
+                    "description",
+                    "work_flow",
+                    "created_by",
+                    "created_at",
+                    "updated_at",
+                    "is_active",
+                )
+            },
+        ),
+    )
+
+    actions = ["toggle_is_active"]
+
+    def toggle_is_active(self, request, queryset):
+        for task_type in queryset:
+            task_type.is_active = not task_type.is_active
+            task_type.save()
+
+        self.message_user(request, f"Selected task types toggled for is_active status.")
+
+    toggle_is_active.short_description = "Toggle is_active status"
+
+
 class TaskPriorityAdmin(admin.ModelAdmin):
     list_display = (
         "name",
@@ -163,7 +208,7 @@ class TaskCommentAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Task, TaskAdmin)
-admin.site.register(TaskType, TaskStatusAdmin)
+admin.site.register(TaskType, TaskTypeAdmin)
 admin.site.register(TaskStatus, TaskStatusAdmin)
 admin.site.register(TaskComment, TaskCommentAdmin)
 admin.site.register(TaskPriority, TaskPriorityAdmin)
