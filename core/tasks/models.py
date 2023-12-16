@@ -32,6 +32,7 @@ class Task(models.Model):
     participants = models.ManyToManyField(
         User, related_name="tasks_participated", blank=True
     )
+    actions = models.ManyToManyField('flow.Action',blank= True)
 
     def __str__(self):
         return self.title

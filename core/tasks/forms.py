@@ -5,7 +5,7 @@ from .models import Task, TaskStatus, TaskType, TaskPriority
 class CreateTaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ("title", "description", "type", "status", "assign_to", "priority")
+        fields = ("title", "description", "type", "priority")
 
 
 class CreateTaskStatusForm(forms.ModelForm):
