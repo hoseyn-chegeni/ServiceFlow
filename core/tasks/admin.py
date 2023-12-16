@@ -50,6 +50,8 @@ class TaskAdmin(admin.ModelAdmin):
                     "created_date",
                     "last_change",
                     "participants",
+                    "actions",
+
                 )
             },
         ),

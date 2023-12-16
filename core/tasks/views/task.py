@@ -71,6 +71,10 @@ class CreateTaskView(BaseCreateView):
         task.team = task.type.work_flow.root.team
         task.status = TaskStatus.objects.get(name = 'Open')
         task.save()
+        for i  in task.type.work_flow.root.action.all():
+            task.actions.add(i)
+        task.save()
+
         TaskLogFlow.objects.create(
             task = task, 
             flow = task.type.work_flow,
