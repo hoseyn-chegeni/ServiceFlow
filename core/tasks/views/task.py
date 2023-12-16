@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from ..filters import TaskFilter
-from ..models import Task
+from ..models import Task, TaskLogFlow
 from ..forms import CreateTaskForm
 from django.urls import reverse_lazy
 from db_events.models import TaskLog
@@ -65,6 +65,18 @@ class CreateTaskView(BaseCreateView):
     success_message = "Task Successfully Created"
     url = "tasks:detail"
 
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        task = form.save(commit=False)
+        task.team = task.type.work_flow.root.team
+        task.save()
+        TaskLogFlow.objects.create(
+            task = task, 
+            flow = task.type.work_flow,
+            state = task.type.work_flow.root,
+            comment = f'Task Created with {task.type} type and send to {task.type.work_flow.root.team} for review'
+        )
+        return super().form_valid(form)
 
 class TaskDetailView(BaseDetailView):
     model = Task

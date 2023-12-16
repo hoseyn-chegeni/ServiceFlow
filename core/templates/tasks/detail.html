@@ -66,26 +66,33 @@
             </div>
         </div>
 
-        <!-- Comment section -->
-        <div class="card">
-            <div class="card-header">
-                Comments
-            </div>
-            <div class="card-body">
-              {% for comment in task.comments.all %}
 
-                <!-- Display existing comments -->
-                <div class="mb-3">
-                    <strong>{{ comment.user }} :</strong> "{{ comment.comment }}" {%if comment.attachments%} <a href="{{comment.attachments.url}}">{{comment.attachment_title}} </a>{%endif%}  at {{ comment.commented_at }}
-                <hr>
-                  </div>
-                {%endfor%}
-                <!-- Add new comment form -->
-                <a href="{% url 'tasks:task_comment' pk=object.pk %}" class="btn btn-success me-2">Add New Comment</a>
-                
-            </div>
-        </div>
-    </div>
+<!-- Task Flow Log section -->
+<div class="card mt-4">
+  <div class="card-header">
+      Task Flow Log
+  </div>
+  <div class="card-body">
+      {% for i in object.flow_task.all %}
+          <div class="card mb-3">
+              <div class="card-body">
+                  <p class="card-text"><strong>Flow:</strong> {{ i.flow }}</p>
+                  <p class="card-text"><strong>State:</strong> {{ i.state }}</p>
+                  <p class="card-text"><strong>Proces Percentage:</strong> %{{ i.state.process_percentage }}</p>
+                  <p class="card-text"><strong>Comment:</strong> {{ i.comment }}</p>
+                  <p class="card-text"><strong>Date:</strong> {{ i.created_at }}</p>
+              </div>
+          </div>
+      {% empty %}
+          <p>No task flow logs available</p>
+      {% endfor %}
+  </div>
+</div>
+
+
+<a href="#" class="btn btn-success me-2">Task Checked</a>
+
+
 
 
       <!-- DELETE MODALS -->
