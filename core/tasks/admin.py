@@ -5,6 +5,7 @@ from .models import (
     TaskType,
     TaskComment,
     TaskPriority,
+    TaskLogFlow
 )
 
 
@@ -206,9 +207,17 @@ class TaskCommentAdmin(admin.ModelAdmin):
         ),
     )
 
+class TaskLogFlowAdmin(admin.ModelAdmin):
+    list_display = ('task', 'flow', 'state')
+    list_filter = ('flow', 'state')
+    search_fields = ('task__name',)
+
+
+
 
 admin.site.register(Task, TaskAdmin)
 admin.site.register(TaskType, TaskTypeAdmin)
 admin.site.register(TaskStatus, TaskStatusAdmin)
 admin.site.register(TaskComment, TaskCommentAdmin)
 admin.site.register(TaskPriority, TaskPriorityAdmin)
+admin.site.register(TaskLogFlow, TaskLogFlowAdmin)

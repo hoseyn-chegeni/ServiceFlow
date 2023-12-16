@@ -92,3 +92,13 @@ class TaskComment(models.Model):
 
     def __str__(self):
         return f"{self.task.title}/ {self.user.email}"
+
+
+
+class TaskLogFlow(models.Model):
+    task = models.ForeignKey('Task', on_delete = models.CASCADE, related_name = 'flow_task')
+    flow = models.ForeignKey('flow.WorkFlow', on_delete = models.CASCADE, related_name = 'flow_flow')
+    state = models.ForeignKey('flow.State', on_delete = models.CASCADE, related_name = 'flow_state')
+
+    def __str__(self):
+        return f"Task: {self.task}, Flow: {self.flow}, State: {self.state}"
