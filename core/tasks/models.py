@@ -105,9 +105,8 @@ class TaskLogFlow(models.Model):
     attachments_1 = models.FileField(upload_to="attachments", blank=True, null=True)
     attachments_2 = models.FileField(upload_to="attachments", blank=True, null=True)
     attachments_3 = models.FileField(upload_to="attachments", blank=True, null=True)
+    action = models.ForeignKey('flow.Action', blank = True, null = True, on_delete = models.SET_NULL)
     created_at = models.DateTimeField(auto_now_add=True)
-
-
 
     def __str__(self):
         return f"Task: {self.task}, Flow: {self.flow}, State: {self.state}"
