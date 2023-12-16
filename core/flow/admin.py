@@ -23,7 +23,7 @@ class WorkFlowAdmin(admin.ModelAdmin):
 
 
 class StateAdmin(admin.ModelAdmin):
-    list_display = ('state', 'team', 'process_percentage', 'action')
+    list_display = ('state', 'team', 'process_percentage',)
     list_filter = ('team', 'action')
     search_fields = ('state', 'team__name', 'action__title')
     list_per_page = 20  # Number of items per admin page

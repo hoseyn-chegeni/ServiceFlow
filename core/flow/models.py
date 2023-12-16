@@ -17,7 +17,7 @@ class State(models.Model):
     state = models.CharField(max_length = 255, )
     team  = models.ForeignKey('team.Team', on_delete = models.CASCADE)
     process_percentage = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)])
-    action = models.ForeignKey('Action', on_delete = models.CASCADE)
+    action = models.ManyToManyField('Action')
     
 class Action(models.Model):
     title = models.CharField(max_length = 255)
