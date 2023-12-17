@@ -13,6 +13,7 @@ from base.views import (
     BaseDetailView,
 )
 from django.views.generic import CreateView
+from flow.models import State
 
 class TaskView(BaseListView):
     model = Task
@@ -159,17 +160,22 @@ class TaskLogFlowCreateView(CreateView):
 
 
     def form_valid(self, form):
-        if form.instance.action.next_state == None:
-            pass
+        task = Task.objects.get(id = self.task.id)
+        action = form.save(commit=False)
+        form.instance.flow = self.task.type.work_flow
+        form.instance.created_by = self.request.user
+        form.instance.state = form.instance.action.next_state
+        task.process_percentage = form.instance.action.next_state.process_percentage
+
+        if form.instance.action.next_state == State.objects.get(state = 'Close'):
+            task.status = TaskStatus.objects.get(name = 'Closed')
+
         else:
-            action = form.save(commit=False)
-            form.instance.flow = self.task.type.work_flow
-            form.instance.created_by = self.request.user
-            form.instance.state = form.instance.action.next_state
-            action.save()
-            task = Task.objects.get(id = self.task.id)
+
             task.team  = form.instance.action.next_state.team
             task.current_state = form.instance.action.next_state
             task.process_percentage = form.instance.action.next_state.process_percentage
+            
+        action.save()
         task.save()
         return super().form_valid(form)

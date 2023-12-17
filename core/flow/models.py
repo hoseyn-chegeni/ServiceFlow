@@ -18,9 +18,9 @@ class WorkFlow(models.Model):
 
 class State(models.Model):
     state = models.CharField(max_length = 255, )
-    team  = models.ForeignKey('team.Team', on_delete = models.CASCADE)
+    team  = models.ForeignKey('team.Team', on_delete = models.CASCADE, blank = True, null = True)
     process_percentage = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)])
-    action = models.ManyToManyField('Action')
+    action = models.ManyToManyField('Action',blank = True)
 
     def __str__(self):
         return self.state
