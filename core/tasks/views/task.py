@@ -162,4 +162,7 @@ class TaskLogFlowCreateView(CreateView):
         form.instance.flow = self.task.type.work_flow
         form.instance.state = form.instance.action.next_state
         action.save()
+        task = Task.objects.get(id = self.task.id)
+        task.team  = form.instance.action.next_state.team
+        task.save()
         return super().form_valid(form)

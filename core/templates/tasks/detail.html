@@ -71,7 +71,7 @@
       {% for i in object.flow_task.all %}
           <div class="card mb-3">
               <div class="card-body">
-                  <p class="card-text"><strong>Flow:</strong> {{ i.flow }}</p>
+                  <p class="card-text"><strong>Team:</strong> {{ i.state.team }}</p>
                   <p class="card-text"><strong>State:</strong> {{ i.state }}</p>
                   <p class="card-text"><strong>Proces Percentage:</strong> %{{ i.state.process_percentage }}</p>
                   <p class="card-text"><strong>Comment:</strong> {{ i.comment }}</p>
