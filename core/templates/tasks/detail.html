@@ -54,7 +54,6 @@
           <a href="{% url 'tasks:log' object.id%}" class="btn btn-success me-2">Task Log</a>
           <a href="#" data-toggle="modal" data-target="#exampleModal2"  class="btn btn-success me-2" title="assignee" >Assign to me</a>
           <a href="{% url 'tasks:assign_to' object.id%}" class="btn btn-success me-2">Assign To</a>
-          <a href="{% url 'tasks:change_status' object.id%}" class="btn btn-success me-2">Change Status</a>
           <a href="{% url 'tasks:change_priority' object.id%}" class="btn btn-success me-2">Change Priority</a>
           <a href="{% url 'tasks:update' object.id%}" class="btn btn-success me-2">Update</a>
           <a href="#" data-toggle="modal" data-target="#exampleModal"  class="btn btn-success me-2" title="Delete" >Delete</a>
