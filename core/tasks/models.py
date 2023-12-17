@@ -22,6 +22,7 @@ class Task(models.Model):
     status = models.ForeignKey(
         "TaskStatus", on_delete=models.SET_NULL, blank=True, null=True
     )
+    current_state = models.ForeignKey("flow.State", on_delete=models.SET_NULL, blank = True, null = True)
     assign_to = models.ForeignKey(
         User, on_delete=models.SET_NULL, blank=True, null=True, related_name="Assigner"
     )

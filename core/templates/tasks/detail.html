@@ -27,6 +27,8 @@
               <hr>
               <p class="card-text"><strong>Status: </strong>{{object.status}}</p>
               <hr>
+              <p class="card-text"><strong>Current State: </strong>{{object.current_state}}</p>
+              <hr>
               <p class="card-text"><strong>Priority: </strong>{{object.priority}}</p>
               <hr>
               <p class="card-text"><strong>Created at: </strong>{{object.created_date}}</p>
@@ -71,6 +73,7 @@
           <div class="card mb-3">
               <div class="card-body">
                   <p class="card-text"><strong>Team:</strong> {{ i.state.team }}</p>
+                  <p class="card-text"><strong>Flow:</strong> {{ i.flow }}</p>
                   <p class="card-text"><strong>State:</strong> {{ i.state }}</p>
                   <p class="card-text"><strong>Proces Percentage:</strong> %{{ i.state.process_percentage }}</p>
                   <p class="card-text"><strong>Comment:</strong> {{ i.comment }}</p>
