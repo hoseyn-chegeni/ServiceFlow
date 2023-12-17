@@ -1,6 +1,6 @@
 from django.db import models
 from accounts.models import User
-
+from django.core.validators import MinValueValidator, MaxValueValidator
 # Create your models here.
 
 
@@ -23,6 +23,8 @@ class Task(models.Model):
         "TaskStatus", on_delete=models.SET_NULL, blank=True, null=True
     )
     current_state = models.ForeignKey("flow.State", on_delete=models.SET_NULL, blank = True, null = True)
+    process_percentage = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)])
+
     assign_to = models.ForeignKey(
         User, on_delete=models.SET_NULL, blank=True, null=True, related_name="Assigner"
     )

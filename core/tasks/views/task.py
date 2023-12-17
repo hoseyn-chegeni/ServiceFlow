@@ -69,6 +69,7 @@ class CreateTaskView(BaseCreateView):
         form.instance.created_by = self.request.user
         task = form.save(commit=False)
         task.current_state = task.type.work_flow.root
+        task.process_percentage = task.type.work_flow.root.process_percentage
         task.team = task.type.work_flow.root.team
         task.status = TaskStatus.objects.get(name = 'Open')
         task.save()
@@ -159,14 +160,7 @@ class TaskLogFlowCreateView(CreateView):
 
     def form_valid(self, form):
         if form.instance.action.next_state == None:
-            action = form.save(commit=False)
-            form.instance.created_by = self.request.user
-            form.instance.flow = self.task.type.work_flow
-            form.instance.state.process_percentage = 100
-            action.save()
-            task = Task.objects.get(id = self.task.id)
-            task.status = TaskStatus.objects.get(name = 'Closed')
-
+            pass
         else:
             action = form.save(commit=False)
             form.instance.flow = self.task.type.work_flow
@@ -175,14 +169,7 @@ class TaskLogFlowCreateView(CreateView):
             action.save()
             task = Task.objects.get(id = self.task.id)
             task.team  = form.instance.action.next_state.team
-            task.save()
+            task.current_state = form.instance.action.next_state
+            task.process_percentage = form.instance.action.next_state.process_percentage
+        task.save()
         return super().form_valid(form)
-
-
-        # action = form.save(commit=False)
-        # form.instance.created_by = self.request.user
-        # form.instance.flow = self.task.type.work_flow
-        # form.instance.state = form.instance.action.next_state
-        # action.save()
-        # task = Task.objects.get(id = self.task.id)
-        # task.team  = form.instance.action.next_state.team
