@@ -48,6 +48,7 @@ class AssetStatusUpdateView(BaseUpdateView):
     template_name = "asset/status/update.html"
     permission_required = "asset.change_assetstatus"
     success_message = "Status Successfully Updated."
+    context_object_name = 'asset_status'
     fields = (
         "name",
         "description",
