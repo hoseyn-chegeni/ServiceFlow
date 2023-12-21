@@ -77,7 +77,7 @@ class ComponentCategoryDetailView(BaseDetailView):
 class ComponentCategoryCreateView(BaseCreateView):
     model = ComponentCategory
     template_name = "asset/component_category/create.html"
-    fields = "__all__"
+    fields = ['name','description','is_active',]
     permission_required = "asset.add_componentcategory"
     success_message = "Component Successfully Created."
     url = "asset:component_category_detail"
@@ -86,11 +86,11 @@ class ComponentCategoryCreateView(BaseCreateView):
 class ComponentCategoryUpdateView(BaseUpdateView):
     model = ComponentCategory
     template_name = "asset/component_category/update.html"
-    fields = "__all__"
+    fields = ['name','description','is_active',]
     permission_required = "asset.change_componentcategory"
     url = "asset:component_category_detail"
     success_message = "Component Category Successfully updated."
-
+    context_object_name = 'component_category'
 
 class ComponentCategoryDeleteView(BaseDeleteView):
     model = ComponentCategory
