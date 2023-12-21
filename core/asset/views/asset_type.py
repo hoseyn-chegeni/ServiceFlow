@@ -1,8 +1,6 @@
-from django.views.generic import DetailView
 from ..models.asset_type import AssetType
 from django.urls import reverse_lazy
 from ..forms import CreateAssetTypeForm
-from django.contrib.auth.mixins import LoginRequiredMixin
 from base.views import BaseCreateView, BaseUpdateView, BaseDeleteView, BaseListView,  BaseDetailView
 from ..filters import AssetTypeFilters
 

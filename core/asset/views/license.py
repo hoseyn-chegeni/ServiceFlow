@@ -72,7 +72,7 @@ class LicenseCategoryDetailView(BaseDeleteView):
 class LicenseCategoryCreateView(BaseCreateView):
     model = LicenseCategory
     template_name = "asset/license_category/create.html"
-    fields = "__all__"
+    fields = ['name','description','is_active',]
     permission_required = "asset.add_licensecategory"
     success_message = "License Category Successfully Created."
     url = "asset:license_category_detail"
@@ -81,7 +81,7 @@ class LicenseCategoryCreateView(BaseCreateView):
 class LicenseCategoryUpdateView(BaseUpdateView):
     model = LicenseCategory
     template_name = "asset/license_category/update.html"
-    fields = "__all__"
+    fields = ['name','description','is_active',]
     permission_required = "asset.change_licensecategory"
     success_message = "License Category Successfully Updated."
     url = "asset:license_category_detail"
