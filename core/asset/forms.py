@@ -71,12 +71,3 @@ class CreateAccessoryForm(forms.ModelForm):
             "notes",
             "in_out",
         )
-
-
-class CreateAccessoryCategoryForm(forms.ModelForm):
-    class Meta:
-        model = AccessoryCategory
-        fields = (
-            "name",
-            "description",
-        )

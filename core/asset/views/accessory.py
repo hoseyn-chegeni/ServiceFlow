@@ -8,7 +8,7 @@ from base.views import (
 )
 from ..models.accessory import Accessory, AccessoryCategory
 from ..filters import AccessoryFilters, AccessoryCategoryFilters
-from ..forms import CreateAccessoryForm, CreateAccessoryCategoryForm
+from ..forms import CreateAccessoryForm
 
 
 class AccessoryListView(BaseListView):
@@ -81,7 +81,7 @@ class AccessoryCategoryDetailView(BaseDetailView):
 class AccessoryCategoryCreateView(BaseCreateView):
     model = AccessoryCategory
     template_name = "asset/accessory_category/create.html"
-    form_class = CreateAccessoryCategoryForm
+    fields = ['name','description','is_active',]
     permission_required = "asset.add_accessorycategory"
     success_message = "Category Successfully Created."
     url = "asset:accessory_category_detail"
@@ -92,9 +92,9 @@ class AccessoryCategoryUpdateView(BaseUpdateView):
     template_name = "asset/accessory_category/update.html"
     permission_required = "asset.change_accessorycategory"
     success_message = "Category Successfully Updated."
-    fields = ("name",)
+    fields = ['name','description','is_active',]
     url = "asset:accessory_category_detail"
-
+    context_object_name = 'accessory_category'
 
 class AccessoryCategoryDeleteView(BaseDeleteView):
     model = AccessoryCategory
