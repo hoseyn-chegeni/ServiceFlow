@@ -3,7 +3,7 @@ from ..models.asset_type import AssetType
 from django.urls import reverse_lazy
 from ..forms import CreateAssetTypeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from base.views import BaseCreateView, BaseUpdateView, BaseDeleteView, BaseListView
+from base.views import BaseCreateView, BaseUpdateView, BaseDeleteView, BaseListView,  BaseDetailView
 from ..filters import AssetTypeFilters
 
 
@@ -15,10 +15,10 @@ class AssetTypeListView(BaseListView):
     permission_required = "asset.view_assettype"
 
 
-class AssetTypeDetailView(LoginRequiredMixin, DetailView):
+class AssetTypeDetailView(BaseDetailView):
     model = AssetType
     template_name = "asset/type/detail.html"
-
+    permission_required = "asset.change_assettype"
 
 class AssetTypeCreateView(BaseCreateView):
     model = AssetType
