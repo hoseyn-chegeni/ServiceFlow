@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from ..forms import CreateAssetStatusForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
-from base.views import BaseCreateView, BaseDeleteView, BaseListView, BaseUpdateView
+from base.views import BaseCreateView, BaseDeleteView, BaseListView, BaseUpdateView, BaseDetailView
 from ..filters import AssetStatusFilters
 
 
@@ -29,10 +29,10 @@ class AssetStatusListView(BaseListView):
         return context
 
 
-class AssetStatusDetailView(LoginRequiredMixin, DetailView):
+class AssetStatusDetailView(BaseDetailView):
     model = AssetStatus
     template_name = "asset/status/detail.html"
-
+    permission_required = "asset.change_assetstatus"
 
 class AssetStatusCreateView(BaseCreateView):
     model = AssetStatus
