@@ -34,6 +34,7 @@ class AssetTypeUpdateView(BaseUpdateView):
     template_name = "asset/type/update.html"
     permission_required = "asset.change_assettype"
     success_message = "Type Successfully Updated."
+    context_object_name = 'asset_type'
     fields = (
         "name",
         "description",
