@@ -75,7 +75,7 @@ class ConsumableCategoryDetailView(BaseDetailView):
 class ConsumableCategoryCreateView(BaseCreateView):
     model = ConsumableCategory
     template_name = "asset/consumable_category/create.html"
-    fields = "__all__"
+    fields = ['name','description','is_active',]
     permission_required = "asset.add_consumablecategory"
     success_message = "Category Successfully Created."
     url = "asset:consumable_category_detail"
@@ -84,7 +84,7 @@ class ConsumableCategoryCreateView(BaseCreateView):
 class ConsumableCategoryUpdateView(BaseUpdateView):
     model = ConsumableCategory
     template_name = "asset/consumable_category/update.html"
-    fields = "__all__"
+    fields = ['name','description','is_active',]
     permission_required = "asset.change_consumablecategory"
     url = "asset:consumable_category_detail"
     success_message = "Category Successfully Created."
