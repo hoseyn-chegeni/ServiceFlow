@@ -88,6 +88,7 @@ class ConsumableCategoryUpdateView(BaseUpdateView):
     permission_required = "asset.change_consumablecategory"
     url = "asset:consumable_category_detail"
     success_message = "Category Successfully Created."
+    context_object_name = 'consumable_category'
 
 
 class ConsumableCategoryDeleteView(BaseDeleteView):
