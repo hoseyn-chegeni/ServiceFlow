@@ -176,16 +176,9 @@ urlpatterns = [
         LicenseCategoryCreateView.as_view(),
         name="license_category_create",
     ),
-    path(
-        "license_category_detail/<int:pk>",
-        LicenseCategoryDetailView.as_view(),
-        name="license_category_detail",
-    ),
-    path(
-        "license_category_update/<int:pk>",
-        LicenseCategoryUpdateView.as_view(),
-        name="license_category_update",
-    ),
+    path("license_category_detail/<int:pk>/", LicenseCategoryDetailView.as_view(),name="license_category_detail",),
+    path("license_category_update/<int:pk>", LicenseCategoryUpdateView.as_view(),name="license_category_update",),
+
     path(
         "license_category_delete/<int:pk>",
         LicenseCategoryDeleteView.as_view(),
