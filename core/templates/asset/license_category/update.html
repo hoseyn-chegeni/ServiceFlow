@@ -1,15 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UPDATE</title>
-</head>
-<body>
-    <form method="post">
-        {%csrf_token%}
-        {{form.as_p}}
-        <input type="submit" value="Create" id="">
-    </form>
-</body>
-</html>
+
+{%extends 'base.html' %}
+{%block title %} Edit Asset Type  {%endblock%}
+
+{%block content %} 
+   
+<div class="container">
+    <main>
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="" width="62" height="47">
+        <h2>Edit Asset Type</h2>
+      </div>
+
+
+          <h4 class="mb-3">Edit Information</h4>
+          <form class="needs-validation" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" placeholder=""  name="name" value = {{license_category.name}}>
+              </div>
+  
+              <div class="col-sm-6">
+                <label for="description" class="form-label">Description</label>
+                <input type="text" class="form-control" id="description" placeholder=""  name="description" value = {{license_category.description}}>
+              </div>
+
+              <div class="col-sm-6">
+                <div class="form-check">
+                    {% if license_category.is_active == True%}
+                    <input class="form-check-input" type="checkbox"  id="checkboxExample" name="is_active" Checked>
+                    {%else%}
+                    <input class="form-check-input" type="checkbox"  id="checkboxExample" name="is_active">
+                    {%endif%}
+                    <label class="form-check-label" for="checkboxExample">Is Active</label>
+                </div>
+            </div>
+
+
+
+
+            <button class="w-100 btn btn-lg btn-outline-success" type="submit">Edit</button>
+          </form>
+        </div>
+      </div>
+    </main>
+</div>
+
+{%endblock%}

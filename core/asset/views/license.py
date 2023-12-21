@@ -63,7 +63,7 @@ class LicenseCategoryListView(BaseListView):
     filterset_class = LicenseCategoryFilters
 
 
-class LicenseCategoryDetailView(BaseDeleteView):
+class LicenseCategoryDetailView(BaseDetailView):
     model = LicenseCategory
     template_name = "asset/license_category/detail.html"
     permission_required = "asset.view_licensecategory"
@@ -85,6 +85,7 @@ class LicenseCategoryUpdateView(BaseUpdateView):
     permission_required = "asset.change_licensecategory"
     success_message = "License Category Successfully Updated."
     url = "asset:license_category_detail"
+    context_object_name = 'license_category'
 
 
 class LicenseCategoryDeleteView(BaseDeleteView):
