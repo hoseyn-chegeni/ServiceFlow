@@ -457,6 +457,16 @@
         </div>
       </div>
     </nav>
+    {% if form.errors %}
+{% for field, errors in form.errors.items %}
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ field }}:  {% for error in errors %}{{ error }}{% endfor %}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{% endfor %}
+{% endif %}
+
+
     {% for message in messages %}
     <div class="alert alert-success alert-dismissible fade show" role="alert">
       {{ message }}
@@ -464,6 +474,9 @@
     </div>
     {%endfor%}
 {% block content %}{%endblock%}
+
+
+
 
 
       <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
