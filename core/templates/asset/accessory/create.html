@@ -1,15 +1,124 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CREATE MEETINGS</title>
-</head>
-<body>
-    <form method="post">
-        {%csrf_token%}
-        {{form.as_p}}
-        <input type="submit" value="Create" id="">
-    </form>
-</body>
-</html>
+
+{%extends 'base.html' %}
+{%block title %} Add Accessory {%endblock%}
+
+{%block content %} 
+   
+<div class="container">
+    <main>
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="" width="62" height="47">
+        <h2>Add Accessory </h2>
+        <p>{{ form.errors }}</p>
+      </div>
+
+
+          <h4 class="mb-3">Add Information</h4>
+          <form class="needs-validation" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" placeholder=""  name="name" >
+              </div>
+  
+              <div class="col-sm-6">
+                <label for="company" class="form-label">Company</label>
+                <input type="text" class="form-control" id="company" placeholder=""  name="company" >
+              </div>
+
+
+              <div class="col-sm-6">
+                <label for="model_number" class="form-label">Model Number</label>
+                <input type="text" class="form-control" id="model_number" placeholder=""  name="model_number" >
+              </div>
+
+
+              <div class="col-sm-6">
+                <label for="manufacturer" class="form-label">Manufacturer</label>
+                <input type="text" class="form-control" id="manufacturer" placeholder=""  name="manufacturer" >
+              </div>
+
+
+
+              <div class="col-sm-6">
+                <label for="category">Category</label>
+                <select class="form-select" id="category" name="category">
+                    <option value="">----------</option>
+                    {% for i in form.fields.category.queryset %}
+                        <option value="{{ i.pk }}">
+                            {{ i.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            
+              <div class="col-sm-6">
+                <label for="supplier" class="form-label">Supplier</label>
+                <input type="text" class="form-control" id="supplier" placeholder=""  name="supplier" >
+              </div>
+
+              <div class="col-sm-6">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" class="form-control" id="location" placeholder=""  name="location" >
+              </div>
+
+              <div class="col-sm-6">
+                <label for="total" class="form-label">Total</label>
+                <input type="number" class="form-control" id="total" placeholder=""  name="total" >
+              </div>
+
+              <div class="col-sm-6">
+              <label for="available" class="form-label">Available</label>
+              <input type="number" class="form-control" id="available" placeholder=""  name="available" >
+            </div>
+
+            <div class="col-sm-6">
+                <label for="checked_out" class="form-label">Checked out</label>
+                <input type="number" class="form-control" id="checked_out" placeholder=""  name="checked_out" >
+              </div>
+
+
+              <div class="col-sm-6">
+                <label for="min_quantity" class="form-label">Min quantity</label>
+                <input type="number" class="form-control" id="min_quantity" placeholder=""  name="min_quantity" >
+              </div>
+
+              <div class="col-sm-6">
+                <label for="purchase_date" class="form-label">Purchase date</label>
+                <input type="text" class="form-control" id="purchase_date" placeholder=""  name="purchase_date" >
+              </div>
+
+              <div class="col-sm-6">
+                <label for="purchase_cost" class="form-label">Purchase cost:</label>
+                <input type="number" class="form-control" id="purchase_cost" placeholder=""  name="purchase_cost" >
+              </div>
+
+              <div class="col-sm-6">
+                <label for="order_number" class="form-label">Order number</label>
+                <input type="text" class="form-control" id="order_number" placeholder=""  name="order_number" >
+              </div>
+
+              <div class="col-sm-6">
+                <label for="notes" class="form-label">Notes</label>
+                <input type="text" class="form-control" id="notes" placeholder=""  name="notes" >
+              </div>
+
+              <div class="col-sm-6">
+                <label for="in_out" class="form-label">In out</label>
+                <input type="text" class="form-control" id="in_out" placeholder=""  name="in_out" >
+              </div>
+
+              <label class="form-label" for="customFile">Add Accessory image</label>
+                <input type="file" class="form-control" id="customFile" name="image" />
+
+
+            <button class="w-100 btn btn-lg btn-outline-success" type="submit">Add Istance</button>
+          </form>
+        </div>
+      </div>
+    </main>
+</div>
+
+{%endblock%}
