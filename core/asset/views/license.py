@@ -67,6 +67,7 @@ class LicenseCategoryDetailView(BaseDetailView):
     model = LicenseCategory
     template_name = "asset/license_category/detail.html"
     permission_required = "asset.view_licensecategory"
+    context_object_name = 'license_category'
 
 
 class LicenseCategoryCreateView(BaseCreateView):
