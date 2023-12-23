@@ -176,6 +176,10 @@ class TaskLogFlowCreateView(CreateView):
             task.team  = form.instance.action.next_state.team
             task.current_state = form.instance.action.next_state
             task.process_percentage = form.instance.action.next_state.process_percentage
+            task.actions.clear()
+            for i  in form.instance.action.next_state.action.all():
+                task.actions.add(i)
+            
             
         action.save()
         task.save()
