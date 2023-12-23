@@ -72,6 +72,7 @@ class ComponentCategoryDetailView(BaseDetailView):
     model = ComponentCategory
     template_name = "asset/component_category/detail.html"
     permission_required = "asset.view_componentcategory"
+    context_object_name = 'component_category'
 
 
 class ComponentCategoryCreateView(BaseCreateView):
