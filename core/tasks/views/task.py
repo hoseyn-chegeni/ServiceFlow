@@ -166,6 +166,7 @@ class TaskLogFlowCreateView(CreateView):
         form.instance.created_by = self.request.user
         form.instance.state = form.instance.action.next_state
         task.process_percentage = form.instance.action.next_state.process_percentage
+        task.assign_to = None
 
         if form.instance.action.next_state == State.objects.get(state = 'Close'):
             task.status = TaskStatus.objects.get(name = 'Closed')
