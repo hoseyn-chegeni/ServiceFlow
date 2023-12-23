@@ -70,6 +70,7 @@ class ConsumableCategoryDetailView(BaseDetailView):
     model = ConsumableCategory
     template_name = "asset/consumable_category/detail.html"
     permission_required = "asset.view_consumablecategory"
+    context_object_name = 'consumable_category'
 
 
 class ConsumableCategoryCreateView(BaseCreateView):
