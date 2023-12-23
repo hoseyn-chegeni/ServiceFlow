@@ -76,6 +76,7 @@ class AccessoryCategoryDetailView(BaseDetailView):
     model = AccessoryCategory
     template_name = "asset/accessory_category/detail.html"
     permission_required = "asset.view_accessorycategory"
+    context_object_name = 'accessory_category'
 
 
 class AccessoryCategoryCreateView(BaseCreateView):
