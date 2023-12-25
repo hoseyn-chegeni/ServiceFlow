@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
-
+from django.contrib.auth.models import Group
 
 # Create your models here.
 class WorkFlow(models.Model):
@@ -18,7 +18,7 @@ class WorkFlow(models.Model):
 
 class State(models.Model):
     state = models.CharField(max_length = 255, )
-    team  = models.ForeignKey('team.Team', on_delete = models.CASCADE, blank = True, null = True)
+    team  = models.ForeignKey(Group, on_delete = models.CASCADE, blank = True, null = True)
     process_percentage = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)])
     action = models.ManyToManyField('Action',blank = True)
 
