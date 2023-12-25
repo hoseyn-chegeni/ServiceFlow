@@ -26,7 +26,7 @@ class TaskAssignToMe(LoginRequiredMixin, View):
                     additional_info=f"{self.request.user} Assigned Task to {task.assign_to}",
                 )
             else:
-                messages.success(
+                messages.warning(
                     self.request, f"You Cant Assign TSK-{task.id} to your self, its not assigned to your team."
                 )
         return HttpResponseRedirect(
