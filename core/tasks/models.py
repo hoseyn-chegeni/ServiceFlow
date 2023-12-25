@@ -1,6 +1,7 @@
 from django.db import models
 from accounts.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.contrib.auth.models import Group
 # Create your models here.
 
 
@@ -28,7 +29,7 @@ class Task(models.Model):
     assign_to = models.ForeignKey(
         User, on_delete=models.SET_NULL, blank=True, null=True, related_name="Assigner"
     )
-    team  = models.ForeignKey('team.Team', on_delete=models.SET_NULL, blank = True, null = True,)
+    team  = models.ForeignKey(Group, on_delete=models.SET_NULL, blank = True, null = True,)
     priority = models.ForeignKey(
         "TaskPriority", on_delete=models.SET_NULL, blank=True, null=True
     )
