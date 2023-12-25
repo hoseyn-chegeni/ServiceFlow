@@ -54,9 +54,12 @@ class MyTeamTasks(BaseListView):
     filterset_class = TaskFilter
     permission_required = "tasks.view_task"
 
-    def get_queryset(self, **kwargs):
-        qs = super().get_queryset(**kwargs)
-        return qs.filter(type__assigned_to=self.request.user.member_of)
+    def get_queryset(self):
+        # Get the groups the current user belongs to
+        user_groups = self.request.user.groups.all()
+
+        # Filter tasks based on teams the user belongs to
+        return Task.objects.filter(team__in=user_groups)
 
 
 class CreateTaskView(BaseCreateView):
@@ -170,6 +173,8 @@ class TaskLogFlowCreateView(CreateView):
 
         if form.instance.action.next_state == State.objects.get(state = 'Close'):
             task.status = TaskStatus.objects.get(name = 'Closed')
+            task.team  = None
+
 
         else:
 
