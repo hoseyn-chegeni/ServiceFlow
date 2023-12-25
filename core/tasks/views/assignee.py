@@ -12,21 +12,27 @@ class TaskAssignToMe(LoginRequiredMixin, View):
     def get(self, request, pk):
         task = Task.objects.filter(pk=pk).first()
         if task:
-            task.assign_to = self.request.user
-            task.participants.add(self.request.user)
-            messages.success(
-                self.request, f"TSK-{task.id} Successfully assigned to you."
-            )
-            task.save()
-            TaskLog.objects.create(
-                user=self.request.user,
-                task=task,
-                event_type="Assignment",
-                additional_info=f"{self.request.user} Assigned Task to {task.assign_to}",
-            )
+            if task.team in self.request.user.groups.all():
+                task.assign_to = self.request.user
+                task.participants.add(self.request.user)
+                messages.success(
+                    self.request, f"TSK-{task.id} Successfully assigned to you."
+                )
+                task.save()
+                TaskLog.objects.create(
+                    user=self.request.user,
+                    task=task,
+                    event_type="Assignment",
+                    additional_info=f"{self.request.user} Assigned Task to {task.assign_to}",
+                )
+            else:
+                messages.success(
+                    self.request, f"You Cant Assign TSK-{task.id} to your self, its not assigned to your team."
+                )
         return HttpResponseRedirect(
             reverse_lazy("tasks:detail", kwargs={"pk": task.pk})
         )
+        
 
 
 class TaskAssignTo(BaseUpdateView):
