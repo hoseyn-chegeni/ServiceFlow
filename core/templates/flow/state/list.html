@@ -1,0 +1,101 @@
+{% extends 'baseList.html'%}
+
+{%block title%}States{%endblock%}
+{%block list_title%}States{%endblock%}
+{%block filter_form%}
+<form class="table text-white mb-0" method="get">
+    {%csrf_token%}
+    <div class="row g-3">
+
+      <div class="col-sm-6">
+        <label for="id_id" class="form-label">Id</label>
+        <input  class="form-control" type="number" name="id" step="any" id="id_id"value="{{ request.GET.id }}" >
+      </div>
+
+      <div class="col-sm-6">
+        <label for="state" class="form-label">State</label>
+        <input  class="form-control" type="text" name="state" step="any" id="state" value="{{ request.GET.state }}" >
+    </div>
+
+        <div class="col-sm-6">
+            <label for="team" class="form-label">Type</label>
+            <select class="form-select" aria-label="Default select example" name="team">
+                <option value="">----------</option>
+                {% for i in filter.form.team.field.queryset %}
+                
+                <option value="{{ i.id }}">{{ i.name }}</option>
+                {%endfor%}
+              </select>
+          </div>
+
+
+      <button class="w-10 btn btn-lg btn-outline-success" type="submit">Search</button>
+    </form>
+{%endblock%}
+
+{% block buttons%}
+<a href="{% url 'flow:state_create' %}" class="btn btn-success me-2">Add Instance</a>
+<a href="#" class="btn btn-success me-2">Reports</a>
+{%endblock%}
+{%block list%}
+<table class="table text-white mb-0">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">State</th>
+        <th scope="col">Is active</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+
+
+    <tbody>
+        {%for i in state%}
+      <tr class="fw-normal">
+        <td class="align-middle">
+          <span>{{i.id}}</span>
+        </td>
+        <td class="align-middle">
+            <span>{{i.state}}</span>
+        </td>
+          <td class="align-middle">
+            {% if i.is_active == True%}
+            <h6 class="mb-0"><span class="badge bg-success">{{i.is_active}}</span></h6>
+            {%else%}
+            <h6 class="mb-0"><span class="badge bg-danger">{{i.is_active}}</span></h6>
+            {%endif%}
+          </td>
+
+          <td class="align-middle">
+            <a href="{%url 'flow:state_detail' i.id %}" data-mdb-toggle="tooltip" title="Detail"> <i class="fas fa-info-circle"></i></a>
+          <a href="{%url 'flow:state_update' i.id %}" data-mdb-toggle="tooltip" title="Update"><i class="fas fa-edit" ></i></a>
+          <a href="#" data-toggle="modal" data-target="#exampleModal"  title="Delete" ><i class="fas fa-trash-alt"></i></a>
+        </td>
+      </tr>
+      </tr>
+      <!-- DELETE MODALS -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Are you sure you want to delete {{i}}?
+            </div>
+            <div class="modal-footer">
+              <a class="btn btn-primary" href="{% url 'flow:state_delete' i.id %}" class="btn">Delete</a>
+          </div>
+          </div>
+        </div>
+      </div>
+
+
+    
+      {%endfor%}
+      </tbody>
+  </table>
+  {%endblock%}

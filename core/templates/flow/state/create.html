@@ -1,0 +1,70 @@
+{%extends 'base.html' %}
+{%block title %} Create State{%endblock%}
+
+{%block content %} 
+   
+<div class="container">
+    <main>
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="" width="62" height="47">
+        <h2>Cretae State</h2>
+      </div>
+
+
+          <h4 class="mb-3">Add Information</h4>
+          <form class="needs-validation" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label for="state" class="form-label">State</label>
+                <input type="text" class="form-control" id="state" placeholder=""  name="state">
+              </div>
+  
+              <div class="col-sm-6">
+                <label for="team">Team</label>
+                <select class="form-select" id="team" name="team">
+                    <option value="">----------</option>
+                    {% for i in form.fields.team.queryset %}
+                        <option value="{{ i.pk }}">
+                            {{ i.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-sm-6">
+                <label for="action">action</label>
+                <select class="form-select" id="action" name="action" multiple>
+                    <option value="">----------</option>
+                    {% for i in form.fields.action.queryset %}
+                        <option value="{{ i.pk }}">
+                            {{ i.title }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-sm-6">
+                <label for="process_percentage" class="form-label">Process Percentage</label>
+                <input type="number" class="form-control" id="process_percentage" placeholder=""  name="process_percentage">
+              </div>
+
+
+              <div class="col-sm-6">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox"  id="checkboxExample" name="is_active" Checked>
+                    <label class="form-check-label" for="checkboxExample">Is Active</label>
+                </div>
+            </div>
+
+
+
+
+            <button class="w-100 btn btn-lg btn-outline-success" type="submit">Add Instance</button>
+          </form>
+        </div>
+      </div>
+    </main>
+</div>
+
+{%endblock%}
