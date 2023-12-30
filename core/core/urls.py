@@ -38,6 +38,7 @@ urlpatterns = (
         path("mail/", include("mail.urls")),
         path("asset/", include("asset.urls")),
         path("rbac/", include("rbac.urls")),
+        path("flow/", include("flow.urls")),
         path("", include("core.swagger")),
     ]
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
