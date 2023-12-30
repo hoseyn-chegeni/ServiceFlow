@@ -37,6 +37,7 @@ class AssetUpdateView(BaseUpdateView):
     context_object_name = "asset"
     permission_required = "asset.change_asset"
     url = "asset:detail"
+    success_message = 'Asset Successfully Updated'
     fields = (
         "name",
         "type",
