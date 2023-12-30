@@ -448,10 +448,32 @@
                   <li><a class="dropdown-item" href="{%url 'rbac:permission_list' %}">All Permissions</a></li>
                 </ul>
               </li>
+
+
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Work Flow Management
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{%url 'rbac:role_list'%}">Flows</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="{%url 'rbac:role_create'%}">States</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="{%url 'rbac:permission_list' %}">Actions</a></li>
+                </ul>
+              </li>
+
               <li class="nav-item">
                 <a class="nav-link" href="{%url 'accounts:logout'%}">Logout</a>
               </li>
             </ul>
+
+
 
           </div>
         </div>
