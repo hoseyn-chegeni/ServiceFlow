@@ -21,6 +21,10 @@ class State(models.Model):
     team  = models.ForeignKey(Group, on_delete = models.CASCADE, blank = True, null = True)
     process_percentage = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)])
     action = models.ManyToManyField('Action',blank = True)
+    created_by = models.ForeignKey("accounts.User", on_delete=models.SET_NULL, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.state
@@ -28,7 +32,11 @@ class State(models.Model):
 class Action(models.Model):
     title = models.CharField(max_length = 255)
     next_state = models.ForeignKey('State',on_delete = models.SET_NULL, blank = True, null = True, related_name = 'next')
-
+    created_by = models.ForeignKey("accounts.User", on_delete=models.SET_NULL, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
+    
     def __str__(self):
         return self.title
     
